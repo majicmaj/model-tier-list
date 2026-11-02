@@ -35,8 +35,15 @@ Tiers are score bands in steps of max / 7 with boundaries snapped to nearby scor
 gaps, lettered S down from the best band. Trailing empty tiers drop. Models
 with no score for a lens sit in the unranked row.
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers static assets)
 
-Build command: `pnpm build`. Output directory: `dist`. No adapter needed; the
-app is fully static. After `pnpm fetch`, commit the new snapshot and logos so
-the deploy prints the fresh edition.
+Live: https://llmtiers.hobbyhood.app
+
+```sh
+pnpm build
+npx wrangler deploy
+```
+
+`wrangler.jsonc` serves `dist` and attaches the custom domain. Cloudflare manages
+its DNS record and certificate through the Workers custom domain configuration.
+After `pnpm fetch`, commit the refreshed snapshot and logos before deploying.
