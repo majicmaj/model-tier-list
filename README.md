@@ -1,7 +1,7 @@
 # Model Tier List
 
-Artificial Analysis model data as a seven-tier board. Six lens chips re-cut the
-full board with one tap. Each data refresh prints a dated edition.
+Artificial Analysis model and coding-harness data as tier boards. Lens chips
+re-cut the full board with one tap. Each data refresh prints a dated edition.
 
 ## Run
 
@@ -18,9 +18,10 @@ Open http://localhost:5173/ in a browser.
 pnpm fetch
 ```
 
-The script pulls the Artificial Analysis models page, reads model records from
-the page payloads, downloads company logos to `public/logos`, and writes
-`src/data/snapshot.json`. Rebuild or reload to print the new edition.
+The script pulls the Artificial Analysis models page and the coding-agents
+page, reads records from the page payloads, downloads company logos to
+`public/logos`, and writes `src/data/snapshot.json` plus `src/data/agents.json`.
+Rebuild or reload to print the new edition.
 
 Lens sources per model:
 
@@ -30,6 +31,13 @@ Lens sources per model:
 - Latency: median seconds to first chunk (lower wins)
 - Context: context window tokens (higher wins)
 - Value: weighted USD per index task (lower wins)
+
+Lens sources per harness run:
+
+- Score: AA agent index score (higher wins)
+- Cost: mean USD per task (lower wins)
+- Time: mean wall time per task (lower wins)
+- Steps: mean steps per task (lower wins)
 
 Tiers are score bands in steps of max / 7 with boundaries snapped to nearby score
 gaps, lettered S down from the best band. Trailing empty tiers drop. Models

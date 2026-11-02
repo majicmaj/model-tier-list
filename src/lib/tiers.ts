@@ -1,4 +1,5 @@
 import snapshot from '../data/snapshot.json'
+import agentSnapshot from '../data/agents.json'
 
 export type LensId = 'intelligence' | 'speed' | 'price' | 'latency' | 'context' | 'value'
 
@@ -14,6 +15,7 @@ export interface Model {
   slug: string
   name: string
   shortName: string
+  detail?: string | null
   company: string
   url: string
   releaseDate: string | null
@@ -43,6 +45,7 @@ export interface Snapshot {
 }
 
 export const data = snapshot as Snapshot
+export const agentData = agentSnapshot as Snapshot
 
 const compact = (v: number): string => {
   if (v >= 1_000_000) {
@@ -98,6 +101,52 @@ export const LENSES: Lens[] = [
     hint: 'Weighted USD per index task · lower wins',
     higherBetter: false,
     format: (v) => `$${v.toFixed(2)}`,
+  },
+]
+
+const duration = (s: number): string => {
+  if (s >= 3600) {
+    const h = Math.floor(s / 3600)
+    const m = Math.round((s % 3600) / 60)
+    return m ? `${h}h ${m}m` : `${h}h`
+  }
+  if (s >= 90) return `${Math.round(s / 60)}m`
+  return `${Math.round(s)}s`
+}
+
+/**
+ * Harness lenses reuse the shared score fields: intelligence holds the AA
+ * index score, price the mean USD per task, latency the mean wall time per
+ * task, and speed the mean step count per task.
+ */
+export const HLENSES: Lens[] = [
+  {
+    id: 'intelligence',
+    label: 'Score',
+    hint: 'Share of eval tasks done well · higher wins',
+    higherBetter: true,
+    format: (v) => `${(v * 100).toFixed(1)}%`,
+  },
+  {
+    id: 'price',
+    label: 'Cost',
+    hint: 'Mean USD per task · lower wins',
+    higherBetter: false,
+    format: (v) => `$${v.toFixed(2)}`,
+  },
+  {
+    id: 'latency',
+    label: 'Time',
+    hint: 'Mean wall time per task · lower wins',
+    higherBetter: false,
+    format: (v) => duration(v),
+  },
+  {
+    id: 'speed',
+    label: 'Steps',
+    hint: 'Mean steps per task · lower wins',
+    higherBetter: false,
+    format: (v) => String(Math.round(v)),
   },
 ]
 
@@ -162,11 +211,11 @@ export function bands(lens: Lens, ranked: Ranked[]): Band[] {
   const hi = Math.max(...vals)
   const log = lo > 0 && hi / lo > 50
   const t = (v: number): number => {
-    if (log) return Math.log10(v)
+    if (log) return lens.higherBetter ? Math.log10(v) : -Math.log10(v)
     return lens.higherBetter ? v : -v
   }
   const inv = (s: number): number => {
-    if (log) return 10 ** s
+    if (log) return lens.higherBetter ? 10 ** s : 10 ** -s
     return lens.higherBetter ? s : -s
   }
   const ts = vals.map(t)
@@ -217,14 +266,14 @@ export function bands(lens: Lens, ranked: Ranked[]): Band[] {
   const fmt = lens.format
   const labels = TIERS.map((_, j) => {
     const isLast = j === last || j === TIERS.length - 1
-    if (lens.higherBetter || log) {
+    if (lens.higherBetter) {
       const upper = j === 0 ? top : bounds[j - 1]
       if (isLast && j > 0) return `≤ ${fmt(inv(upper))}`
       return `${fmt(inv(upper))} – ${fmt(inv(bounds[j]))}`
     }
     const lower = j === 0 ? top : bounds[j - 1]
-    if (isLast && j > 0) return `≥ ${fmt(-lower)}`
-    return `${fmt(-lower)} – ${fmt(-bounds[j])}`
+    if (isLast && j > 0) return `≥ ${fmt(inv(lower))}`
+    return `${fmt(inv(lower))} – ${fmt(inv(bounds[j]))}`
   })
   return TIERS.slice(0, last + 1).map((tier, j) => ({
     tier,

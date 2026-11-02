@@ -1,15 +1,20 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
+  HLENSES,
   LENSES,
+  agentData,
   bands,
   data,
   gapCopy,
   rank,
+  type Company,
   type Lens,
   type LensId,
   type Model,
   type Ranked,
 } from './lib/tiers'
+
+type Page = 'models' | 'harnesses'
 
 interface TipState {
   slug: string
@@ -19,8 +24,8 @@ interface TipState {
   pinned: boolean
 }
 
-function Logo({ model }: { model: Model }) {
-  const co = data.companies[model.company]
+function Logo({ model, makers }: { model: Model; makers: Record<string, Company> }) {
+  const co = makers[model.company]
   if (!co?.logo) {
     return (
       <span className="logo-miss" aria-hidden="true">
@@ -59,6 +64,7 @@ interface TileInfo {
 
 function Tile({
   model,
+  makers,
   delay,
   tipOpen,
   onHover,
@@ -66,13 +72,14 @@ function Tile({
   onToggle,
 }: {
   model: Model
+  makers: Record<string, Company>
   delay: number
   tipOpen: boolean
   onHover: (slug: string, anchor: HTMLElement) => void
   onLeave: () => void
   onToggle: (slug: string, anchor: HTMLElement) => void
 }) {
-  const co = data.companies[model.company]
+  const co = makers[model.company]
   return (
     <button
       type="button"
@@ -85,7 +92,7 @@ function Tile({
       onBlur={onLeave}
       onClick={(e) => onToggle(model.slug, e.currentTarget)}
     >
-      <Logo model={model} />
+      <Logo model={model} makers={makers} />
       <span className="tile-name">{model.shortName}</span>
     </button>
   )
@@ -93,18 +100,20 @@ function Tile({
 
 function Tooltip({
   model,
+  makers,
   lens,
   info,
   pos,
   total,
 }: {
   model: Model
+  makers: Record<string, Company>
   lens: Lens
   info: TileInfo | null
   pos: TipState
   total: number
 }) {
-  const co = data.companies[model.company]
+  const co = makers[model.company]
   return (
     <div
       id={`tip-${model.slug}`}
@@ -112,8 +121,9 @@ function Tooltip({
       className={`tip${pos.above ? ' is-above' : ' is-below'}`}
       style={{ left: `${pos.x}px`, top: `${pos.y}px` } as React.CSSProperties}
     >
-      <p className="tip-name">{model.shortName}</p>
+      <p className="tip-name">{model.detail ? model.name : model.shortName}</p>
       <p className="tip-co">{co?.name || 'Unknown maker'}</p>
+      {model.detail ? <p className="tip-detail">{model.detail}</p> : null}
       {info ? (
         <dl className="tip-grid">
           <div>
@@ -140,11 +150,13 @@ function Tooltip({
       ) : (
         <p className="tip-flat">No {lens.label.toLowerCase()} score this edition.</p>
       )}
-      <p className="tip-meta">
-        {model.reasoning && <span className="tag">reasoning</span>}
-        {model.openWeights && <span className="tag">open</span>}
-        {model.releaseDate && <span className="tip-rel">Rel. {model.releaseDate}</span>}
-      </p>
+      {(model.reasoning || model.openWeights || model.releaseDate) && (
+        <p className="tip-meta">
+          {model.reasoning && <span className="tag">reasoning</span>}
+          {model.openWeights && <span className="tag">open</span>}
+          {model.releaseDate && <span className="tip-rel">Rel. {model.releaseDate}</span>}
+        </p>
+      )}
       <a className="tip-link" href={model.url} target="_blank" rel="noreferrer">
         Open on Artificial Analysis
       </a>
@@ -161,12 +173,26 @@ interface LensTipState {
 }
 
 export default function App() {
+  const [page, setPage] = useState<Page>(() =>
+    window.location.hash === '#/harnesses' ? 'harnesses' : 'models',
+  )
   const [lensId, setLensId] = useState<LensId>('intelligence')
   const [tip, setTip] = useState<TipState | null>(null)
   const [lensTip, setLensTip] = useState<LensTipState | null>(null)
-  const lens = LENSES.find((l) => l.id === lensId)!
-  const { ranked, unranked } = useMemo(() => rank(lens, data.models), [lens])
+  const ds = page === 'models' ? data : agentData
+  const lenses = page === 'models' ? LENSES : HLENSES
+  const lens = lenses.find((l) => l.id === lensId) ?? lenses[0]
+  const { ranked, unranked } = useMemo(() => rank(lens, ds.models), [lens, ds])
   const rows = useMemo(() => bands(lens, ranked), [lens, ranked])
+
+  const goPage = (p: Page) => {
+    if (p === page) return
+    setPage(p)
+    setLensId('intelligence')
+    setTip(null)
+    setLensTip(null)
+    window.location.hash = p === 'harnesses' ? '#/harnesses' : '#/'
+  }
 
   useEffect(() => {
     setTip(null)
@@ -209,7 +235,7 @@ export default function App() {
     }
   }, [tip, lensTip])
 
-  if (!data.models.length) {
+  if (!ds.models.length) {
     return (
       <main className="page">
         <h1>Model Tier List</h1>
@@ -258,16 +284,16 @@ export default function App() {
   }
 
   const onKeys = (e: React.KeyboardEvent) => {
-    const i = LENSES.findIndex((l) => l.id === lensId)
+    const i = lenses.findIndex((l) => l.id === lens.id)
     let n: number | null = null
-    if (e.key === 'ArrowRight') n = (i + 1) % LENSES.length
-    if (e.key === 'ArrowLeft') n = (i - 1 + LENSES.length) % LENSES.length
+    if (e.key === 'ArrowRight') n = (i + 1) % lenses.length
+    if (e.key === 'ArrowLeft') n = (i - 1 + lenses.length) % lenses.length
     if (e.key === 'Home') n = 0
-    if (e.key === 'End') n = LENSES.length - 1
+    if (e.key === 'End') n = lenses.length - 1
     if (n !== null) {
       e.preventDefault()
-      setLensId(LENSES[n].id)
-      document.getElementById(`chip-${LENSES[n].id}`)?.focus()
+      setLensId(lenses[n].id)
+      document.getElementById(`chip-${lenses[n].id}`)?.focus()
     }
   }
 
@@ -292,16 +318,29 @@ export default function App() {
 
   return (
     <main className="page">
-      <h1 className="sr-only">Model Tier List</h1>
+      <h1 className="sr-only">Model and Harness Tier List</h1>
+      <div className="pages" role="tablist" aria-label="Leaderboard">
+        {(['models', 'harnesses'] as Page[]).map((p) => (
+          <button
+            key={p}
+            role="tab"
+            aria-selected={page === p}
+            className={`page-tab${page === p ? ' is-on' : ''}`}
+            onClick={() => goPage(p)}
+          >
+            {p === 'models' ? 'Models' : 'Harnesses'}
+          </button>
+        ))}
+      </div>
       <div className="chips" role="tablist" aria-label="Metric lens" onKeyDown={onKeys}>
-        {LENSES.map((l) => (
+        {lenses.map((l) => (
           <button
             key={l.id}
             id={`chip-${l.id}`}
             role="tab"
-            aria-selected={l.id === lensId}
+            aria-selected={l.id === lens.id}
             aria-describedby={lensTip?.id === l.id ? 'lens-tip' : undefined}
-            className={`chip${l.id === lensId ? ' is-on' : ''}`}
+            className={`chip${l.id === lens.id ? ' is-on' : ''}`}
             onMouseEnter={(e) => onChipHover(l.id, e.currentTarget)}
             onMouseLeave={onChipLeave}
             onFocus={(e) => onChipHover(l.id, e.currentTarget)}
@@ -318,19 +357,26 @@ export default function App() {
 
       <div className="board">
         {rows.map((b) => (
-          <section key={`${lensId}-${b.tier}`} className="tier" aria-label={`Tier ${b.tier}`}>
+          <section
+            key={`${page}-${lens.id}-${b.tier}`}
+            className="tier"
+            aria-label={`Tier ${b.tier}`}
+          >
             <div className={`tier-label tier-label-${b.tier}`}>
               <span className="tier-letter">{b.tier}</span>
               <span className="tier-range">{b.label}</span>
             </div>
             {b.empty ? (
-              <p className="tier-empty">No models in this band.</p>
+              <p className="tier-empty">
+                {page === 'models' ? 'No models in this band.' : 'No harnesses in this band.'}
+              </p>
             ) : (
               <div className="tiles">
                 {b.rows.map((r) => (
                   <Tile
                     key={r.model.slug}
                     model={r.model}
+                    makers={ds.companies}
                     delay={Math.min(r.rank * 12, 330)}
                     tipOpen={tip?.slug === r.model.slug}
                     onHover={onHover}
@@ -345,7 +391,10 @@ export default function App() {
       </div>
 
       {unranked.length > 0 && (
-        <section className="tier tier-flat" aria-label="Unranked models">
+        <section
+          className="tier tier-flat"
+          aria-label={page === 'models' ? 'Unranked models' : 'Unranked harnesses'}
+        >
           <div className="tier-label tier-label-flat">
             <span className="tier-letter">–</span>
             <span className="tier-range">No score</span>
@@ -355,6 +404,7 @@ export default function App() {
               <Tile
                 key={m.slug}
                 model={m}
+                makers={ds.companies}
                 delay={Math.min((ranked.length + i) * 12, 330)}
                 tipOpen={tip?.slug === m.slug}
                 onHover={onHover}
@@ -367,7 +417,14 @@ export default function App() {
       )}
 
       {tip && tipModel && (
-        <Tooltip model={tipModel} lens={lens} info={tipInfo} pos={tip} total={ranked.length} />
+        <Tooltip
+          model={tipModel}
+          makers={ds.companies}
+          lens={lens}
+          info={tipInfo}
+          pos={tip}
+          total={ranked.length}
+        />
       )}
 
       {lensTip && (
@@ -377,17 +434,17 @@ export default function App() {
           className={`lens-tip${lensTip.above ? ' is-above' : ' is-below'}`}
           style={{ left: `${lensTip.x}px`, top: `${lensTip.y}px` } as React.CSSProperties}
         >
-          {LENSES.find((l) => l.id === lensTip.id)?.hint}
+          {lenses.find((l) => l.id === lensTip.id)?.hint}
         </div>
       )}
 
       <footer className="colophon">
         <p>
           Data:{' '}
-          <a href={data.source} target="_blank" rel="noreferrer">
+          <a href={ds.source} target="_blank" rel="noreferrer">
             Artificial Analysis
           </a>{' '}
-          · Updated {data.edition}
+          · Updated {ds.edition}
         </p>
       </footer>
     </main>
