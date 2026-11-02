@@ -89,9 +89,10 @@ a {
 }
 
 .page {
+  --gutter: 20px;
   max-width: 940px;
   margin: 0 auto;
-  padding: 22px 20px 56px;
+  padding: 22px 0 56px;
 }
 
 /* Screen-reader title: tabs lead the visual top. */
@@ -114,7 +115,7 @@ a {
   border-radius: 999px;
   padding: 2px;
   gap: 2px;
-  margin-bottom: 10px;
+  margin: 0 var(--gutter) 10px;
 }
 
 .page-tab {
@@ -136,70 +137,136 @@ a {
   color: var(--gray-1);
 }
 
-/* Lens chips own the one action color. */
-.chips {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 8px;
-  margin-top: 0;
-  overflow-x: auto;
-  padding: 4px;
-  scrollbar-width: thin;
+/* Lens picker: rounded button, menu lists each lens with its hint. */
+.lens-field {
+  position: relative;
+  display: inline-block;
+  margin: 0 var(--gutter);
+  z-index: 20;
 }
 
-.chip {
+.lens-btn {
   appearance: none;
-  flex: 0 0 auto;
-  touch-action: manipulation;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border: 1px solid var(--gray-7);
-  background: transparent;
+  background: var(--card);
   color: var(--ink);
   border-radius: 999px;
-  padding: 6px 14px;
+  padding: 7px 16px;
   font: inherit;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.875rem;
   cursor: pointer;
+  touch-action: manipulation;
   transition:
     background-color 150ms var(--ease),
-    border-color 150ms var(--ease),
-    color 150ms var(--ease);
+    border-color 150ms var(--ease);
 }
 
-.chip:hover {
+.lens-btn:hover {
   border-color: var(--gray-8);
   background: var(--rowwash);
 }
 
-.chip.is-on {
-  background: var(--action);
-  border-color: var(--action);
-  color: #fff;
+.lens-btn svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
 }
 
-.chip.is-on:hover {
-  background: var(--action-deep);
-  border-color: var(--action-deep);
+.lens-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  min-width: 250px;
+  max-width: calc(100vw - 2 * var(--gutter));
+  background: var(--card);
+  border: 1px solid var(--gray-7);
+  border-radius: 12px;
+  box-shadow: 3px 6px 24px rgba(0, 0, 0, 0.16);
+  padding: 4px;
+  animation: tip-in-below 160ms var(--ease) both;
 }
 
-/* Lens hint bubble: one line on a small ink plate. */
-.lens-tip {
-  position: fixed;
-  z-index: 30;
-  max-width: min(260px, calc(100vw - 16px));
-  background: var(--ink);
-  color: var(--gray-1);
+.lens-opt {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  border: 0;
+  background: transparent;
   border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 0.8125rem;
-  white-space: nowrap;
-  box-shadow: 3px 6px 24px rgba(0, 0, 0, 0.28);
-  animation: tip-in 160ms var(--ease) both;
-  pointer-events: none;
+  padding: 8px 10px;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
 }
 
-.lens-tip.is-below {
-  animation-name: tip-in-below;
+.lens-opt:hover {
+  background: var(--rowwash);
+}
+
+.lens-opt.is-on {
+  background: var(--blue-3);
+}
+
+.lens-opt-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.lens-opt-hint {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+/* Phone lens picker: Vaul bottom sheet. */
+.drawer-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.drawer-card {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 41;
+  background: var(--card);
+  border-radius: 16px 16px 0 0;
+  padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+  max-height: 80dvh;
+  overflow-y: auto;
+  outline: none;
+}
+
+.drawer-grip {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--gray-7);
+  margin: 4px auto 8px;
+}
+
+.drawer-title {
+  font: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 4px 8px;
+}
+
+.drawer-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 /* Tier rows: label cell plus tile field. */
@@ -209,12 +276,19 @@ a {
 }
 
 .tier {
-  display: grid;
-  grid-template-columns: 78px minmax(0, 1fr);
-  gap: 10px;
+  display: flex;
   align-items: center;
-  padding: 8px 0;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px var(--gutter);
   border-bottom: 1px solid var(--hair);
+  scrollbar-width: thin;
+}
+
+/* End space survives scrolling; plain end padding would collapse. */
+.tier::after {
+  content: '';
+  flex: 0 0 calc(var(--gutter) - 10px);
 }
 
 .tier-label {
@@ -267,20 +341,16 @@ a {
 
 .tier-empty {
   margin: 0;
-  align-self: center;
+  flex: 1 1 auto;
   font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 
 .tiles {
   display: flex;
-  flex-wrap: nowrap;
+  flex: none;
   gap: 8px;
   align-items: center;
-  min-height: 78px;
-  overflow-x: auto;
-  padding: 4px;
-  scrollbar-width: thin;
 }
 
 /* Model square: logo over name on a faint maker tint. */
@@ -475,7 +545,7 @@ a {
 
 /* Colophon. */
 .colophon {
-  margin-top: 20px;
+  margin: 20px var(--gutter) 0;
   border-top: 4px solid var(--ink);
   padding-top: 8px;
   font-size: 0.75rem;
@@ -487,18 +557,15 @@ a {
 }
 
 .empty {
+  margin-inline: var(--gutter);
   color: var(--ink-soft);
 }
 
 /* Narrow board: slimmer label, smaller squares. */
 @media (max-width: 640px) {
   .page {
-    padding: 18px 14px 48px;
-  }
-
-  .tier {
-    grid-template-columns: 68px minmax(0, 1fr);
-    gap: 8px;
+    --gutter: 14px;
+    padding: 18px 0 48px;
   }
 
   .tier-label {
@@ -521,13 +588,13 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .tile,
   .tip,
-  .lens-tip {
+  .lens-menu {
     animation-duration: 1ms;
     animation-delay: 0ms;
   }
 
   .tile,
-  .chip {
+  .lens-btn {
     transition-duration: 1ms;
   }
 }
