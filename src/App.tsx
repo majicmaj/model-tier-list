@@ -40,6 +40,15 @@ function tilePos(anchor: HTMLElement): { x: number; y: number; above: boolean } 
   return { x, y: above ? r.top - 10 : r.bottom + 10, above }
 }
 
+function lensPos(anchor: HTMLElement): { x: number; y: number; above: boolean } {
+  const r = anchor.getBoundingClientRect()
+  const w = 260
+  const h = 44
+  const x = Math.min(Math.max(r.left + r.width / 2 - w / 2, 8), window.innerWidth - w - 8)
+  const above = r.top > h + 12
+  return { x, y: above ? r.top - 10 : r.bottom + 10, above }
+}
+
 interface TileInfo {
   value: string
   rank: number
@@ -143,40 +152,68 @@ function Tooltip({
   )
 }
 
+interface LensTipState {
+  id: LensId
+  x: number
+  y: number
+  above: boolean
+  pinned: boolean
+}
+
 export default function App() {
   const [lensId, setLensId] = useState<LensId>('intelligence')
   const [tip, setTip] = useState<TipState | null>(null)
+  const [lensTip, setLensTip] = useState<LensTipState | null>(null)
   const lens = LENSES.find((l) => l.id === lensId)!
   const { ranked, unranked } = useMemo(() => rank(lens, data.models), [lens])
   const rows = useMemo(() => bands(lens, ranked), [lens, ranked])
 
-  useEffect(() => setTip(null), [lensId])
+  useEffect(() => {
+    setTip(null)
+    setLensTip((cur) => (cur && cur.id !== lensId ? null : cur))
+  }, [lensId])
 
   useEffect(() => {
-    if (!tip) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setTip(null)
+    if (!tip && !lensTip) return
+    const close = () => {
+      setTip(null)
+      setLensTip(null)
     }
-    const onScroll = () => setTip(null)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close()
+    }
+    const onScroll = () => close()
+    const outside = (el: HTMLElement): boolean =>
+      !el.closest('.tile') &&
+      !el.closest('.tip') &&
+      !el.closest('.chip') &&
+      !el.closest('.lens-tip')
     const onDown = (e: MouseEvent) => {
-      const el = e.target as HTMLElement
-      if (!el.closest('.tile') && !el.closest('.tip')) setTip(null)
+      if (outside(e.target as HTMLElement)) close()
+    }
+    // iOS Safari skips mousedown on plain page areas, so touch taps need this.
+    const onTouchEnd = (e: TouchEvent) => {
+      if (outside(e.target as HTMLElement)) close()
     }
     window.addEventListener('keydown', onKey)
     window.addEventListener('scroll', onScroll, { capture: true, passive: true })
+    window.addEventListener('resize', onScroll)
     window.addEventListener('mousedown', onDown)
+    window.addEventListener('touchend', onTouchEnd)
     return () => {
       window.removeEventListener('keydown', onKey)
       window.removeEventListener('scroll', onScroll, true)
+      window.removeEventListener('resize', onScroll)
       window.removeEventListener('mousedown', onDown)
+      window.removeEventListener('touchend', onTouchEnd)
     }
-  }, [tip])
+  }, [tip, lensTip])
 
   if (!data.models.length) {
     return (
       <main className="page">
         <h1>Model Tier List</h1>
-        <p className="empty">No snapshot yet. Run pnpm fetch to print the first edition.</p>
+        <p className="empty">No data yet.</p>
       </main>
     )
   }
@@ -191,10 +228,33 @@ export default function App() {
     setTip((cur) => (cur && !cur.pinned ? null : cur))
   }
   const onToggle = (slug: string, anchor: HTMLElement) => {
+    setLensTip(null)
     setTip((cur) => {
       if (cur?.pinned && cur.slug === slug) return null
       return { slug, ...tilePos(anchor), pinned: true }
     })
+  }
+
+  const onChipHover = (id: LensId, anchor: HTMLElement) => {
+    setLensTip((cur) => {
+      if (cur?.pinned) return cur
+      return { id, ...lensPos(anchor), pinned: false }
+    })
+  }
+  const onChipLeave = () => {
+    setLensTip((cur) => (cur && !cur.pinned ? null : cur))
+  }
+  const onChipClick = (id: LensId, anchor: HTMLElement) => {
+    if (id === lensId) {
+      setTip(null)
+      setLensTip((cur) => {
+        if (cur?.pinned && cur.id === id) return null
+        return { id, ...lensPos(anchor), pinned: true }
+      })
+    } else {
+      setLensTip(null)
+      setLensId(id)
+    }
   }
 
   const onKeys = (e: React.KeyboardEvent) => {
@@ -232,26 +292,7 @@ export default function App() {
 
   return (
     <main className="page">
-      <header className="masthead">
-        <div className="mast-top">
-          <h1>Model Tier List</h1>
-          <p className="edition">
-            Edition {data.edition} · {data.models.length} models · Data:{' '}
-            <a href={data.source} target="_blank" rel="noreferrer">
-              Artificial Analysis
-            </a>
-          </p>
-        </div>
-        <ol className="legend" aria-label="Tier legend">
-          {rows.map((b) => (
-            <li key={b.tier} className="legend-item">
-              <span className={`plate plate-${b.tier}`}>{b.tier}</span>
-              <span className="legend-count">{b.rows.length}</span>
-            </li>
-          ))}
-        </ol>
-      </header>
-
+      <h1 className="sr-only">Model Tier List</h1>
       <div className="chips" role="tablist" aria-label="Metric lens" onKeyDown={onKeys}>
         {LENSES.map((l) => (
           <button
@@ -259,14 +300,19 @@ export default function App() {
             id={`chip-${l.id}`}
             role="tab"
             aria-selected={l.id === lensId}
+            aria-describedby={lensTip?.id === l.id ? 'lens-tip' : undefined}
             className={`chip${l.id === lensId ? ' is-on' : ''}`}
-            onClick={() => setLensId(l.id)}
+            onMouseEnter={(e) => onChipHover(l.id, e.currentTarget)}
+            onMouseLeave={onChipLeave}
+            onFocus={(e) => onChipHover(l.id, e.currentTarget)}
+            onBlur={onChipLeave}
+            onClick={(e) => onChipClick(l.id, e.currentTarget)}
           >
             {l.label}
           </button>
         ))}
       </div>
-      <p className="hint" role="tabpanel" aria-live="polite">
+      <p className="sr-only" role="status">
         {lens.hint}
       </p>
 
@@ -276,9 +322,6 @@ export default function App() {
             <div className={`tier-label tier-label-${b.tier}`}>
               <span className="tier-letter">{b.tier}</span>
               <span className="tier-range">{b.label}</span>
-              <span className="tier-count">
-                {b.rows.length} model{b.rows.length === 1 ? '' : 's'}
-              </span>
             </div>
             {b.empty ? (
               <p className="tier-empty">No models in this band.</p>
@@ -306,9 +349,6 @@ export default function App() {
           <div className="tier-label tier-label-flat">
             <span className="tier-letter">–</span>
             <span className="tier-range">No score</span>
-            <span className="tier-count">
-              {unranked.length} model{unranked.length === 1 ? '' : 's'}
-            </span>
           </div>
           <div className="tiles">
             {unranked.map((m, i) => (
@@ -330,13 +370,25 @@ export default function App() {
         <Tooltip model={tipModel} lens={lens} info={tipInfo} pos={tip} total={ranked.length} />
       )}
 
+      {lensTip && (
+        <div
+          id="lens-tip"
+          role="tooltip"
+          className={`lens-tip${lensTip.above ? ' is-above' : ' is-below'}`}
+          style={{ left: `${lensTip.x}px`, top: `${lensTip.y}px` } as React.CSSProperties}
+        >
+          {LENSES.find((l) => l.id === lensTip.id)?.hint}
+        </div>
+      )}
+
       <footer className="colophon">
         <p>
-          Snapshot {data.fetchedAt.slice(0, 10)} from {data.source.replace('https://', '')} ·
-          Tiers are score bands in steps of max / 7, snapped to nearby gaps. Hover or tap
-          a tile for detail.
+          Data:{' '}
+          <a href={data.source} target="_blank" rel="noreferrer">
+            Artificial Analysis
+          </a>{' '}
+          · Updated {data.edition}
         </p>
-        <p>Refresh: pnpm fetch.</p>
       </footer>
     </main>
   )
