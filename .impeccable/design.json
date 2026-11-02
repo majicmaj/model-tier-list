@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-01T22:58:23Z",
+  "title": "Design System: Model Tier List",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Fog Paper", "canonical": "#fcfcfc", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "ink": { "role": "neutral", "displayName": "Annual Ink", "canonical": "#202020", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#646464", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#d9d9d9", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "rowwash": { "role": "neutral", "displayName": "Row Wash", "canonical": "#f0f0f0", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "chip-border": { "role": "neutral", "displayName": "Chip Border", "canonical": "#cecece", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "chip-border-hover": { "role": "neutral", "displayName": "Chip Border Hover", "canonical": "#bbbbbb", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "logo-miss-bg": { "role": "neutral", "displayName": "Miss Block", "canonical": "#e0e0e0", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "action": { "role": "primary", "displayName": "Annual Blue", "canonical": "#0d74ce", "tonalRamp": ["#fbfdff", "#f4faff", "#e6f4fe", "#d5efff", "#c2e5ff", "#acd8fc", "#8ec8f6", "#5eb1ef", "#0090ff", "#0588f0", "#0d74ce", "#113264"] },
+      "action-deep": { "role": "primary", "displayName": "Annual Blue Deep", "canonical": "#113264", "tonalRamp": ["#fbfdff", "#f4faff", "#e6f4fe", "#d5efff", "#c2e5ff", "#acd8fc", "#8ec8f6", "#5eb1ef", "#0090ff", "#0588f0", "#0d74ce", "#113264"] },
+      "selection": { "role": "neutral", "displayName": "Selection Wash", "canonical": "#d5efff", "tonalRamp": ["#fbfdff", "#f4faff", "#e6f4fe", "#d5efff", "#c2e5ff", "#acd8fc", "#8ec8f6", "#5eb1ef", "#0090ff", "#0588f0", "#0d74ce", "#113264"] },
+      "focus": { "role": "neutral", "displayName": "Focus Ring", "canonical": "#5eb1ef", "tonalRamp": ["#fbfdff", "#f4faff", "#e6f4fe", "#d5efff", "#c2e5ff", "#acd8fc", "#8ec8f6", "#5eb1ef", "#0090ff", "#0588f0", "#0d74ce", "#113264"] },
+      "white": { "role": "neutral", "displayName": "White", "canonical": "#ffffff", "tonalRamp": ["#ffffff"] },
+      "tip-text": { "role": "neutral", "displayName": "Tooltip Text", "canonical": "#fcfcfc", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "tip-soft": { "role": "neutral", "displayName": "Tooltip Soft", "canonical": "#d9d9d9", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "tip-tag": { "role": "neutral", "displayName": "Tooltip Tag", "canonical": "#e8e8e8", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "tip-tag-border": { "role": "neutral", "displayName": "Tooltip Tag Border", "canonical": "#838383", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "tip-link": { "role": "primary", "displayName": "Tooltip Link", "canonical": "#d5efff", "tonalRamp": ["#fbfdff", "#f4faff", "#e6f4fe", "#d5efff", "#c2e5ff", "#acd8fc", "#8ec8f6", "#5eb1ef", "#0090ff", "#0588f0", "#0d74ce", "#113264"] },
+      "tier-s-bg": { "role": "secondary", "displayName": "S Plate Ground", "canonical": "#feebec", "tonalRamp": ["#fffcfc", "#fff7f7", "#feebec", "#ffdbdc", "#ffcdce", "#fdbdbe", "#f4a9aa", "#eb8e90", "#e5484d", "#dc3e42", "#ce2c31", "#641723"] },
+      "tier-s-ink": { "role": "secondary", "displayName": "S Plate Ink", "canonical": "#ce2c31", "tonalRamp": ["#fffcfc", "#fff7f7", "#feebec", "#ffdbdc", "#ffcdce", "#fdbdbe", "#f4a9aa", "#eb8e90", "#e5484d", "#dc3e42", "#ce2c31", "#641723"] },
+      "tier-a-bg": { "role": "secondary", "displayName": "A Plate Ground", "canonical": "#ffefd6", "tonalRamp": ["#fefcfb", "#fff7ed", "#ffefd6", "#ffdfb5", "#ffd19a", "#ffc182", "#f5ae73", "#ec9455", "#f76b15", "#ef5f00", "#cc4e00", "#582d1d"] },
+      "tier-a-ink": { "role": "secondary", "displayName": "A Plate Ink", "canonical": "#cc4e00", "tonalRamp": ["#fefcfb", "#fff7ed", "#ffefd6", "#ffdfb5", "#ffd19a", "#ffc182", "#f5ae73", "#ec9455", "#f76b15", "#ef5f00", "#cc4e00", "#582d1d"] },
+      "tier-b-bg": { "role": "secondary", "displayName": "B Plate Ground", "canonical": "#fff7c2", "tonalRamp": ["#fefdfb", "#fefbe9", "#fff7c2", "#ffee9c", "#fbe577", "#f3d673", "#e9c162", "#e2a336", "#ffc53d", "#ffba18", "#ab6400", "#4f3422"] },
+      "tier-b-ink": { "role": "secondary", "displayName": "B Plate Ink", "canonical": "#ab6400", "tonalRamp": ["#fefdfb", "#fefbe9", "#fff7c2", "#ffee9c", "#fbe577", "#f3d673", "#e9c162", "#e2a336", "#ffc53d", "#ffba18", "#ab6400", "#4f3422"] },
+      "tier-c-bg": { "role": "secondary", "displayName": "C Plate Ground", "canonical": "#e6f6eb", "tonalRamp": ["#fbfefc", "#f4fbf6", "#e6f6eb", "#d6f1df", "#c4e8d1", "#adddc0", "#8eceaa", "#5bb98b", "#30a46c", "#2b9a66", "#218358", "#193b2d"] },
+      "tier-c-ink": { "role": "secondary", "displayName": "C Plate Ink", "canonical": "#218358", "tonalRamp": ["#fbfefc", "#f4fbf6", "#e6f6eb", "#d6f1df", "#c4e8d1", "#adddc0", "#8eceaa", "#5bb98b", "#30a46c", "#2b9a66", "#218358", "#193b2d"] },
+      "tier-d-bg": { "role": "secondary", "displayName": "D Plate Ground", "canonical": "#e0f8f3", "tonalRamp": ["#fafefd", "#f3fbf9", "#e0f8f3", "#ccf3ea", "#b8eae0", "#a1ded2", "#83cdc1", "#53b9ab", "#12a594", "#0d9b8a", "#008573", "#0d3d38"] },
+      "tier-d-ink": { "role": "secondary", "displayName": "D Plate Ink", "canonical": "#008573", "tonalRamp": ["#fafefd", "#f3fbf9", "#e0f8f3", "#ccf3ea", "#b8eae0", "#a1ded2", "#83cdc1", "#53b9ab", "#12a594", "#0d9b8a", "#008573", "#0d3d38"] },
+      "tier-e-bg": { "role": "secondary", "displayName": "E Plate Ground", "canonical": "#e6f4fe", "tonalRamp": ["#fbfdff", "#f4faff", "#e6f4fe", "#d5efff", "#c2e5ff", "#acd8fc", "#8ec8f6", "#5eb1ef", "#0090ff", "#0588f0", "#0d74ce", "#113264"] },
+      "tier-e-ink": { "role": "secondary", "displayName": "E Plate Ink", "canonical": "#0d74ce", "tonalRamp": ["#fbfdff", "#f4faff", "#e6f4fe", "#d5efff", "#c2e5ff", "#acd8fc", "#8ec8f6", "#5eb1ef", "#0090ff", "#0588f0", "#0d74ce", "#113264"] },
+      "tier-f-bg": { "role": "secondary", "displayName": "F Plate Ground", "canonical": "#e8e8e8", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] },
+      "tier-f-ink": { "role": "secondary", "displayName": "F Plate Ink", "canonical": "#646464", "tonalRamp": ["#fcfcfc", "#f9f9f9", "#f0f0f0", "#e8e8e8", "#e0e0e0", "#d9d9d9", "#cecece", "#bbbbbb", "#8d8d8d", "#838383", "#646464", "#202020"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Masthead title only. Barlow Condensed 600, uppercase, fluid 1.75-2.5rem." },
+      "headline": { "displayName": "Headline", "purpose": "Tier letters at 1.5rem and legend plates at 1rem. Barlow Condensed 600, uppercase, one voice at two sizes." },
+      "body": { "displayName": "Body", "purpose": "Tiles, hint, and colophon. Barlow at 16px base, 1.45 line height, tabular numerals; fixed microcopy steps from 0.9375rem down to 0.625rem." },
+      "label": { "displayName": "Label", "purpose": "Tooltip reasoning/open tags and grid terms. Barlow 600 at 0.625rem, uppercase, 0.04em tracking." }
+    },
+    "shadows": [
+      { "name": "tooltip", "value": "3px 6px 24px rgba(0, 0, 0, 0.28)", "purpose": "The one structural shadow. The ink tooltip card only, above or below its tile." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The one easing for every transition and keyframe on the board." },
+      { "name": "tile-ripple", "value": "180ms ease-standard both, delay min(rank * 12ms, 330ms)", "purpose": "Top-down edition ripple: tiles fade in scaling from 94% on lens change." },
+      { "name": "tile-hover", "value": "120ms ease-standard", "purpose": "Tile tint deepens 10% to 18% with a 1px lift on hover." },
+      { "name": "tip-in", "value": "160ms ease-standard both, enter only", "purpose": "Tooltip rises 5px on open (mirrored when it sits below); no exit animation." },
+      { "name": "chip-fade", "value": "150ms ease-standard", "purpose": "Lens chip state crossfade (ground, ring, text)." },
+      { "name": "reduced-motion", "value": "1ms duration, 0ms delay", "purpose": "Near-instant path for tile and tooltip entrances and for tile/chip transitions under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Lens Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Idle lens tab. Transparent pill with a gray ring; six of them re-cut the board.",
+      "html": "<button class=\"ds-chip\">Intelligence</button>",
+      "css": ".ds-chip { appearance: none; border: 1px solid #cecece; background: transparent; color: #202020; border-radius: 999px; padding: 6px 14px; font-family: 'Barlow', system-ui, sans-serif; font-weight: 500; font-size: 0.875rem; cursor: pointer; transition: background-color 150ms cubic-bezier(0.16, 1, 0.3, 1), border-color 150ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-chip:hover { border-color: #bbbbbb; background: #f0f0f0; } .ds-chip:focus-visible { outline: 2px solid #5eb1ef; outline-offset: 2px; }"
+    },
+    {
+      "name": "Active Lens Chip",
+      "kind": "chip",
+      "refersTo": "chip-active",
+      "description": "Selected lens tab. The one solid Annual Blue fill on the page, with white text.",
+      "html": "<button class=\"ds-chip-on\">Intelligence</button>",
+      "css": ".ds-chip-on { appearance: none; border: 1px solid #0d74ce; background: #0d74ce; color: #ffffff; border-radius: 999px; padding: 6px 14px; font-family: 'Barlow', system-ui, sans-serif; font-weight: 500; font-size: 0.875rem; cursor: pointer; transition: background-color 150ms cubic-bezier(0.16, 1, 0.3, 1), border-color 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-chip-on:hover { background: #113264; border-color: #113264; } .ds-chip-on:focus-visible { outline: 2px solid #5eb1ef; outline-offset: 2px; }"
+    },
+    {
+      "name": "Tier Plate",
+      "kind": "custom",
+      "refersTo": "tier-plate-s",
+      "description": "Letterpress tier marker (S shown). Lives in the masthead legend; plates never change across lenses.",
+      "html": "<span class=\"ds-plate\">S</span>",
+      "css": ".ds-plate { display: inline-flex; align-items: center; justify-content: center; min-width: 1.6rem; height: 1.6rem; padding: 0 0.3rem; border-radius: 5px; font-family: 'Barlow Condensed', 'Barlow', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1; background: #feebec; color: #ce2c31; }"
+    },
+    {
+      "name": "Tier Label Cell",
+      "kind": "custom",
+      "refersTo": "tier-label-s",
+      "description": "Tinted plate opening each tier row (S shown): letter, band range, model count.",
+      "html": "<div class=\"ds-tier-label\"><span class=\"ds-tier-letter\">S</span><span class=\"ds-tier-range\">59.4 – 50.2</span><span class=\"ds-tier-count\">4 models</span></div>",
+      "css": ".ds-tier-label { border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: center; gap: 1px; min-height: 78px; background: #feebec; color: #ce2c31; font-family: 'Barlow', system-ui, sans-serif; } .ds-tier-letter { font-family: 'Barlow Condensed', 'Barlow', sans-serif; font-weight: 600; font-size: 1.5rem; line-height: 1; } .ds-tier-range { font-size: 0.6875rem; font-variant-numeric: tabular-nums; line-height: 1.3; } .ds-tier-count { font-size: 0.6875rem; opacity: 0.85; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Model Tile",
+      "kind": "custom",
+      "refersTo": "tile",
+      "description": "Borderless 78px model square: logo over a two-line name on a faint maker tint.",
+      "html": "<button class=\"ds-tile\"><span class=\"ds-tile-logo\">G</span><span class=\"ds-tile-name\">Gemini 3 Pro Preview</span></button>",
+      "css": ".ds-tile { --tint: #1f1f1f; appearance: none; width: 78px; height: 78px; border: 0; border-radius: 10px; background: color-mix(in srgb, var(--tint) 10%, #fcfcfc); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 6px; font-family: 'Barlow', system-ui, sans-serif; animation: ds-tile-in 180ms cubic-bezier(0.16, 1, 0.3, 1) both; transition: background-color 120ms cubic-bezier(0.16, 1, 0.3, 1), transform 120ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-tile:hover { background: color-mix(in srgb, var(--tint) 18%, #fcfcfc); transform: translateY(-1px); } .ds-tile.is-open { outline: 2px solid #0d74ce; outline-offset: 1px; } .ds-tile:focus-visible { outline: 2px solid #5eb1ef; outline-offset: 2px; } .ds-tile-logo { width: 24px; height: 24px; border-radius: 6px; background: #e0e0e0; color: #646464; font-size: 0.8125rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex: none; } .ds-tile-name { font-size: 0.625rem; font-weight: 600; line-height: 1.25; text-align: center; color: #202020; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-width: 100%; overflow-wrap: anywhere; } @keyframes ds-tile-in { from { opacity: 0; transform: scale(0.94); } } @media (max-width: 640px) { .ds-tile { width: 68px; height: 68px; } .ds-tile-logo { width: 22px; height: 22px; } }"
+    },
+    {
+      "name": "Tooltip Card",
+      "kind": "custom",
+      "refersTo": "tooltip",
+      "description": "Fixed 248px ink detail card: name, maker, rank/value/gap/tier grid, badges, release date, one link.",
+      "html": "<div class=\"ds-tip\"><p class=\"ds-tip-name\">Gemini 3 Pro</p><p class=\"ds-tip-co\">Google</p><dl class=\"ds-tip-grid\"><div><dt>Rank</dt><dd>#01 of 28</dd></div><div><dt>Intelligence</dt><dd>59.4</dd></div><div><dt>Gap</dt><dd>lead</dd></div><div><dt>Tier</dt><dd>S · 59.4 – 50.2</dd></div></dl><p class=\"ds-tip-meta\"><span class=\"ds-tip-tag\">reasoning</span><span class=\"ds-tip-rel\">Rel. 2025-11-18</span></p><a class=\"ds-tip-link\" href=\"#\">Open on Artificial Analysis</a></div>",
+      "css": ".ds-tip { width: 248px; background: #202020; color: #fcfcfc; border-radius: 10px; padding: 12px 14px; box-shadow: 3px 6px 24px rgba(0, 0, 0, 0.28); font-family: 'Barlow', system-ui, sans-serif; animation: ds-tip-in 160ms cubic-bezier(0.16, 1, 0.3, 1) both; } .ds-tip-name { margin: 0; font-weight: 600; font-size: 0.9375rem; line-height: 1.25; } .ds-tip-co { margin: 1px 0 0; font-size: 0.8125rem; color: #d9d9d9; } .ds-tip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin: 10px 0 0; } .ds-tip-grid dt { font-size: 0.625rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #d9d9d9; margin: 0; } .ds-tip-grid dd { margin: 1px 0 0; font-size: 0.875rem; font-weight: 600; font-variant-numeric: tabular-nums; } .ds-tip-meta { margin: 10px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; } .ds-tip-tag { font-size: 0.625rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #e8e8e8; border: 1px solid #838383; border-radius: 4px; padding: 1px 5px; white-space: nowrap; } .ds-tip-rel { font-size: 0.75rem; color: #d9d9d9; font-variant-numeric: tabular-nums; } .ds-tip-link { display: inline-block; margin-top: 10px; font-size: 0.8125rem; font-weight: 600; color: #d5efff; text-underline-offset: 3px; } @keyframes ds-tip-in { from { opacity: 0; transform: translateY(5px); } }"
+    },
+    {
+      "name": "Tier Legend",
+      "kind": "custom",
+      "description": "Fixed S-F plate index with live per-tier counts; plates never change across lenses.",
+      "html": "<ol class=\"ds-legend\"><li class=\"ds-legend-item\"><span class=\"ds-plate-s\">S</span><span class=\"ds-count\">4</span></li><li class=\"ds-legend-item\"><span class=\"ds-plate-a\">A</span><span class=\"ds-count\">4</span></li><li class=\"ds-legend-item\"><span class=\"ds-plate-b\">B</span><span class=\"ds-count\">4</span></li></ol>",
+      "css": ".ds-legend { list-style: none; display: flex; gap: 10px; margin: 8px 0 0; padding: 0 0 8px; border-bottom: 1px solid #d9d9d9; font-family: 'Barlow', system-ui, sans-serif; } .ds-legend-item { display: flex; align-items: center; gap: 5px; } .ds-plate-s, .ds-plate-a, .ds-plate-b { display: inline-flex; align-items: center; justify-content: center; min-width: 1.6rem; height: 1.6rem; padding: 0 0.3rem; border-radius: 5px; font-family: 'Barlow Condensed', 'Barlow', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1; } .ds-plate-s { background: #feebec; color: #ce2c31; } .ds-plate-a { background: #ffefd6; color: #cc4e00; } .ds-plate-b { background: #fff7c2; color: #ab6400; } .ds-count { font-size: 0.75rem; color: #646464; font-variant-numeric: tabular-nums; min-width: 1ch; }"
+    },
+    {
+      "name": "Logo Fallback",
+      "kind": "custom",
+      "refersTo": "logo-fallback",
+      "description": "Company-initial tile shown when a model tile has no logo file.",
+      "html": "<span class=\"ds-miss\">G</span>",
+      "css": ".ds-miss { width: 24px; height: 24px; border-radius: 6px; background: #e0e0e0; color: #646464; font-family: 'Barlow', system-ui, sans-serif; font-size: 0.8125rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Season Annual",
+    "overview": "The board is a printed season annual, not a dashboard. Each data refresh prints a dated edition: the masthead stamps the edition date beside the tier legend, seven ruled tier sections follow with S first, and a colophon closes the page with the snapshot date and the refresh command. Fog-paper ground, ink hairline rules, and condensed grotesk heads do the work; nothing glows or floats, and only the tooltip card casts a shadow.\n\nDensity serves the glance. Each tier is a classic tier row: a tinted label cell (letter, score-band range, model count) beside a field of model squares, each square a logo over a two-line name on a faint maker tint. Hover or tap opens one ink tooltip card with rank, value, gap, tier, badges, and the source link. Every numeral sets in tabular figures so cells hold still while lenses change. Lens chips are the only controls on the page, and tapping one ripples the tiles top to bottom into the new lens. The system refuses the dense sortable grid and the neon card wall; both were rejected in the direction contract and neither appears in the build.",
+    "keyCharacteristics": [
+      "Ruled tier rows: label cells plus model tiles, divided by weight-carrying rules (4px / 2px / 1px).",
+      "Fixed seven-plate tier legend, identical on every lens.",
+      "One action color, owned by the lens chips.",
+      "Tabular numerals everywhere a number appears.",
+      "Edition honesty: snapshot date on the masthead, source and method in the colophon."
+    ],
+    "rules": [
+      { "name": "The One Action Color Rule", "body": "Annual Blue as a solid fill appears only on the active lens chip, and as an outline only on the open tile. Blue anywhere else is letterpress (E plate), the tooltip link (blue-4 on ink), selection, or focus — never a second button, link, or badge color.", "section": "colors" },
+      { "name": "The Fixed Legend Rule", "body": "Tier plate inks never change across lenses. A lens re-sorts tiles and recounts plates; it never restyles them.", "section": "colors" },
+      { "name": "The Company Tint Rule", "body": "Tile grounds take the snapshot's per-company tint at 10% (18% hover) or plain paper. The palette never assigns tile grounds, so new companies arrive pre-tinted.", "section": "colors" },
+      { "name": "The Tabular Figures Rule", "body": "Every numeral on the board — rank, value, gap, count, range, edition — sets in tabular figures. Cells must hold still while lenses change; proportional figures are a defect.", "section": "typography" },
+      { "name": "The One-Column Annual Rule", "body": "The board is a single ruled column at every width. Narrow screens shrink cells, never the page: no sidebars, no multi-column grids, no cards.", "section": "layout" },
+      { "name": "The One Shadow Rule", "body": "Only the tooltip casts. If a new element seems to need a shadow, it needs a rule, a wash, or a tint instead.", "section": "elevation" },
+      { "name": "The Ruled Page Rule", "body": "Weight carries hierarchy. When a new section needs emphasis, give it a heavier rule, never a heavier radius, border, or shadow.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do set every numeral in tabular figures — ranks, values, gaps, counts, ranges, dates.",
+      "Do reuse the plate tokens for any new tier marker, and keep S red through F gray in fixed order.",
+      "Do tint tile grounds from the snapshot's company ink at 10% over paper (18% hover), falling back to plain paper.",
+      "Do size tiles 78px desktop / 68px narrow with 10px corners, borderless, names clamped to two lines.",
+      "Do keep the tooltip a fixed 248px ink card with enter-only motion and the one recorded shadow.",
+      "Do ripple lens changes top-down (180ms entrance, 12ms per rank capped at 330ms) on the standard ease, with the reduced-motion path intact.",
+      "Do keep the full board usable at 390px: legend wraps, labels narrow to 84px, tiles shrink to 68px.",
+      "Do theme focus, selection, and underline offset from the palette on every new surface."
+    ],
+    "donts": [
+      "Don't restyle, reorder, or recolor tier plates per lens — the legend is fixed.",
+      "Don't spend Annual Blue outside the active chip, the open tile's outline, the E plate's letterpress ink, selection, and focus.",
+      "Don't add a second shadow or any glow; only the tooltip casts.",
+      "Don't set numerals in proportional figures or let names push past two lines — names clamp.",
+      "Don't draw vertical accent borders or borders above 1px except the horizontal annual and section rules, the chip rings, and the open tile's outline.",
+      "Don't invent company colors; un-inked companies take plain paper until the snapshot inks them."
+    ]
+  }
+}

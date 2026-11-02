@@ -1,0 +1,538 @@
+@import '@radix-ui/colors/gray.css';
+@import '@radix-ui/colors/red.css';
+@import '@radix-ui/colors/orange.css';
+@import '@radix-ui/colors/amber.css';
+@import '@radix-ui/colors/green.css';
+@import '@radix-ui/colors/teal.css';
+@import '@radix-ui/colors/blue.css';
+
+@font-face {
+  font-family: 'Barlow';
+  src: url('/fonts/barlow-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow';
+  src: url('/fonts/barlow-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow';
+  src: url('/fonts/barlow-600.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow';
+  src: url('/fonts/barlow-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url('/fonts/barlowcondensed-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url('/fonts/barlowcondensed-600.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+:root {
+  --paper: var(--gray-1);
+  --card: #ffffff;
+  --ink: var(--gray-12);
+  --ink-soft: var(--gray-11);
+  --hair: var(--gray-6);
+  --rowwash: var(--gray-3);
+  --action: var(--blue-11);
+  --action-deep: var(--blue-12);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Barlow', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+::selection {
+  background: var(--blue-4);
+  color: var(--blue-12);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue-8);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.page {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 22px 20px 56px;
+}
+
+/* Masthead: thick-thin annual rule, title left, edition right. */
+.masthead {
+  border-top: 4px solid var(--ink);
+  padding-top: 10px;
+}
+
+.mast-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px 24px;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 8px;
+}
+
+.masthead h1 {
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0;
+}
+
+.edition {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Fixed tier legend: plates never change across lenses. */
+.legend {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-count {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  min-width: 1ch;
+}
+
+.plate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  height: 1.6rem;
+  padding: 0 0.3rem;
+  border-radius: 5px;
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.plate-S { background: var(--red-3); color: var(--red-11); }
+.plate-A { background: var(--orange-3); color: var(--orange-11); }
+.plate-B { background: var(--amber-3); color: var(--amber-11); }
+.plate-C { background: var(--green-3); color: var(--green-11); }
+.plate-D { background: var(--teal-3); color: var(--teal-11); }
+.plate-E { background: var(--blue-3); color: var(--blue-11); }
+.plate-F { background: var(--gray-4); color: var(--gray-11); }
+
+/* Lens chips own the one action color. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.chip {
+  appearance: none;
+  border: 1px solid var(--gray-7);
+  background: transparent;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: inherit;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    background-color 150ms var(--ease),
+    border-color 150ms var(--ease),
+    color 150ms var(--ease);
+}
+
+.chip:hover {
+  border-color: var(--gray-8);
+  background: var(--rowwash);
+}
+
+.chip.is-on {
+  background: var(--action);
+  border-color: var(--action);
+  color: #fff;
+}
+
+.chip.is-on:hover {
+  background: var(--action-deep);
+  border-color: var(--action-deep);
+}
+
+.hint {
+  margin: 8px 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+/* Tier rows: label cell plus tile field. */
+.board {
+  margin-top: 6px;
+  border-top: 2px solid var(--ink);
+}
+
+.tier {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.tier-label {
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  min-height: 78px;
+}
+
+.tier-label-S { background: var(--red-3); color: var(--red-11); }
+.tier-label-A { background: var(--orange-3); color: var(--orange-11); }
+.tier-label-B { background: var(--amber-3); color: var(--amber-11); }
+.tier-label-C { background: var(--green-3); color: var(--green-11); }
+.tier-label-D { background: var(--teal-3); color: var(--teal-11); }
+.tier-label-E { background: var(--blue-3); color: var(--blue-11); }
+.tier-label-F { background: var(--gray-4); color: var(--gray-11); }
+.tier-label-flat {
+  background: transparent;
+  border: 1px dashed var(--gray-7);
+  color: var(--ink-soft);
+}
+
+.tier-label-S .tier-range, .tier-label-S .tier-count { color: var(--red-12); }
+.tier-label-A .tier-range, .tier-label-A .tier-count { color: var(--orange-12); }
+.tier-label-B .tier-range, .tier-label-B .tier-count { color: var(--amber-12); }
+.tier-label-C .tier-range, .tier-label-C .tier-count { color: var(--green-12); }
+.tier-label-D .tier-range, .tier-label-D .tier-count { color: var(--teal-12); }
+.tier-label-E .tier-range, .tier-label-E .tier-count { color: var(--blue-12); }
+.tier-label-F .tier-range, .tier-label-F .tier-count { color: var(--gray-12); }
+
+.tier-letter {
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.tier-range {
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+.tier-count {
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tier-empty {
+  margin: 0;
+  align-self: center;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: center;
+  min-height: 78px;
+}
+
+/* Model square: logo over name on a faint maker tint. */
+.tile {
+  appearance: none;
+  width: 78px;
+  height: 78px;
+  border: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--tint, transparent) 10%, var(--paper));
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px;
+  animation: tile-in 180ms var(--ease) both;
+  animation-delay: var(--d, 0ms);
+  transition:
+    background-color 120ms var(--ease),
+    transform 120ms var(--ease);
+}
+
+.tile:hover {
+  background: color-mix(in srgb, var(--tint, transparent) 18%, var(--paper));
+  transform: translateY(-1px);
+}
+
+.tile.is-open {
+  outline: 2px solid var(--action);
+  outline-offset: 1px;
+}
+
+.logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+  flex: none;
+}
+
+.logo-miss {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--gray-5);
+  color: var(--gray-11);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.tile-name {
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+/* Detail card: ink plate, plain text, one link. */
+.tip {
+  position: fixed;
+  z-index: 30;
+  width: 248px;
+  background: var(--ink);
+  color: var(--gray-1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 3px 6px 24px rgba(0, 0, 0, 0.28);
+  animation: tip-in 160ms var(--ease) both;
+}
+
+.tip.is-below {
+  animation-name: tip-in-below;
+}
+
+@keyframes tip-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+@keyframes tip-in-below {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+.tip-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.25;
+}
+
+.tip-co {
+  margin: 1px 0 0;
+  font-size: 0.8125rem;
+  color: var(--gray-6);
+}
+
+.tip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin: 10px 0 0;
+}
+
+.tip-grid dt {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gray-6);
+  margin: 0;
+}
+
+.tip-grid dd {
+  margin: 1px 0 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.tip-flat {
+  margin: 10px 0 0;
+  font-size: 0.8125rem;
+  color: var(--gray-6);
+}
+
+.tip-meta {
+  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.tag {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray-4);
+  border: 1px solid var(--gray-10);
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+.tip-rel {
+  font-size: 0.75rem;
+  color: var(--gray-6);
+  font-variant-numeric: tabular-nums;
+}
+
+.tip-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--blue-4);
+}
+
+/* Colophon. */
+.colophon {
+  margin-top: 20px;
+  border-top: 4px solid var(--ink);
+  padding-top: 8px;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.colophon p {
+  margin: 2px 0;
+}
+
+.empty {
+  color: var(--ink-soft);
+}
+
+/* Narrow board: slimmer label, smaller squares. */
+@media (max-width: 640px) {
+  .page {
+    padding: 18px 14px 48px;
+  }
+
+  .tier {
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .tile {
+    width: 68px;
+    height: 68px;
+  }
+
+  .logo,
+  .logo-miss {
+    width: 22px;
+    height: 22px;
+  }
+
+  .legend {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tip {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  .tile,
+  .chip {
+    transition-duration: 1ms;
+  }
+}
