@@ -56,6 +56,20 @@ function num(v) {
   return typeof v === 'number' && Number.isFinite(v) ? v : null
 }
 
+/**
+ * Drop baked tile grounds so logos sit clean on tinted tiles: a leading
+ * full-bleed light rect, plus opencode's pair of full-bleed ground paths.
+ * Dark grounds that carry the mark (spacexai, xiaomi, zai) stay untouched.
+ */
+function sanitizeSvg(svg) {
+  let out = svg.replace(
+    /<svg([^>]*)>\s*<rect\s+width="(48|100%)"\s+height="(48|100%)"[^>]*fill="(white|#fff(?:fff)?|#[Ff]0[Ee][Ff][Ee][Aa])"[^>]*\/>\s*/,
+    '<svg$1>',
+  )
+  out = out.replace(/<path d="M43 0H5V48H43V0Z" fill="(?:black|white)"\/>\s*/g, '')
+  return out
+}
+
 async function main() {
   console.log('GET', SRC)
   const res = await fetch(SRC, { headers: { 'user-agent': UA, accept: 'text/html' } })
@@ -198,7 +212,8 @@ async function main() {
       const lr = await fetch(url, { headers: { 'user-agent': UA } })
       if (!lr.ok) throw new Error(String(lr.status))
       const buf = Buffer.from(await lr.arrayBuffer())
-      writeFileSync(join(logoDir, file), buf)
+      const body = file.endsWith('.svg') ? sanitizeSvg(buf.toString('utf8')) : buf
+      writeFileSync(join(logoDir, file), body)
       logoOk++
     } catch (err) {
       console.warn('logo skip:', file, String(err.message || err))

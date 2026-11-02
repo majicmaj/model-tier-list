@@ -41,6 +41,89 @@ function Logo({ model, makers }: { model: Model; makers: Record<string, Company>
   return <img className="logo" src={co.logo} alt="" loading="lazy" width={28} height={28} />
 }
 
+function Mark({ src, name, size }: { src: string | null | undefined; name: string; size: number }) {
+  if (!src) {
+    return (
+      <span className="mark-miss" style={{ width: size, height: size }} aria-hidden="true">
+        {name.slice(0, 1)}
+      </span>
+    )
+  }
+  return <img className="mark" src={src} alt="" loading="lazy" width={size} height={size} />
+}
+
+const ICONS = {
+  rank: (
+    <>
+      <line x1="4" x2="20" y1="9" y2="9" />
+      <line x1="4" x2="20" y1="15" y2="15" />
+      <line x1="10" x2="8" y1="3" y2="21" />
+      <line x1="16" x2="14" y1="3" y2="21" />
+    </>
+  ),
+  metric: (
+    <>
+      <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+      <path d="M18 17V9" />
+      <path d="M13 17V5" />
+      <path d="M8 17v-3" />
+    </>
+  ),
+  gap: (
+    <>
+      <path d="m18 8 4 4-4 4" />
+      <path d="M2 12h20" />
+      <path d="m6 8-4 4 4 4" />
+    </>
+  ),
+  tier: (
+    <>
+      <circle cx="12" cy="8" r="6" />
+      <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+    </>
+  ),
+  harness: (
+    <>
+      <path d="M12 8V4H8" />
+      <rect width="16" height="12" x="4" y="8" rx="2" />
+      <path d="M2 14h2" />
+      <path d="M20 14h2" />
+      <path d="M15 13v2" />
+      <path d="M9 13v2" />
+    </>
+  ),
+  model: (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="2" />
+      <rect x="9" y="9" width="6" height="6" />
+      <path d="M15 2v2" />
+      <path d="M15 20v2" />
+      <path d="M2 15h2" />
+      <path d="M2 9h2" />
+      <path d="M20 15h2" />
+      <path d="M20 9h2" />
+      <path d="M9 2v2" />
+      <path d="M9 20v2" />
+    </>
+  ),
+} as const
+
+function Icon({ n }: { n: keyof typeof ICONS }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {ICONS[n]}
+    </svg>
+  )
+}
+
 function tilePos(anchor: HTMLElement): { x: number; y: number; above: boolean } {
   const r = anchor.getBoundingClientRect()
   const w = 248
@@ -88,7 +171,22 @@ function Tile({
       onBlur={onLeave}
       onClick={(e) => onToggle(model.slug, e.currentTarget)}
     >
-      <Logo model={model} makers={makers} />
+      {model.modelMakers?.length ? (
+        <span className="logos" aria-hidden="true">
+          <Mark
+            src={makers[model.company]?.logo}
+            name={makers[model.company]?.name || model.shortName}
+            size={24}
+          />
+          <Mark
+            src={makers[model.modelMakers[0]]?.logo}
+            name={makers[model.modelMakers[0]]?.name || model.shortName}
+            size={24}
+          />
+        </span>
+      ) : (
+        <Logo model={model} makers={makers} />
+      )}
       <span className="tile-name">{model.shortName}</span>
     </button>
   )
@@ -117,27 +215,63 @@ function Tooltip({
       className={`tip${pos.above ? ' is-above' : ' is-below'}`}
       style={{ left: `${pos.x}px`, top: `${pos.y}px` } as React.CSSProperties}
     >
-      <p className="tip-name">{model.detail ? model.name : model.shortName}</p>
-      <p className="tip-co">{co?.name || 'Unknown maker'}</p>
-      {model.detail ? <p className="tip-detail">{model.detail}</p> : null}
+      <p className="tip-name">{model.modelMakers ? model.name : model.shortName}</p>
+      {model.modelMakers ? (
+        <div className="tip-combo">
+          <div className="tip-part">
+            <Icon n="harness" />
+            <Mark src={co?.logo} name={co?.name || model.name} size={16} />
+            <span>
+              {co?.name || 'Unknown maker'}
+              {model.version ? ` · v${model.version}` : ''}
+            </span>
+          </div>
+          <div className="tip-part">
+            <Icon n="model" />
+            {model.modelMakers.map((k) => (
+              <Mark
+                key={k}
+                src={makers[k]?.logo}
+                name={makers[k]?.name || model.modelLabel || '?'}
+                size={16}
+              />
+            ))}
+            <span>{model.modelLabel}</span>
+          </div>
+        </div>
+      ) : (
+        <p className="tip-co">{co?.name || 'Unknown maker'}</p>
+      )}
       {info ? (
         <dl className="tip-grid">
           <div>
-            <dt>Rank</dt>
+            <dt>
+              <Icon n="rank" />
+              Rank
+            </dt>
             <dd>
               #{String(info.rank).padStart(2, '0')} of {total}
             </dd>
           </div>
           <div>
-            <dt>{lens.label}</dt>
+            <dt>
+              <Icon n="metric" />
+              {lens.label}
+            </dt>
             <dd>{info.value}</dd>
           </div>
           <div>
-            <dt>Gap</dt>
+            <dt>
+              <Icon n="gap" />
+              Gap
+            </dt>
             <dd>{info.gap}</dd>
           </div>
           <div>
-            <dt>Tier</dt>
+            <dt>
+              <Icon n="tier" />
+              Tier
+            </dt>
             <dd>
               {info.tier} · {info.band}
             </dd>

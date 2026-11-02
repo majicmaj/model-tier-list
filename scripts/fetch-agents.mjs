@@ -56,6 +56,20 @@ function num(v) {
   return typeof v === 'number' && Number.isFinite(v) ? v : null
 }
 
+/**
+ * Drop baked tile grounds so logos sit clean on tinted tiles: a leading
+ * full-bleed light rect, plus opencode's pair of full-bleed ground paths.
+ * Dark grounds that carry the mark (spacexai, xiaomi, zai) stay untouched.
+ */
+function sanitizeSvg(svg) {
+  let out = svg.replace(
+    /<svg([^>]*)>\s*<rect\s+width="(48|100%)"\s+height="(48|100%)"[^>]*fill="(white|#fff(?:fff)?|#[Ff]0[Ee][Ff][Ee][Aa])"[^>]*\/>\s*/,
+    '<svg$1>',
+  )
+  out = out.replace(/<path d="M43 0H5V48H43V0Z" fill="(?:black|white)"\/>\s*/g, '')
+  return out
+}
+
 const slugify = (s) =>
   String(s || '')
     .toLowerCase()
@@ -127,9 +141,8 @@ async function main() {
   const slugs = new Set()
   const missing = { intelligence: 0, price: 0, latency: 0, speed: 0 }
 
-  for (const r of records) {
-    const maker = r.agentCreator || {}
-    const logoPath = maker.logo || null
+  const addMaker = (m, fallback) => {
+    const logoPath = m.logo || null
     const file = logoName(logoPath)
     if (logoPath && file && !logoFiles.has(file)) {
       let p = logoPath
@@ -137,7 +150,29 @@ async function main() {
       if (nx) p = decodeURIComponent(nx[1])
       logoFiles.set(file, p)
     }
-    const key = String(maker.slug || r.provider || 'unknown').toLowerCase()
+    const key = String(m.slug || fallback || 'unknown').toLowerCase()
+    if (!companies[key]) {
+      companies[key] = {
+        name: m.name || titleCase(key),
+        logo: file ? `/logos/${file}` : null,
+        color: m.color || null,
+      }
+    } else {
+      const co = companies[key]
+      if (!co.color) co.color = m.color || null
+      if (!co.logo && file) co.logo = `/logos/${file}`
+    }
+    return key
+  }
+
+  for (const r of records) {
+    const maker = r.agentCreator || {}
+    const key = addMaker(maker, r.provider)
+    const modelMakers = []
+    for (const m of r.modelCreators || []) {
+      const k = addMaker(m, null)
+      if (!modelMakers.includes(k)) modelMakers.push(k)
+    }
     const mean = r.mean || {}
     const v = {
       intelligence: num(r.indexScore),
@@ -146,17 +181,6 @@ async function main() {
       speed: num(mean.steps),
     }
     for (const k of Object.keys(missing)) if (v[k] === null) missing[k]++
-    if (!companies[key]) {
-      companies[key] = {
-        name: maker.name || titleCase(key),
-        logo: file ? `/logos/${file}` : null,
-        color: maker.color || null,
-      }
-    } else {
-      const co = companies[key]
-      if (!co.color) co.color = maker.color || null
-      if (!co.logo && file) co.logo = `/logos/${file}`
-    }
     const model = cleanModel(r.display?.model || '')
     const vers = r.versions || {}
     const version =
@@ -170,7 +194,9 @@ async function main() {
       slug,
       name: r.agentName,
       shortName: model || r.agentName,
-      detail: version ? `${model} · v${version}` : model || null,
+      version,
+      modelLabel: model || null,
+      modelMakers,
       company: key,
       url: SRC,
       releaseDate: null,
@@ -195,7 +221,8 @@ async function main() {
       const lr = await fetch(url, { headers: { 'user-agent': UA } })
       if (!lr.ok) throw new Error(String(lr.status))
       const buf = Buffer.from(await lr.arrayBuffer())
-      writeFileSync(join(logoDir, file), buf)
+      const body = file.endsWith('.svg') ? sanitizeSvg(buf.toString('utf8')) : buf
+      writeFileSync(join(logoDir, file), body)
       logoOk++
     } catch (err) {
       console.warn('logo skip:', file, String(err.message || err))

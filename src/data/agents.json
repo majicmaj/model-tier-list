@@ -1,6 +1,6 @@
 {
   "edition": "2026-11-02",
-  "fetchedAt": "2026-11-02T18:08:08.671Z",
+  "fetchedAt": "2026-11-02T19:04:33.147Z",
   "source": "https://artificialanalysis.ai/agents/coding-agents",
   "priceField": "meanCostUsd",
   "models": [
@@ -8,7 +8,11 @@
       "slug": "claude-code-claude-opus-5-5-max",
       "name": "Claude Code",
       "shortName": "Claude Opus 5.5 (Max)",
-      "detail": "Claude Opus 5.5 (Max) · v2.1.280",
+      "version": "2.1.280",
+      "modelLabel": "Claude Opus 5.5 (Max)",
+      "modelMakers": [
+        "anthropic"
+      ],
       "company": "anthropic",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -25,7 +29,12 @@
       "slug": "devin-fusion-cli-claude-opus-5-5-max-gpt-6-luna-high",
       "name": "Devin Fusion CLI",
       "shortName": "Claude Opus 5.5 Max + GPT-6 Luna High",
-      "detail": "Claude Opus 5.5 Max + GPT-6 Luna High · v3000.11.34",
+      "version": "3000.11.34",
+      "modelLabel": "Claude Opus 5.5 Max + GPT-6 Luna High",
+      "modelMakers": [
+        "anthropic",
+        "openai"
+      ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -42,7 +51,12 @@
       "slug": "github-copilot-copilot-fusion-max",
       "name": "GitHub Copilot",
       "shortName": "Copilot Fusion (max)",
-      "detail": "Copilot Fusion (max) · v1.0.101",
+      "version": "1.0.101",
+      "modelLabel": "Copilot Fusion (max)",
+      "modelMakers": [
+        "anthropic",
+        "openai"
+      ],
       "company": "github",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -59,7 +73,11 @@
       "slug": "antigravity-cli-gemini-4-carbon-high",
       "name": "Antigravity CLI",
       "shortName": "Gemini 4 Carbon (High)",
-      "detail": "Gemini 4 Carbon (High) · v1.4.3",
+      "version": "1.4.3",
+      "modelLabel": "Gemini 4 Carbon (High)",
+      "modelMakers": [
+        "google"
+      ],
       "company": "google",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -76,7 +94,11 @@
       "slug": "claude-code-claude-sonnet-5-5-max",
       "name": "Claude Code",
       "shortName": "Claude Sonnet 5.5 (Max)",
-      "detail": "Claude Sonnet 5.5 (Max) · v2.1.280",
+      "version": "2.1.280",
+      "modelLabel": "Claude Sonnet 5.5 (Max)",
+      "modelMakers": [
+        "anthropic"
+      ],
       "company": "anthropic",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -93,7 +115,11 @@
       "slug": "muse-code-muse-wonder-full-max",
       "name": "Muse Code",
       "shortName": "Muse Wonder Full (Max)",
-      "detail": "Muse Wonder Full (Max) · v1.4.5-R5426.1",
+      "version": "1.4.5-R5426.1",
+      "modelLabel": "Muse Wonder Full (Max)",
+      "modelMakers": [
+        "meta"
+      ],
       "company": "meta",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -110,7 +136,12 @@
       "slug": "devin-fusion-cli-claude-fable-5-1-xhigh-swe-2-medium",
       "name": "Devin Fusion CLI",
       "shortName": "Claude Fable 5.1 XHigh + SWE-2 Medium",
-      "detail": "Claude Fable 5.1 XHigh + SWE-2 Medium · v3000.10.23",
+      "version": "3000.10.23",
+      "modelLabel": "Claude Fable 5.1 XHigh + SWE-2 Medium",
+      "modelMakers": [
+        "anthropic",
+        "cognition"
+      ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -127,7 +158,11 @@
       "slug": "claude-code-claude-fable-5-1-max",
       "name": "Claude Code",
       "shortName": "Claude Fable 5.1 (Max)",
-      "detail": "Claude Fable 5.1 (Max) · v2.1.263",
+      "version": "2.1.263",
+      "modelLabel": "Claude Fable 5.1 (Max)",
+      "modelMakers": [
+        "anthropic"
+      ],
       "company": "anthropic",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -144,7 +179,11 @@
       "slug": "codex-gpt-6-astra-max",
       "name": "Codex",
       "shortName": "GPT-6 Astra (Max)",
-      "detail": "GPT-6 Astra (Max) · v0.153.4",
+      "version": "0.153.4",
+      "modelLabel": "GPT-6 Astra (Max)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -161,7 +200,11 @@
       "slug": "codex-gpt-6-1-sol-max",
       "name": "Codex",
       "shortName": "GPT-6.1 Sol (Max)",
-      "detail": "GPT-6.1 Sol (Max) · v0.154.0",
+      "version": "0.154.0",
+      "modelLabel": "GPT-6.1 Sol (Max)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -178,7 +221,11 @@
       "slug": "antigravity-cli-gemini-4-argon-high",
       "name": "Antigravity CLI",
       "shortName": "Gemini 4 Argon (High)",
-      "detail": "Gemini 4 Argon (High) · v1.2.10",
+      "version": "1.2.10",
+      "modelLabel": "Gemini 4 Argon (High)",
+      "modelMakers": [
+        "google"
+      ],
       "company": "google",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -195,7 +242,12 @@
       "slug": "devin-fusion-cli-gpt-6-astra-xhigh-swe-2-medium",
       "name": "Devin Fusion CLI",
       "shortName": "GPT-6 Astra XHigh + SWE-2 Medium",
-      "detail": "GPT-6 Astra XHigh + SWE-2 Medium · v3000.10.23",
+      "version": "3000.10.23",
+      "modelLabel": "GPT-6 Astra XHigh + SWE-2 Medium",
+      "modelMakers": [
+        "openai",
+        "cognition"
+      ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -212,7 +264,11 @@
       "slug": "muse-code-muse-wonder-max",
       "name": "Muse Code",
       "shortName": "Muse Wonder (Max)",
-      "detail": "Muse Wonder (Max) · v1.4.5-R5426.1",
+      "version": "1.4.5-R5426.1",
+      "modelLabel": "Muse Wonder (Max)",
+      "modelMakers": [
+        "meta"
+      ],
       "company": "meta",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -229,7 +285,11 @@
       "slug": "opencode-glm-5-3-max",
       "name": "Opencode",
       "shortName": "GLM-5.3 (Max)",
-      "detail": "GLM-5.3 (Max) · v1.18.29",
+      "version": "1.18.29",
+      "modelLabel": "GLM-5.3 (Max)",
+      "modelMakers": [
+        "zai"
+      ],
       "company": "opencode",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -246,7 +306,11 @@
       "slug": "mistral-vibe-mistral-large-4-high",
       "name": "Mistral Vibe",
       "shortName": "Mistral Large 4 (High)",
-      "detail": "Mistral Large 4 (High) · v3.0.0-v14",
+      "version": "3.0.0-v14",
+      "modelLabel": "Mistral Large 4 (High)",
+      "modelMakers": [
+        "mistral"
+      ],
       "company": "mistral",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -263,7 +327,11 @@
       "slug": "codex-gpt-6-1-terra-xhigh",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Xhigh)",
-      "detail": "GPT-6.1 Terra (Xhigh) · v0.163.0",
+      "version": "0.163.0",
+      "modelLabel": "GPT-6.1 Terra (Xhigh)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -280,7 +348,11 @@
       "slug": "codex-gpt-6-1-terra-max",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Max)",
-      "detail": "GPT-6.1 Terra (Max) · v0.163.0",
+      "version": "0.163.0",
+      "modelLabel": "GPT-6.1 Terra (Max)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -297,7 +369,11 @@
       "slug": "codex-deepseek-v4-1-flash-max",
       "name": "Codex",
       "shortName": "DeepSeek V4.1 Flash (Max)",
-      "detail": "DeepSeek V4.1 Flash (Max) · v0.153.2",
+      "version": "0.153.2",
+      "modelLabel": "DeepSeek V4.1 Flash (Max)",
+      "modelMakers": [
+        "deepseek"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -314,7 +390,11 @@
       "slug": "grok-build-grok-4-7-xhigh",
       "name": "Grok Build",
       "shortName": "Grok 4.7 (Xhigh)",
-      "detail": "Grok 4.7 (Xhigh) · v1.0.40",
+      "version": "1.0.40",
+      "modelLabel": "Grok 4.7 (Xhigh)",
+      "modelMakers": [
+        "xai"
+      ],
       "company": "xai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -331,7 +411,11 @@
       "slug": "deepseek-harness-deepseek-v4-1-flash-1017-max",
       "name": "DeepSeek Harness",
       "shortName": "DeepSeek V4.1 Flash 1017 (Max)",
-      "detail": "DeepSeek V4.1 Flash 1017 (Max) · v0.2.1rc2",
+      "version": "0.2.1rc2",
+      "modelLabel": "DeepSeek V4.1 Flash 1017 (Max)",
+      "modelMakers": [
+        "deepseek"
+      ],
       "company": "deepseek",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -348,7 +432,11 @@
       "slug": "codex-gpt-6-1-terra-high",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (High)",
-      "detail": "GPT-6.1 Terra (High) · v0.163.0",
+      "version": "0.163.0",
+      "modelLabel": "GPT-6.1 Terra (High)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -365,7 +453,11 @@
       "slug": "muse-code-muse-spark-1-3-max",
       "name": "Muse Code",
       "shortName": "Muse Spark 1.3 (Max)",
-      "detail": "Muse Spark 1.3 (Max) · v1.0.3-R2198.1",
+      "version": "1.0.3-R2198.1",
+      "modelLabel": "Muse Spark 1.3 (Max)",
+      "modelMakers": [
+        "meta"
+      ],
       "company": "meta",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -382,7 +474,11 @@
       "slug": "claude-code-step-5-preview",
       "name": "Claude Code",
       "shortName": "Step 5 Preview",
-      "detail": "Step 5 Preview · v2.1.220",
+      "version": "2.1.220",
+      "modelLabel": "Step 5 Preview",
+      "modelMakers": [
+        "stepfun"
+      ],
       "company": "anthropic",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -399,7 +495,11 @@
       "slug": "codex-gpt-6-1-terra-medium",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Medium)",
-      "detail": "GPT-6.1 Terra (Medium) · v0.163.0",
+      "version": "0.163.0",
+      "modelLabel": "GPT-6.1 Terra (Medium)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -416,7 +516,11 @@
       "slug": "kimi-code-cli-kimi-k3-max",
       "name": "Kimi Code CLI",
       "shortName": "Kimi K3 (Max)",
-      "detail": "Kimi K3 (Max) · v0.36.1",
+      "version": "0.36.1",
+      "modelLabel": "Kimi K3 (Max)",
+      "modelMakers": [
+        "kimi"
+      ],
       "company": "kimi",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -433,7 +537,11 @@
       "slug": "claude-code-qwen3-8-max",
       "name": "Claude Code",
       "shortName": "Qwen3.8 Max",
-      "detail": "Qwen3.8 Max · v2.1.266",
+      "version": "2.1.266",
+      "modelLabel": "Qwen3.8 Max",
+      "modelMakers": [
+        "alibaba"
+      ],
       "company": "anthropic",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -450,7 +558,11 @@
       "slug": "codex-gpt-6-1-terra-non-reasoning",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Non-reasoning)",
-      "detail": "GPT-6.1 Terra (Non-reasoning) · v0.163.0",
+      "version": "0.163.0",
+      "modelLabel": "GPT-6.1 Terra (Non-reasoning)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -467,7 +579,11 @@
       "slug": "claude-code-claude-haiku-5-5-max",
       "name": "Claude Code",
       "shortName": "Claude Haiku 5.5 (Max)",
-      "detail": "Claude Haiku 5.5 (Max) · v2.1.296",
+      "version": "2.1.296",
+      "modelLabel": "Claude Haiku 5.5 (Max)",
+      "modelMakers": [
+        "anthropic"
+      ],
       "company": "anthropic",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -484,7 +600,11 @@
       "slug": "mistral-vibe-mistral-large-4-medium",
       "name": "Mistral Vibe",
       "shortName": "Mistral Large 4 (Medium)",
-      "detail": "Mistral Large 4 (Medium) · v3.0.0-v14",
+      "version": "3.0.0-v14",
+      "modelLabel": "Mistral Large 4 (Medium)",
+      "modelMakers": [
+        "mistral"
+      ],
       "company": "mistral",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -501,7 +621,11 @@
       "slug": "codex-gpt-6-1-terra-low",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Low)",
-      "detail": "GPT-6.1 Terra (Low) · v0.163.0",
+      "version": "0.163.0",
+      "modelLabel": "GPT-6.1 Terra (Low)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -518,7 +642,11 @@
       "slug": "antigravity-sdk-v0-1-12-gemini-3-8-flash-high",
       "name": "Antigravity SDK v0.1.12",
       "shortName": "Gemini 3.8 Flash (High)",
-      "detail": "Gemini 3.8 Flash (High) · v0.1.12",
+      "version": "0.1.12",
+      "modelLabel": "Gemini 3.8 Flash (High)",
+      "modelMakers": [
+        "google"
+      ],
       "company": "google",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -535,7 +663,11 @@
       "slug": "codex-gpt-6-luna-max",
       "name": "Codex",
       "shortName": "GPT-6 Luna (Max)",
-      "detail": "GPT-6 Luna (Max) · v0.154.0",
+      "version": "0.154.0",
+      "modelLabel": "GPT-6 Luna (Max)",
+      "modelMakers": [
+        "openai"
+      ],
       "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -552,7 +684,11 @@
       "slug": "muse-code-muse-spark-open-xhigh",
       "name": "Muse Code",
       "shortName": "Muse Spark Open (Xhigh)",
-      "detail": "Muse Spark Open (Xhigh) · v1.4.2-R4684.1",
+      "version": "1.4.2-R4684.1",
+      "modelLabel": "Muse Spark Open (Xhigh)",
+      "modelMakers": [
+        "meta"
+      ],
       "company": "meta",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -569,7 +705,11 @@
       "slug": "mirror-beam-1-0",
       "name": "Mirror",
       "shortName": "Beam 1.0",
-      "detail": "Beam 1.0 · v0.1.8-aa.1",
+      "version": "0.1.8-aa.1",
+      "modelLabel": "Beam 1.0",
+      "modelMakers": [
+        "reflection"
+      ],
       "company": "reflection",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
@@ -624,6 +764,11 @@
       "logo": "/logos/github.svg",
       "color": "#181717"
     },
+    "alibaba": {
+      "name": "Alibaba",
+      "logo": "/logos/alibaba.svg",
+      "color": "#ff7018"
+    },
     "reflection": {
       "name": "Reflection",
       "logo": "/logos/reflection.svg",
@@ -634,6 +779,11 @@
       "logo": "/logos/deepseek.svg",
       "color": "#2243e6"
     },
+    "stepfun": {
+      "name": "StepFun",
+      "logo": "/logos/stepfun.svg",
+      "color": "#00F5E7"
+    },
     "kimi": {
       "name": "Kimi",
       "logo": "/logos/kimi.jpg",
@@ -643,6 +793,11 @@
       "name": "OpenCode",
       "logo": "/logos/opencode.svg",
       "color": "#2D2828"
+    },
+    "zai": {
+      "name": "Z AI",
+      "logo": "/logos/zai.svg",
+      "color": "#1c7ff8"
     }
   }
 }

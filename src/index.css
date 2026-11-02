@@ -409,6 +409,31 @@ a {
   flex: none;
 }
 
+.logos {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+}
+
+.mark {
+  object-fit: contain;
+  display: block;
+  flex: none;
+}
+
+.mark-miss {
+  border-radius: 4px;
+  background: var(--gray-5);
+  color: var(--gray-11);
+  font-size: 0.625rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
 .tile-name {
   font-size: 0.625rem;
   font-weight: 600;
@@ -474,10 +499,26 @@ a {
   color: var(--gray-6);
 }
 
-.tip-detail {
-  margin: 4px 0 0;
+.tip-combo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tip-part {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.8125rem;
   color: var(--gray-4);
+}
+
+.tip-part > svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  color: var(--gray-6);
 }
 
 .tip-grid {
@@ -488,12 +529,21 @@ a {
 }
 
 .tip-grid dt {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--gray-6);
   margin: 0;
+}
+
+.tip-grid dt svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
 }
 
 .tip-grid dd {

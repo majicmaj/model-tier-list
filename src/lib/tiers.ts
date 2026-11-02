@@ -15,7 +15,9 @@ export interface Model {
   slug: string
   name: string
   shortName: string
-  detail?: string | null
+  version?: string | null
+  modelLabel?: string | null
+  modelMakers?: string[]
   company: string
   url: string
   releaseDate: string | null
