@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Leaderboard, { type BoardConfig } from './Leaderboard'
 import { HLENSES, LENSES, agentData, data } from './lib/tiers'
 
 type Page = 'models' | 'harnesses'
+
+const PAGES: Page[] = ['models', 'harnesses']
 
 const CONFIGS: Record<Page, BoardConfig> = {
   models: {
@@ -29,6 +31,27 @@ export default function App() {
   const [page, setPage] = useState<Page>(() =>
     window.location.hash === '#/harnesses' ? 'harnesses' : 'models',
   )
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const pillRef = useRef<HTMLSpanElement>(null)
+
+  const placePill = () => {
+    const btn = tabRefs.current[PAGES.indexOf(page)]
+    const pill = pillRef.current
+    const base = tabRefs.current[0]?.offsetWidth
+    if (!btn || !pill || !base) return
+    pill.style.width = `${base}px`
+    pill.style.transform = `translateX(${btn.offsetLeft - 2}px) scaleX(${btn.offsetWidth / base})`
+  }
+
+  useLayoutEffect(() => {
+    placePill()
+  }, [page])
+
+  useEffect(() => {
+    window.addEventListener('resize', placePill)
+    document.fonts?.ready.then(placePill).catch(() => {})
+    return () => window.removeEventListener('resize', placePill)
+  }, [])
 
   const goPage = (p: Page) => {
     if (p === page) return
@@ -40,9 +63,13 @@ export default function App() {
     <main className="page">
       <h1 className="sr-only">Model and Harness Tier List</h1>
       <div className="pages" role="tablist" aria-label="Leaderboard">
-        {(['models', 'harnesses'] as Page[]).map((p) => (
+        <span ref={pillRef} className="pages-pill" aria-hidden="true" />
+        {PAGES.map((p, i) => (
           <button
             key={p}
+            ref={(el) => {
+              tabRefs.current[i] = el
+            }}
             role="tab"
             aria-selected={page === p}
             className={`page-tab${page === p ? ' is-on' : ''}`}

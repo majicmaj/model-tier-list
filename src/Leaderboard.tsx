@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Drawer } from 'vaul'
 import {
   bands,
@@ -162,6 +162,7 @@ function Tile({
   return (
     <button
       type="button"
+      data-slug={model.slug}
       className={`tile${tipOpen ? ' is-open' : ''}`}
       style={{ '--d': `${delay}ms`, '--tint': co?.color || undefined } as React.CSSProperties}
       aria-describedby={tipOpen ? `tip-${model.slug}` : undefined}
@@ -463,11 +464,50 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
   const { entries, makers, lenses, emptyBand, unrankedLabel, edition, source } = config
   const [lensId, setLensId] = useState<LensId>(lenses[0].id)
   const [tip, setTip] = useState<TipState | null>(null)
+  const [flip, setFlip] = useState(false)
+  const firstRects = useRef(new Map<string, { x: number; y: number }>())
+  const flipTimer = useRef<number | null>(null)
   const lens = lenses.find((l) => l.id === lensId) ?? lenses[0]
   const { ranked, unranked } = useMemo(() => rank(lens, entries), [lens, entries])
   const rows = useMemo(() => bands(lens, ranked), [lens, ranked])
 
   useEffect(() => setTip(null), [lensId])
+
+  const pick = (id: LensId) => {
+    if (id === lensId) return
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const m = new Map<string, { x: number; y: number }>()
+      document.querySelectorAll('.tile[data-slug]').forEach((el) => {
+        const r = el.getBoundingClientRect()
+        m.set(el.getAttribute('data-slug')!, { x: r.left, y: r.top })
+      })
+      firstRects.current = m
+      setFlip(true)
+    }
+    setLensId(id)
+  }
+
+  useLayoutEffect(() => {
+    if (!flip) return
+    document.querySelectorAll('.tile[data-slug]').forEach((el) => {
+      const f = firstRects.current.get(el.getAttribute('data-slug')!)
+      if (!f) return
+      const r = el.getBoundingClientRect()
+      const dx = f.x - r.left
+      const dy = f.y - r.top
+      if (dx || dy) {
+        ;(el as HTMLElement).animate(
+          [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }],
+          { duration: 350, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+        )
+      }
+    })
+    if (flipTimer.current) window.clearTimeout(flipTimer.current)
+    flipTimer.current = window.setTimeout(() => setFlip(false), 380)
+    return () => {
+      if (flipTimer.current) window.clearTimeout(flipTimer.current)
+    }
+  }, [lensId, flip])
 
   useEffect(() => {
     if (!tip) return
@@ -537,14 +577,14 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
 
   return (
     <>
-      <LensSelect lenses={lenses} lens={lens} onPick={setLensId} />
+      <LensSelect lenses={lenses} lens={lens} onPick={pick} />
       <p className="sr-only" role="status">
         {lens.hint}
       </p>
 
-      <div className="board">
+      <div className={`board${flip ? ' is-flip' : ''}`}>
         {rows.map((b) => (
-          <section key={`${lens.id}-${b.tier}`} className="tier" aria-label={`Tier ${b.tier}`}>
+          <section key={b.tier} className="tier" aria-label={`Tier ${b.tier}`}>
             <div className={`tier-label tier-label-${b.tier}`}>
               <span className="tier-letter">{b.tier}</span>
               <span className="tier-range">{b.label}</span>

@@ -110,6 +110,7 @@ a {
 
 /* Page switch: one segmented control above the lens chips. */
 .pages {
+  position: relative;
   display: inline-flex;
   border: 1px solid var(--gray-7);
   border-radius: 999px;
@@ -118,8 +119,21 @@ a {
   margin: 0 var(--gutter) 10px;
 }
 
+.pages-pill {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  background: var(--ink);
+  border-radius: 999px;
+  transform-origin: left center;
+  transition: transform 250ms var(--ease);
+}
+
 .page-tab {
   appearance: none;
+  position: relative;
+  z-index: 1;
   border: 0;
   background: transparent;
   color: var(--ink);
@@ -130,10 +144,11 @@ a {
   font-size: 0.875rem;
   cursor: pointer;
   touch-action: manipulation;
+  transition: color 150ms var(--ease);
 }
 
 .page-tab.is-on {
-  background: var(--ink);
+  background: transparent;
   color: var(--gray-1);
 }
 
@@ -289,6 +304,11 @@ a {
 .tier::after {
   content: '';
   flex: 0 0 calc(var(--gutter) - 10px);
+}
+
+/* FLIP runs drive tile motion; the enter replay stays off meanwhile. */
+.board.is-flip .tile {
+  animation: none;
 }
 
 .tier-label {
@@ -644,7 +664,12 @@ a {
   }
 
   .tile,
-  .lens-btn {
+  .lens-btn,
+  .page-tab {
     transition-duration: 1ms;
+  }
+
+  .pages-pill {
+    transition: none;
   }
 }
