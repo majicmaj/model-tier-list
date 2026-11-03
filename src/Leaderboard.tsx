@@ -144,7 +144,6 @@ interface TileInfo {
 function Tile({
   model,
   makers,
-  delay,
   tipOpen,
   onHover,
   onLeave,
@@ -152,7 +151,6 @@ function Tile({
 }: {
   model: Model
   makers: Record<string, Company>
-  delay: number
   tipOpen: boolean
   onHover: (slug: string, anchor: HTMLElement) => void
   onLeave: () => void
@@ -164,7 +162,7 @@ function Tile({
       type="button"
       data-slug={model.slug}
       className={`tile${tipOpen ? ' is-open' : ''}`}
-      style={{ '--d': `${delay}ms`, '--tint': co?.color || undefined } as React.CSSProperties}
+      style={{ '--tint': co?.color || undefined } as React.CSSProperties}
       aria-describedby={tipOpen ? `tip-${model.slug}` : undefined}
       onMouseEnter={(e) => onHover(model.slug, e.currentTarget)}
       onMouseLeave={onLeave}
@@ -464,9 +462,7 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
   const { entries, makers, lenses, emptyBand, unrankedLabel, edition, source } = config
   const [lensId, setLensId] = useState<LensId>(lenses[0].id)
   const [tip, setTip] = useState<TipState | null>(null)
-  const [flip, setFlip] = useState(false)
   const firstRects = useRef(new Map<string, { x: number; y: number }>())
-  const flipTimer = useRef<number | null>(null)
   const lens = lenses.find((l) => l.id === lensId) ?? lenses[0]
   const { ranked, unranked } = useMemo(() => rank(lens, entries), [lens, entries])
   const rows = useMemo(() => bands(lens, ranked), [lens, ranked])
@@ -482,15 +478,37 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
         m.set(el.getAttribute('data-slug')!, { x: r.left, y: r.top })
       })
       firstRects.current = m
-      setFlip(true)
     }
     setLensId(id)
   }
 
+  // Mount enter: staggered fade in one WAAPI pass, before first paint.
   useLayoutEffect(() => {
-    if (!flip) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const anims = [...document.querySelectorAll('.tile')].map((el, i) =>
+      (el as HTMLElement).animate(
+        [
+          { opacity: 0, transform: 'scale(0.94)' },
+          { opacity: 1, transform: 'scale(1)' },
+        ],
+        {
+          duration: 180,
+          delay: Math.min(i * 12, 330),
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          fill: 'backwards',
+        },
+      ),
+    )
+    return () => anims.forEach((a) => a.cancel())
+  }, [])
+
+  // Lens switch: FLIP each tile from its old spot. One-shot per render.
+  useLayoutEffect(() => {
+    const first = firstRects.current
+    firstRects.current = new Map()
+    if (!first.size) return
     document.querySelectorAll('.tile[data-slug]').forEach((el) => {
-      const f = firstRects.current.get(el.getAttribute('data-slug')!)
+      const f = first.get(el.getAttribute('data-slug')!)
       if (!f) return
       const r = el.getBoundingClientRect()
       const dx = f.x - r.left
@@ -502,12 +520,7 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
         )
       }
     })
-    if (flipTimer.current) window.clearTimeout(flipTimer.current)
-    flipTimer.current = window.setTimeout(() => setFlip(false), 380)
-    return () => {
-      if (flipTimer.current) window.clearTimeout(flipTimer.current)
-    }
-  }, [lensId, flip])
+  })
 
   useEffect(() => {
     if (!tip) return
@@ -582,7 +595,7 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
         {lens.hint}
       </p>
 
-      <div className={`board${flip ? ' is-flip' : ''}`}>
+      <div className="board">
         {rows.map((b) => (
           <section key={b.tier} className="tier" aria-label={`Tier ${b.tier}`}>
             <div className={`tier-label tier-label-${b.tier}`}>
@@ -598,7 +611,6 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
                     key={r.model.slug}
                     model={r.model}
                     makers={makers}
-                    delay={Math.min(r.rank * 12, 330)}
                     tipOpen={tip?.slug === r.model.slug}
                     onHover={onHover}
                     onLeave={onLeave}
@@ -623,7 +635,6 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
                 key={m.slug}
                 model={m}
                 makers={makers}
-                delay={Math.min((ranked.length + i) * 12, 330)}
                 tipOpen={tip?.slug === m.slug}
                 onHover={onHover}
                 onLeave={onLeave}

@@ -306,11 +306,6 @@ a {
   flex: 0 0 calc(var(--gutter) - 10px);
 }
 
-/* FLIP runs drive tile motion; the enter replay stays off meanwhile. */
-.board.is-flip .tile {
-  animation: none;
-}
-
 .tier-label {
   border-radius: 8px;
   padding: 6px;
@@ -390,8 +385,6 @@ a {
   justify-content: center;
   gap: 4px;
   padding: 6px;
-  animation: tile-in 180ms var(--ease) both;
-  animation-delay: var(--d, 0ms);
   transition:
     background-color 120ms var(--ease),
     transform 120ms var(--ease);
@@ -466,13 +459,6 @@ a {
   overflow: hidden;
   max-width: 100%;
   overflow-wrap: anywhere;
-}
-
-@keyframes tile-in {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
 }
 
 /* Detail card: ink plate, plain text, one link. */
@@ -656,7 +642,6 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tile,
   .tip,
   .lens-menu {
     animation-duration: 1ms;
