@@ -1,6 +1,6 @@
 {
-  "edition": "2026-11-02",
-  "fetchedAt": "2026-11-02T19:04:33.147Z",
+  "edition": "2026-11-09",
+  "fetchedAt": "2026-11-09T19:44:07.848Z",
   "source": "https://artificialanalysis.ai/agents/coding-agents",
   "priceField": "meanCostUsd",
   "models": [
@@ -32,8 +32,7 @@
       "version": "3000.11.34",
       "modelLabel": "Claude Opus 5.5 Max + GPT-6 Luna High",
       "modelMakers": [
-        "anthropic",
-        "openai"
+        "unknown"
       ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
@@ -54,8 +53,7 @@
       "version": "1.0.101",
       "modelLabel": "Copilot Fusion (max)",
       "modelMakers": [
-        "anthropic",
-        "openai"
+        "unknown"
       ],
       "company": "github",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
@@ -139,8 +137,7 @@
       "version": "3000.10.23",
       "modelLabel": "Claude Fable 5.1 XHigh + SWE-2 Medium",
       "modelMakers": [
-        "anthropic",
-        "cognition"
+        "unknown"
       ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
@@ -245,8 +242,7 @@
       "version": "3000.10.23",
       "modelLabel": "GPT-6 Astra XHigh + SWE-2 Medium",
       "modelMakers": [
-        "openai",
-        "cognition"
+        "unknown"
       ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
@@ -303,27 +299,6 @@
       "value": null
     },
     {
-      "slug": "mistral-vibe-mistral-large-4-high",
-      "name": "Mistral Vibe",
-      "shortName": "Mistral Large 4 (High)",
-      "version": "3.0.0-v14",
-      "modelLabel": "Mistral Large 4 (High)",
-      "modelMakers": [
-        "mistral"
-      ],
-      "company": "mistral",
-      "url": "https://artificialanalysis.ai/agents/coding-agents",
-      "releaseDate": null,
-      "reasoning": false,
-      "openWeights": false,
-      "intelligence": 0.482774919409145,
-      "price": 1.25944220793442,
-      "latency": 2903.91483346258,
-      "speed": 100.100451830129,
-      "context": null,
-      "value": null
-    },
-    {
       "slug": "codex-gpt-6-1-terra-xhigh",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Xhigh)",
@@ -374,7 +349,7 @@
       "modelMakers": [
         "deepseek"
       ],
-      "company": "openai",
+      "company": "deepseek",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
       "reasoning": false,
@@ -450,6 +425,27 @@
       "value": null
     },
     {
+      "slug": "muse-code-muse-ember-max",
+      "name": "Muse Code",
+      "shortName": "Muse Ember (Max)",
+      "version": "1.4.14-R7309.1",
+      "modelLabel": "Muse Ember (Max)",
+      "modelMakers": [
+        "meta"
+      ],
+      "company": "meta",
+      "url": "https://artificialanalysis.ai/agents/coding-agents",
+      "releaseDate": null,
+      "reasoning": false,
+      "openWeights": false,
+      "intelligence": 0.459457786466818,
+      "price": null,
+      "latency": 1153.8620908146,
+      "speed": 215.785131964809,
+      "context": null,
+      "value": null
+    },
+    {
       "slug": "muse-code-muse-spark-1-3-max",
       "name": "Muse Code",
       "shortName": "Muse Spark 1.3 (Max)",
@@ -479,7 +475,7 @@
       "modelMakers": [
         "stepfun"
       ],
-      "company": "anthropic",
+      "company": "stepfun",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
       "reasoning": false,
@@ -534,6 +530,27 @@
       "value": null
     },
     {
+      "slug": "muse-code-muse-ember-xhigh",
+      "name": "Muse Code",
+      "shortName": "Muse Ember (Xhigh)",
+      "version": "1.4.14-R7309.1",
+      "modelLabel": "Muse Ember (Xhigh)",
+      "modelMakers": [
+        "meta"
+      ],
+      "company": "meta",
+      "url": "https://artificialanalysis.ai/agents/coding-agents",
+      "releaseDate": null,
+      "reasoning": false,
+      "openWeights": false,
+      "intelligence": 0.398415900727707,
+      "price": null,
+      "latency": 1273.67282749321,
+      "speed": 181.890664711632,
+      "context": null,
+      "value": null
+    },
+    {
       "slug": "claude-code-qwen3-8-max",
       "name": "Claude Code",
       "shortName": "Qwen3.8 Max",
@@ -542,7 +559,7 @@
       "modelMakers": [
         "alibaba"
       ],
-      "company": "anthropic",
+      "company": "alibaba_cloud",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
       "reasoning": false,
@@ -597,11 +614,11 @@
       "value": null
     },
     {
-      "slug": "mistral-vibe-mistral-large-4-medium",
+      "slug": "mistral-vibe-mistral-large-4-high",
       "name": "Mistral Vibe",
-      "shortName": "Mistral Large 4 (Medium)",
+      "shortName": "Mistral Large 4 (High)",
       "version": "3.0.0-v14",
-      "modelLabel": "Mistral Large 4 (Medium)",
+      "modelLabel": "Mistral Large 4 (High)",
       "modelMakers": [
         "mistral"
       ],
@@ -673,10 +690,10 @@
       "releaseDate": null,
       "reasoning": false,
       "openWeights": false,
-      "intelligence": 0.311260251113284,
-      "price": 0.159155559086193,
-      "latency": 1275.79489619203,
-      "speed": 81.3609199522103,
+      "intelligence": 0.312156308460954,
+      "price": 0.156271419158149,
+      "latency": 1250.1301772825,
+      "speed": 80.0352166829586,
       "context": null,
       "value": null
     },
@@ -724,45 +741,65 @@
     }
   ],
   "companies": {
-    "anthropic": {
-      "name": "Anthropic",
-      "logo": "/logos/anthropic.svg",
-      "color": "#cc785c"
-    },
     "meta": {
       "name": "Meta",
       "logo": "/logos/meta.svg",
       "color": "#0089f4"
     },
-    "openai": {
-      "name": "OpenAI",
-      "logo": "/logos/openai.svg",
-      "color": "#1f1f1f"
-    },
-    "google": {
-      "name": "Google",
-      "logo": "/logos/google.svg",
-      "color": "#34A853"
-    },
-    "mistral": {
-      "name": "Mistral",
-      "logo": "/logos/mistral.svg",
-      "color": "#f32e02"
+    "anthropic": {
+      "name": "Anthropic",
+      "logo": "/logos/anthropic.svg",
+      "color": "#cc785c"
     },
     "xai": {
       "name": "SpaceXAI",
       "logo": "/logos/spacexai.svg",
       "color": "#736cd3"
     },
+    "openai": {
+      "name": "OpenAI",
+      "logo": "/logos/openai.svg",
+      "color": "#1f1f1f"
+    },
+    "mistral": {
+      "name": "Mistral",
+      "logo": "/logos/mistral.svg",
+      "color": "#f32e02"
+    },
+    "google": {
+      "name": "Google",
+      "logo": "/logos/google.svg",
+      "color": "#34A853"
+    },
+    "kimi": {
+      "name": "Kimi",
+      "logo": "/logos/kimi.jpg",
+      "color": "#047AFE"
+    },
     "cognition": {
       "name": "Cognition",
       "logo": "/logos/devin.svg",
       "color": "#2200FF"
     },
-    "github": {
-      "name": "GitHub",
-      "logo": "/logos/github.svg",
-      "color": "#181717"
+    "unknown": {
+      "name": "Unknown",
+      "logo": null,
+      "color": null
+    },
+    "deepseek": {
+      "name": "DeepSeek",
+      "logo": "/logos/deepseek.svg",
+      "color": "#2243e6"
+    },
+    "stepfun": {
+      "name": "Stepfun",
+      "logo": "/logos/stepfun.svg",
+      "color": "#00F5E7"
+    },
+    "alibaba_cloud": {
+      "name": "Alibaba Cloud",
+      "logo": null,
+      "color": null
     },
     "alibaba": {
       "name": "Alibaba",
@@ -774,21 +811,6 @@
       "logo": "/logos/reflection.svg",
       "color": "#195428"
     },
-    "deepseek": {
-      "name": "DeepSeek",
-      "logo": "/logos/deepseek.svg",
-      "color": "#2243e6"
-    },
-    "stepfun": {
-      "name": "StepFun",
-      "logo": "/logos/stepfun.svg",
-      "color": "#00F5E7"
-    },
-    "kimi": {
-      "name": "Kimi",
-      "logo": "/logos/kimi.jpg",
-      "color": "#047AFE"
-    },
     "opencode": {
       "name": "OpenCode",
       "logo": "/logos/opencode.svg",
@@ -798,6 +820,11 @@
       "name": "Z AI",
       "logo": "/logos/zai.svg",
       "color": "#1c7ff8"
+    },
+    "github": {
+      "name": "GitHub",
+      "logo": "/logos/github.svg",
+      "color": "#181717"
     }
   }
 }

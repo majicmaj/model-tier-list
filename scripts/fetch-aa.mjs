@@ -152,14 +152,18 @@ async function main() {
     }
     const key = String(c.slug || companyKey(file) || 'unknown').toLowerCase()
     const pbp = r.performanceByPromptType || {}
+    const hl = r.headline || {}
     const speed = num(
-      r.timescaleData?.medianOutputSpeed ??
+      hl.outputSpeed ??
+        r.timescaleData?.medianOutputSpeed ??
         pbp.long?.medianOutputSpeed ??
         pbp.medium?.medianOutputSpeed ??
         null,
     )
     const latency = num(
-      r.timescaleData?.medianTimeToFirstChunk ??
+      hl.timeToFirstToken ??
+        r.multiTurn?.timeToFirstToken ??
+        r.timescaleData?.medianTimeToFirstChunk ??
         pbp.long?.medianTimeToFirstChunk ??
         pbp.medium?.medianTimeToFirstChunk ??
         null,

@@ -472,6 +472,11 @@ a {
   padding: 12px 14px;
   box-shadow: 3px 6px 24px rgba(0, 0, 0, 0.28);
   animation: tip-in 160ms var(--ease) both;
+  pointer-events: none;
+}
+
+.tip.is-pinned {
+  pointer-events: auto;
 }
 
 .tip.is-below {

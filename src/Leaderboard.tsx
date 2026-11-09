@@ -27,6 +27,9 @@ interface TipState {
   y: number
   above: boolean
   pinned: boolean
+  anchorTop: number
+  anchorBottom: number
+  corrected: boolean
 }
 
 function Logo({ model, makers }: { model: Model; makers: Record<string, Company> }) {
@@ -124,13 +127,19 @@ function Icon({ n }: { n: keyof typeof ICONS }) {
   )
 }
 
-function tilePos(anchor: HTMLElement): { x: number; y: number; above: boolean } {
+function tilePos(anchor: HTMLElement): Omit<TipState, 'slug' | 'pinned' | 'corrected'> {
   const r = anchor.getBoundingClientRect()
   const w = 248
   const h = 210
   const x = Math.min(Math.max(r.left + r.width / 2 - w / 2, 8), window.innerWidth - w - 8)
   const above = r.top > h + 12
-  return { x, y: above ? r.top - 10 : r.bottom + 10, above }
+  return {
+    x,
+    y: above ? r.top - 10 - h : r.bottom + 10,
+    above,
+    anchorTop: r.top,
+    anchorBottom: r.bottom,
+  }
 }
 
 interface TileInfo {
@@ -211,7 +220,7 @@ function Tooltip({
     <div
       id={`tip-${model.slug}`}
       role="tooltip"
-      className={`tip${pos.above ? ' is-above' : ' is-below'}`}
+      className={`tip${pos.above ? ' is-above' : ' is-below'}${pos.pinned ? ' is-pinned' : ''}`}
       style={{ left: `${pos.x}px`, top: `${pos.y}px` } as React.CSSProperties}
     >
       <p className="tip-name">{model.modelMakers ? model.name : model.shortName}</p>
@@ -556,7 +565,7 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
   const onHover = (slug: string, anchor: HTMLElement) => {
     setTip((cur) => {
       if (cur?.pinned) return cur
-      return { slug, ...tilePos(anchor), pinned: false }
+      return { slug, ...tilePos(anchor), pinned: false, corrected: false }
     })
   }
   const onLeave = () => {
@@ -565,9 +574,28 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
   const onToggle = (slug: string, anchor: HTMLElement) => {
     setTip((cur) => {
       if (cur?.pinned && cur.slug === slug) return null
-      return { slug, ...tilePos(anchor), pinned: true }
+      return { slug, ...tilePos(anchor), pinned: true, corrected: false }
     })
   }
+
+  // The estimate above uses a fixed card height. After mount, shift the card
+  // so its bottom edge clears the tile, or flip it below when room is short.
+  useLayoutEffect(() => {
+    if (!tip || tip.corrected) return
+    const el = document.getElementById(`tip-${tip.slug}`)
+    if (!el) return
+    const h = el.getBoundingClientRect().height
+    if (!tip.above || tip.y + h <= tip.anchorTop - 4) {
+      setTip({ ...tip, corrected: true })
+      return
+    }
+    const y = tip.anchorTop - 10 - h
+    if (y < 8) {
+      setTip({ ...tip, above: false, y: tip.anchorBottom + 10, corrected: true })
+    } else {
+      setTip({ ...tip, y, corrected: true })
+    }
+  }, [tip])
 
   const tipModel: Model | undefined = tip
     ? (ranked.find((r) => r.model.slug === tip.slug)?.model ??
