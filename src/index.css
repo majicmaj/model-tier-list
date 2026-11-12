@@ -133,7 +133,6 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lens-menu,
   .board-cross {
     animation-duration: 1ms;
     animation-delay: 0ms;
@@ -142,11 +141,13 @@ a {
   .tip,
   .tile,
   .lens-btn,
+  .lens-chip,
   .page-tab {
     transition-duration: 1ms;
   }
 
-  .pages-pill {
+  .pages-pill,
+  .lens-pill {
     transition: none;
   }
 }

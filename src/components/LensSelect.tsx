@@ -30,6 +30,44 @@ function LensOptions({
   )
 }
 
+/** Wide screens: every lens one tap away under a sliding pill. */
+function LensRow({
+  lenses,
+  lens,
+  onPick,
+}: {
+  lenses: Lens[]
+  lens: Lens
+  onPick: (id: LensId) => void
+}) {
+  const i = Math.max(
+    0,
+    lenses.findIndex((l) => l.id === lens.id),
+  )
+  return (
+    <div
+      className={`lens-row n${lenses.length}`}
+      role="group"
+      aria-label="Metric lens"
+      style={{ '--i': i } as React.CSSProperties}
+    >
+      <span className="lens-pill" aria-hidden="true" />
+      {lenses.map((l) => (
+        <button
+          key={l.id}
+          type="button"
+          aria-pressed={l.id === lens.id}
+          title={l.hint}
+          className={`lens-chip${l.id === lens.id ? ' is-on' : ''}`}
+          onClick={() => onPick(l.id)}
+        >
+          {l.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export function LensSelect({
   lenses,
   lens,
@@ -40,35 +78,10 @@ export function LensSelect({
   onPick: (id: LensId) => void
 }) {
   const [open, setOpen] = useState(false)
-  const [closing, setClosing] = useState(false)
   const [isMobile, setIsMobile] = useState(
     () => window.matchMedia('(max-width: 640px)').matches,
   )
   const btnRef = useRef<HTMLButtonElement>(null)
-  const menuRef = useRef<HTMLDivElement>(null)
-  const fadeTimer = useRef(0)
-
-  useEffect(
-    () => () => {
-      window.clearTimeout(fadeTimer.current)
-    },
-    [],
-  )
-
-  /** Desktop menu fades out, then unmounts; the sheet animates itself. */
-  const close = (immediate: boolean) => {
-    if (immediate || isMobile) {
-      setOpen(false)
-      setClosing(false)
-      return
-    }
-    if (closing) return
-    setClosing(true)
-    fadeTimer.current = window.setTimeout(() => {
-      setOpen(false)
-      setClosing(false)
-    }, 120)
-  }
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 640px)')
@@ -80,63 +93,13 @@ export function LensSelect({
     return () => mq.removeEventListener('change', onChange)
   }, [])
 
-  useEffect(() => {
-    if (!open || isMobile) return
-    const onDown = (e: MouseEvent | TouchEvent) => {
-      if (!(e.target as HTMLElement).closest('.lens-field')) close(false)
-    }
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        close(false)
-        btnRef.current?.focus()
-      }
-    }
-    window.addEventListener('mousedown', onDown)
-    window.addEventListener('touchend', onDown)
-    window.addEventListener('keydown', onKey)
-    return () => {
-      window.removeEventListener('mousedown', onDown)
-      window.removeEventListener('touchend', onDown)
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [open, isMobile])
-
-  useEffect(() => {
-    if (open && !isMobile) {
-      menuRef.current?.querySelector<HTMLButtonElement>('[aria-selected="true"]')?.focus()
-    }
-  }, [open, isMobile])
-
-  const onMenuKeys = (e: React.KeyboardEvent) => {
-    const opts = [...(menuRef.current?.querySelectorAll<HTMLButtonElement>('.lens-opt') ?? [])]
-    const i = opts.indexOf(document.activeElement as HTMLButtonElement)
-    if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      opts[(i + 1 + opts.length) % opts.length]?.focus()
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      opts[(i - 1 + opts.length) % opts.length]?.focus()
-    } else if (e.key === 'Home') {
-      e.preventDefault()
-      opts[0]?.focus()
-    } else if (e.key === 'End') {
-      e.preventDefault()
-      opts[opts.length - 1]?.focus()
-    } else if (e.key === 'Tab') {
-      close(false)
-    }
-  }
-
-  const onBtnKeys = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      setOpen(true)
-    }
+  if (!isMobile) {
+    return <LensRow lenses={lenses} lens={lens} onPick={onPick} />
   }
 
   const pick = (id: LensId) => {
     onPick(id)
-    close(false)
+    setOpen(false)
     btnRef.current?.focus()
   }
 
@@ -146,10 +109,9 @@ export function LensSelect({
         ref={btnRef}
         type="button"
         className="lens-btn"
-        aria-haspopup="listbox"
+        aria-haspopup="dialog"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        onKeyDown={onBtnKeys}
       >
         <span>{lens.label}</span>
         <svg viewBox="0 0 12 12" aria-hidden="true">
@@ -163,34 +125,21 @@ export function LensSelect({
           />
         </svg>
       </button>
-      {open && !isMobile && (
-        <div
-          ref={menuRef}
-          role="listbox"
-          aria-label="Metric lens"
-          className={`lens-menu${closing ? ' is-out' : ''}`}
-          onKeyDown={onMenuKeys}
-        >
-          <LensOptions lenses={lenses} lens={lens} onPick={pick} />
-        </div>
-      )}
-      {isMobile && (
-        <Drawer.Root open={open} onOpenChange={setOpen}>
-          <Drawer.Portal>
-            <Drawer.Overlay className="drawer-veil" />
-            <Drawer.Content className="drawer-card" aria-label="Metric lens">
-              <div className="drawer-grip" aria-hidden="true" />
-              <Drawer.Title className="drawer-title">Metric</Drawer.Title>
-              <Drawer.Description className="sr-only">
-                Pick a metric lens for the board.
-              </Drawer.Description>
-              <div role="listbox" aria-label="Metric lens" className="drawer-opts">
-                <LensOptions lenses={lenses} lens={lens} onPick={pick} />
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-      )}
+      <Drawer.Root open={open} onOpenChange={setOpen}>
+        <Drawer.Portal>
+          <Drawer.Overlay className="drawer-veil" />
+          <Drawer.Content className="drawer-card" aria-label="Metric lens">
+            <div className="drawer-grip" aria-hidden="true" />
+            <Drawer.Title className="drawer-title">Metric</Drawer.Title>
+            <Drawer.Description className="sr-only">
+              Pick a metric lens for the board.
+            </Drawer.Description>
+            <div role="listbox" aria-label="Metric lens" className="drawer-opts">
+              <LensOptions lenses={lenses} lens={lens} onPick={pick} />
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
     </div>
   )
 }
