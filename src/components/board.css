@@ -145,6 +145,12 @@
   flex: none;
 }
 
+.tile-marks ~ .tile-new {
+  left: auto;
+  right: 4px;
+  transform: none;
+}
+
 .tile-new {
   position: absolute;
   top: 3px;

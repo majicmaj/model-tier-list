@@ -30,6 +30,44 @@ function Badge({ mark }: { mark: StarMark }) {
   )
 }
 
+function Corners({
+  fresh,
+  partial,
+  delta,
+  marks,
+}: {
+  fresh: boolean
+  partial: boolean
+  delta: number | null
+  marks: StarMark[]
+}) {
+  return (
+    <>
+      {marks.length > 0 && (
+        <span className="tile-marks">
+          {marks.map((s) => (
+            <Badge key={s.label} mark={s} />
+          ))}
+        </span>
+      )}
+      {fresh && (
+        <span className="tile-new" aria-label="New this week">
+          New
+        </span>
+      )}
+      {partial && <span className="tile-dot" aria-label="Score uses partial data" />}
+      {delta !== null && delta !== 0 && (
+        <span
+          className={`tile-delta${delta > 0 ? ' is-up' : ' is-down'}`}
+          aria-label={`Moved ${delta > 0 ? 'up' : 'down'} ${Math.abs(delta)} since last update`}
+        >
+          {deltaCopy(delta)}
+        </span>
+      )}
+    </>
+  )
+}
+
 export function Tile({
   model,
   makers,
@@ -70,27 +108,7 @@ export function Tile({
       onBlur={onLeave}
       onClick={(e) => onToggle(model.slug, e.currentTarget)}
     >
-      {fresh && (
-        <span className="tile-new" aria-label="New this week">
-          New
-        </span>
-      )}
-      {marks.length > 0 && (
-        <span className="tile-marks">
-          {marks.map((s) => (
-            <Badge key={s.label} mark={s} />
-          ))}
-        </span>
-      )}
-      {partial && <span className="tile-dot" aria-label="Score uses partial data" />}
-      {delta !== null && delta !== 0 && (
-        <span
-          className={`tile-delta${delta > 0 ? ' is-up' : ' is-down'}`}
-          aria-label={`Moved ${delta > 0 ? 'up' : 'down'} ${Math.abs(delta)} since last update`}
-        >
-          {deltaCopy(delta)}
-        </span>
-      )}
+      <Corners fresh={fresh} partial={partial} delta={delta} marks={marks} />
       {twin ? (
         <span className="logos" aria-hidden="true">
           <Mark

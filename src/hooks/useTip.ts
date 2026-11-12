@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 export interface TipPos {
   x: number
@@ -58,12 +58,14 @@ export function useTip(lensId: string) {
   )
 
   /** Fade out, then unmount; a fresh hover cancels the fade. */
-  const closeTip = () => {
-    clearTimer()
-    clearFade()
+  const closeTip = useCallback(() => {
+    window.clearTimeout(closeTimer.current)
+    closeTimer.current = 0
+    window.clearTimeout(fadeTimer.current)
+    fadeTimer.current = 0
     setTip((cur) => (cur && !cur.leaving ? { ...cur, leaving: true } : cur))
     fadeTimer.current = window.setTimeout(() => setTip(null), 120)
-  }
+  }, [])
 
   useEffect(() => {
     if (!tip) return
@@ -90,7 +92,7 @@ export function useTip(lensId: string) {
       window.removeEventListener('mousedown', onDown)
       window.removeEventListener('touchend', onTouchEnd)
     }
-  }, [tip])
+  }, [tip, closeTip])
 
   // The estimate above uses a fixed card size. After mount, shift the card
   // so its bottom edge clears the tile, or flip it below when room is short.

@@ -3,10 +3,12 @@
 This file owns quality for model-tier-list. Each agent and each human must obey it.
 If a task conflicts with a rule, stop and ask. Never bend a rule in silence.
 
-## Hard gates (checked by `pnpm quality`, runs in `pnpm build`)
+## Hard gates (run in `pnpm build`, in order)
 
-- No code file holds more than 800 lines. Scope: `src/**` and `scripts/*.mjs`,
-  except generated data in `src/data/*.json`. The gate fails the build past 800.
+- `pnpm quality`: no code file holds more than 800 lines. Scope: `src/**`
+  and `scripts/**/*.mjs`, except generated data in `src/data/*.json`.
+- `pnpm lint`: ESLint passes with zero errors. Rules: complexity max 20,
+  nesting depth max 3, 800 lines max, 5 params max, hooks rules on.
 - TypeScript must pass with zero errors (`tsc --noEmit`).
 - The production build must pass (`vite build`).
 

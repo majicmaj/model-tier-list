@@ -9,6 +9,45 @@ export interface TileInfo {
   gap: string
 }
 
+function ComboHead({ model, makers }: { model: Model; makers: Record<string, Company> }) {
+  const co = makers[model.company]
+  return (
+    <div className="tip-combo">
+      <div className="tip-part">
+        <Icon n="harness" />
+        <Mark src={co?.logo} name={co?.name || model.name} size={16} />
+        <span>
+          {co?.name || 'Unknown maker'}
+          {model.version ? ` · v${model.version}` : ''}
+        </span>
+      </div>
+      <div className="tip-part">
+        <Icon n="model" />
+        {model.modelMakers!.map((k) => (
+          <Mark
+            key={k}
+            src={makers[k]?.logo}
+            name={makers[k]?.name || model.modelLabel || '?'}
+            size={16}
+          />
+        ))}
+        <span>{model.modelLabel}</span>
+      </div>
+    </div>
+  )
+}
+
+function MetaRow({ model }: { model: Model }) {
+  if (!model.reasoning && !model.openWeights && !model.releaseDate) return null
+  return (
+    <p className="tip-meta">
+      {model.reasoning && <span className="tag">reasoning</span>}
+      {model.openWeights && <span className="tag">open</span>}
+      {model.releaseDate && <span className="tip-rel">Rel. {model.releaseDate}</span>}
+    </p>
+  )
+}
+
 export function Tooltip({
   model,
   makers,
@@ -48,28 +87,7 @@ export function Tooltip({
     >
       <p className="tip-name">{model.modelMakers ? model.name : model.shortName}</p>
       {model.modelMakers ? (
-        <div className="tip-combo">
-          <div className="tip-part">
-            <Icon n="harness" />
-            <Mark src={co?.logo} name={co?.name || model.name} size={16} />
-            <span>
-              {co?.name || 'Unknown maker'}
-              {model.version ? ` · v${model.version}` : ''}
-            </span>
-          </div>
-          <div className="tip-part">
-            <Icon n="model" />
-            {model.modelMakers.map((k) => (
-              <Mark
-                key={k}
-                src={makers[k]?.logo}
-                name={makers[k]?.name || model.modelLabel || '?'}
-                size={16}
-              />
-            ))}
-            <span>{model.modelLabel}</span>
-          </div>
-        </div>
+        <ComboHead model={model} makers={makers} />
       ) : (
         <p className="tip-co">{co?.name || 'Unknown maker'}</p>
       )}
@@ -127,13 +145,7 @@ export function Tooltip({
           ))}
         </p>
       )}
-      {(model.reasoning || model.openWeights || model.releaseDate) && (
-        <p className="tip-meta">
-          {model.reasoning && <span className="tag">reasoning</span>}
-          {model.openWeights && <span className="tag">open</span>}
-          {model.releaseDate && <span className="tip-rel">Rel. {model.releaseDate}</span>}
-        </p>
-      )}
+      <MetaRow model={model} />
       <a className="tip-link" href={model.url} target="_blank" rel="noreferrer">
         Open on Artificial Analysis
       </a>

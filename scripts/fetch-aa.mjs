@@ -42,19 +42,15 @@ function chartMaps(charts) {
   return { byUrl, byLabel }
 }
 
-/** One page record plus its chart entry becomes one snapshot model. */
-function toModel(r, ctx) {
-  const { byUrl, byLabel, logoFiles, companies, unmapped, missing, prior, prev, today } = ctx
-  const chart =
-    byUrl.get(r.slug) || byUrl.get(r.release?.slug) || byLabel.get(norm(r.name)) || null
-  const c = r.creator || {}
-  const logoPath = c.logo || chart?.logo || null
-  const file = logoName(logoPath)
-  if (logoPath && file && !logoFiles.has(file)) logoFiles.set(file, originPath(logoPath))
-  const key = String(c.slug || companyKey(file) || 'unknown').toLowerCase()
+function chartFor(byUrl, byLabel, r) {
+  return byUrl.get(r.slug) || byUrl.get(r.release?.slug) || byLabel.get(norm(r.name)) || null
+}
+
+/** Six lens scores from one page record, first live source per field. */
+function modelValues(r) {
   const pbp = r.performanceByPromptType || {}
   const hl = r.headline || {}
-  const v = {
+  return {
     intelligence: num(r.intelligenceIndex),
     speed: firstNum(
       hl.outputSpeed,
@@ -73,7 +69,24 @@ function toModel(r, ctx) {
     context: num(r.contextWindowTokens),
     value: priced(r.intelligenceIndexCostPerTask?.cost?.total ?? null),
   }
-  for (const k of Object.keys(missing)) if (v[k] === null) missing[k]++
+}
+
+function queueLogo(logoFiles, logoPath) {
+  const file = logoName(logoPath)
+  if (logoPath && file && !logoFiles.has(file)) logoFiles.set(file, originPath(logoPath))
+  return file
+}
+
+function fillCompany(co, c, chart, file) {
+  if (!co.color) co.color = c.color || chart?.color || null
+  if (!co.logo && file) co.logo = `/logos/${file}`
+}
+
+/** Register the maker, queue its logo, return the company key. */
+function upsertCompany(ctx, c, chart) {
+  const { companies, logoFiles, unmapped } = ctx
+  const file = queueLogo(logoFiles, c.logo || chart?.logo || null)
+  const key = String(c.slug || companyKey(file) || 'unknown').toLowerCase()
   if (!c.name) unmapped.add(key)
   if (!companies[key]) {
     companies[key] = {
@@ -82,10 +95,18 @@ function toModel(r, ctx) {
       color: c.color || chart?.color || null,
     }
   } else {
-    const co = companies[key]
-    if (!co.color) co.color = c.color || chart?.color || null
-    if (!co.logo && file) co.logo = `/logos/${file}`
+    fillCompany(companies[key], c, chart, file)
   }
+  return key
+}
+
+/** One page record plus its chart entry becomes one snapshot model. */
+function toModel(r, ctx) {
+  const { byUrl, byLabel, missing, prior, prev, today } = ctx
+  const chart = chartFor(byUrl, byLabel, r)
+  const key = upsertCompany(ctx, r.creator || {}, chart)
+  const v = modelValues(r)
+  for (const k of Object.keys(missing)) if (v[k] === null) missing[k]++
   return {
     slug: r.slug,
     name: r.name,
