@@ -257,11 +257,19 @@ export function rank(
   return { ranked, unranked }
 }
 
+export type StarIcon = 'crown' | 'dollar' | 'bolt'
+
 export interface CompoundPart {
   field: LensField
   weight: number
   higherBetter: boolean
   star: string
+  icon: StarIcon
+}
+
+export interface StarMark {
+  label: string
+  icon: StarIcon
 }
 
 export interface CompoundDef {
@@ -270,17 +278,17 @@ export interface CompoundDef {
 
 export const MODEL_COMPOUND: CompoundDef = {
   parts: [
-    { field: 'intelligence', weight: 0.6, higherBetter: true, star: 'Smartest' },
-    { field: 'value', weight: 0.25, higherBetter: false, star: 'Best value' },
-    { field: 'speed', weight: 0.15, higherBetter: true, star: 'Fastest' },
+    { field: 'intelligence', weight: 0.6, higherBetter: true, star: 'Smartest', icon: 'crown' },
+    { field: 'value', weight: 0.25, higherBetter: false, star: 'Best value', icon: 'dollar' },
+    { field: 'speed', weight: 0.15, higherBetter: true, star: 'Fastest', icon: 'bolt' },
   ],
 }
 
 export const HARNESS_COMPOUND: CompoundDef = {
   parts: [
-    { field: 'intelligence', weight: 0.6, higherBetter: true, star: 'Top score' },
-    { field: 'price', weight: 0.25, higherBetter: false, star: 'Cheapest' },
-    { field: 'latency', weight: 0.15, higherBetter: false, star: 'Quickest' },
+    { field: 'intelligence', weight: 0.6, higherBetter: true, star: 'Top score', icon: 'crown' },
+    { field: 'price', weight: 0.25, higherBetter: false, star: 'Cheapest', icon: 'dollar' },
+    { field: 'latency', weight: 0.15, higherBetter: false, star: 'Quickest', icon: 'bolt' },
   ],
 }
 
@@ -455,22 +463,34 @@ export function multiEffortBases(entries: Model[]): Set<string> {
 }
 
 /**
- * Runaway component leaders only: rank 1 beats rank 2 by 15% or more of the
- * bigger value. Close fights earn no star.
+ * Component winners. The primary part crowns its outright best; value and
+ * speed crown the best among entries at or above median smarts, so a weak
+ * but cheap model cannot take the dollar.
  */
-export function compoundStars(def: CompoundDef, models: Model[]): Map<string, string[]> {
-  const out = new Map<string, string[]>()
-  for (const p of def.parts) {
-    const vs = models.filter((m) => m[p.field] !== null)
-    if (vs.length < 2) continue
-    const sorted = [...vs].sort((a, b) => {
+export function compoundStars(def: CompoundDef, models: Model[]): Map<string, StarMark[]> {
+  const out = new Map<string, StarMark[]>()
+  const give = (slug: string, mark: StarMark) => {
+    out.set(slug, [...(out.get(slug) ?? []), mark])
+  }
+  const best = (rows: Model[], p: CompoundPart): Model | null => {
+    if (!rows.length) return null
+    return rows.reduce((a, b) => {
       const [x, y] = [a[p.field]!, b[p.field]!]
-      return p.higherBetter ? y - x : x - y
+      return (p.higherBetter ? y - x : x - y) > 0 ? b : a
     })
-    const [a, b] = [sorted[0][p.field]!, sorted[1][p.field]!]
-    if (Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b)) >= 0.15) {
-      out.set(sorted[0].slug, [...(out.get(sorted[0].slug) ?? []), p.star])
-    }
+  }
+  const [first, ...rest] = def.parts
+  const primary = models.filter((m) => m[first.field] !== null)
+  const win = best(primary, first)
+  if (win) give(win.slug, { label: first.star, icon: first.icon })
+  const ranked = primary.map((m) => m[first.field]!).sort((a, b) => a - b)
+  const median = ranked.length % 2
+    ? ranked[(ranked.length - 1) / 2]
+    : (ranked[ranked.length / 2 - 1] + ranked[ranked.length / 2]) / 2
+  for (const p of rest) {
+    const pool = primary.filter((m) => m[first.field]! >= median && m[p.field] !== null)
+    const w = best(pool, p)
+    if (w) give(w.slug, { label: p.star, icon: p.icon })
   }
   return out
 }

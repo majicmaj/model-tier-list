@@ -457,6 +457,36 @@ a {
   pointer-events: none;
 }
 
+.tile-marks {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  display: flex;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.tile-mark {
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  background: var(--amber-9);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tile-mark svg {
+  width: 10px;
+  height: 10px;
+  display: block;
+}
+
 .tile-dot {
   position: absolute;
   left: 5px;

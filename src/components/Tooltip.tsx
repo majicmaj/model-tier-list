@@ -1,5 +1,5 @@
 import type { Ref } from 'react'
-import type { Company, FactDef, Lens, Model } from '../lib/tiers'
+import type { Company, FactDef, Lens, Model, StarMark } from '../lib/tiers'
 import { Icon, Mark } from './icons'
 import type { TipState } from '../hooks/useTip'
 
@@ -28,7 +28,7 @@ export function Tooltip({
   info: TileInfo | null
   pos: TipState
   total: number
-  marks: string[]
+  marks: StarMark[]
   facts: FactDef[]
   elRef: Ref<HTMLDivElement>
   onTipEnter: () => void
@@ -120,9 +120,9 @@ export function Tooltip({
       {marks.length > 0 && (
         <p className="tip-marks">
           {marks.map((s) => (
-            <span key={s} className="tag tag-star">
+            <span key={s.label} className="tag tag-star">
               <Icon n="tier" />
-              {s}
+              {s.label}
             </span>
           ))}
         </p>

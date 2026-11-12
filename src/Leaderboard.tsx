@@ -67,10 +67,7 @@ export default function Leaderboard({
     [lens, entries, values],
   )
   const rows = useMemo(() => bands(lens, ranked), [lens, ranked])
-  const stars = useMemo(
-    () => (blended ? compoundStars(compound, entries) : null),
-    [blended, compound, entries],
-  )
+  const stars = useMemo(() => compoundStars(compound, entries), [compound, entries])
   const partial = useMemo(
     () => (blended ? compoundPartial(compound, entries) : new Set<string>()),
     [blended, compound, entries],
@@ -144,6 +141,7 @@ export default function Leaderboard({
                       partial={partial.has(r.model.slug)}
                       delta={moves.get(r.model.slug) ?? null}
                       display={displayName(r.model, multi)}
+                      marks={stars.get(r.model.slug) ?? []}
                       tipOpen={tip?.slug === r.model.slug}
                       onHover={onHover}
                       onLeave={onLeave}
@@ -172,6 +170,7 @@ export default function Leaderboard({
                   partial={false}
                   delta={null}
                   display={displayName(m, multi)}
+                  marks={stars.get(m.slug) ?? []}
                   tipOpen={tip?.slug === m.slug}
                   onHover={onHover}
                   onLeave={onLeave}
@@ -191,7 +190,7 @@ export default function Leaderboard({
           info={tipInfo}
           pos={tip}
           total={ranked.length}
-          marks={tipModel ? (stars?.get(tipModel.slug) ?? []) : []}
+          marks={tipModel ? (stars.get(tipModel.slug) ?? []) : []}
           facts={facts}
           elRef={tipEl}
           onTipEnter={onTipEnter}
