@@ -2,12 +2,23 @@
 // Fetch the Artificial Analysis models page, pull model records from the
 // embedded page payloads, download company logos, and write one typed
 // snapshot that the app reads. Run: pnpm fetch
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const SRC = 'https://artificialanalysis.ai/models'
+
+/** First-seen dates carried from the previous snapshot, keyed by slug. */
+function priorAdded() {
+  const p = join(ROOT, 'src', 'data', 'snapshot.json')
+  if (!existsSync(p)) return new Map()
+  try {
+    return new Map(JSON.parse(readFileSync(p, 'utf8')).models.map((m) => [m.slug, m.added]))
+  } catch {
+    return new Map()
+  }
+}
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36'
 
@@ -137,6 +148,8 @@ async function main() {
   const logoFiles = new Map() // file -> origin path
   const unmapped = new Set()
   const missing = { intelligence: 0, speed: 0, price: 0, latency: 0, context: 0, value: 0 }
+  const prior = priorAdded()
+  const today = new Date().toISOString().slice(0, 10)
 
   for (const r of records) {
     const chart =
@@ -193,6 +206,7 @@ async function main() {
     models.push({
       slug: r.slug,
       name: r.name,
+      added: prior.get(r.slug) || today,
       shortName: r.shortName || r.name,
       company: key,
       url: `https://artificialanalysis.ai/models/${r.slug}`,

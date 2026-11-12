@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Leaderboard, { type BoardConfig } from './Leaderboard'
-import { HLENSES, LENSES, agentData, data } from './lib/tiers'
+import { HARNESS_COMPOUND, HLENSES, LENSES, MODEL_COMPOUND, agentData, data } from './lib/tiers'
 
 type Page = 'models' | 'harnesses'
 
@@ -11,6 +11,7 @@ const CONFIGS: Record<Page, BoardConfig> = {
     entries: data.models,
     makers: data.companies,
     lenses: LENSES,
+    compound: MODEL_COMPOUND,
     emptyBand: 'No models in this band.',
     unrankedLabel: 'Unranked models',
     edition: data.edition,
@@ -20,6 +21,7 @@ const CONFIGS: Record<Page, BoardConfig> = {
     entries: agentData.models,
     makers: agentData.companies,
     lenses: HLENSES,
+    compound: HARNESS_COMPOUND,
     emptyBand: 'No harnesses in this band.',
     unrankedLabel: 'Unranked harnesses',
     edition: agentData.edition,

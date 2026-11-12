@@ -31,6 +31,7 @@ Lens sources per model:
 - Latency: median seconds to first chunk (lower wins)
 - Context: context window tokens (higher wins)
 - Value: weighted USD per index task (lower wins)
+- Compound: 60% intelligence, 25% value, 15% speed (higher wins)
 
 Lens sources per harness run:
 
@@ -38,6 +39,7 @@ Lens sources per harness run:
 - Cost: mean USD per task (lower wins)
 - Time: mean wall time per task (lower wins)
 - Steps: mean steps per task (lower wins)
+- Compound: 60% score, 25% cost, 15% time (higher wins)
 
 Tiers are score bands in steps of max / 7 with boundaries snapped to nearby score
 gaps, lettered S down from the best band. Trailing empty tiers drop. Models

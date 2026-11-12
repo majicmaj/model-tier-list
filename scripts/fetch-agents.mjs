@@ -2,12 +2,23 @@
 // Fetch the Artificial Analysis coding-agents page, pull harness+model run
 // records from the embedded page payloads, download maker logos, and write
 // one typed snapshot that the app reads. Run: pnpm fetch:agents
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const SRC = 'https://artificialanalysis.ai/agents/coding-agents'
+
+/** First-seen dates carried from the previous snapshot, keyed by slug. */
+function priorAdded() {
+  const p = join(ROOT, 'src', 'data', 'agents.json')
+  if (!existsSync(p)) return new Map()
+  try {
+    return new Map(JSON.parse(readFileSync(p, 'utf8')).models.map((m) => [m.slug, m.added]))
+  } catch {
+    return new Map()
+  }
+}
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36'
 
@@ -140,6 +151,8 @@ async function main() {
   const logoFiles = new Map() // file -> origin path
   const slugs = new Set()
   const missing = { intelligence: 0, price: 0, latency: 0, speed: 0 }
+  const prior = priorAdded()
+  const today = new Date().toISOString().slice(0, 10)
 
   const addMaker = (m, fallback) => {
     const logoPath = m.logo || null
@@ -194,6 +207,7 @@ async function main() {
       slug,
       name: r.agentName,
       shortName: model || r.agentName,
+      added: prior.get(slug) || today,
       version,
       modelLabel: model || null,
       modelMakers,

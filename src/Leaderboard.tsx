@@ -2,9 +2,13 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Drawer } from 'vaul'
 import {
   bands,
+  compoundStars,
+  compoundValues,
   gapCopy,
+  isNew,
   rank,
   type Company,
+  type CompoundDef,
   type Lens,
   type LensId,
   type Model,
@@ -15,6 +19,7 @@ export interface BoardConfig {
   entries: Model[]
   makers: Record<string, Company>
   lenses: Lens[]
+  compound: CompoundDef
   emptyBand: string
   unrankedLabel: string
   edition: string
@@ -153,6 +158,7 @@ interface TileInfo {
 function Tile({
   model,
   makers,
+  fresh,
   tipOpen,
   onHover,
   onLeave,
@@ -160,6 +166,7 @@ function Tile({
 }: {
   model: Model
   makers: Record<string, Company>
+  fresh: boolean
   tipOpen: boolean
   onHover: (slug: string, anchor: HTMLElement) => void
   onLeave: () => void
@@ -179,6 +186,11 @@ function Tile({
       onBlur={onLeave}
       onClick={(e) => onToggle(model.slug, e.currentTarget)}
     >
+      {fresh && (
+        <span className="tile-new" aria-label="New this week">
+          New
+        </span>
+      )}
       {model.modelMakers?.length ? (
         <span className="logos" aria-hidden="true">
           <Mark
@@ -207,6 +219,7 @@ function Tooltip({
   info,
   pos,
   total,
+  marks,
 }: {
   model: Model
   makers: Record<string, Company>
@@ -214,6 +227,7 @@ function Tooltip({
   info: TileInfo | null
   pos: TipState
   total: number
+  marks: string[]
 }) {
   const co = makers[model.company]
   return (
@@ -287,6 +301,16 @@ function Tooltip({
         </dl>
       ) : (
         <p className="tip-flat">No {lens.label.toLowerCase()} score this edition.</p>
+      )}
+      {marks.length > 0 && (
+        <p className="tip-marks">
+          {marks.map((s) => (
+            <span key={s} className="tag tag-star">
+              <Icon n="tier" />
+              {s}
+            </span>
+          ))}
+        </p>
       )}
       {(model.reasoning || model.openWeights || model.releaseDate) && (
         <p className="tip-meta">
@@ -468,13 +492,26 @@ function LensSelect({
 }
 
 export default function Leaderboard({ config }: { config: BoardConfig }) {
-  const { entries, makers, lenses, emptyBand, unrankedLabel, edition, source } = config
+  const { entries, makers, lenses, compound, emptyBand, unrankedLabel, edition, source } =
+    config
   const [lensId, setLensId] = useState<LensId>(lenses[0].id)
   const [tip, setTip] = useState<TipState | null>(null)
   const firstRects = useRef(new Map<string, { x: number; y: number }>())
   const lens = lenses.find((l) => l.id === lensId) ?? lenses[0]
-  const { ranked, unranked } = useMemo(() => rank(lens, entries), [lens, entries])
+  const blended = lens.id === 'compound'
+  const values = useMemo(
+    () => (blended ? compoundValues(compound, entries) : null),
+    [blended, compound, entries],
+  )
+  const { ranked, unranked } = useMemo(
+    () => rank(lens, entries, values ?? undefined),
+    [lens, entries, values],
+  )
   const rows = useMemo(() => bands(lens, ranked), [lens, ranked])
+  const stars = useMemo(
+    () => (blended ? compoundStars(compound, entries) : null),
+    [blended, compound, entries],
+  )
 
   useEffect(() => setTip(null), [lensId])
 
@@ -639,6 +676,7 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
                     key={r.model.slug}
                     model={r.model}
                     makers={makers}
+                    fresh={isNew(edition, r.model.added)}
                     tipOpen={tip?.slug === r.model.slug}
                     onHover={onHover}
                     onLeave={onLeave}
@@ -663,6 +701,7 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
                 key={m.slug}
                 model={m}
                 makers={makers}
+                fresh={isNew(edition, m.added)}
                 tipOpen={tip?.slug === m.slug}
                 onHover={onHover}
                 onLeave={onLeave}
@@ -681,6 +720,7 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
           info={tipInfo}
           pos={tip}
           total={ranked.length}
+          marks={tipModel ? (stars?.get(tipModel.slug) ?? []) : []}
         />
       )}
 

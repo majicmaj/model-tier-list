@@ -1,7 +1,14 @@
 import snapshot from '../data/snapshot.json'
 import agentSnapshot from '../data/agents.json'
 
-export type LensId = 'intelligence' | 'speed' | 'price' | 'latency' | 'context' | 'value'
+export type LensId =
+  | 'intelligence'
+  | 'speed'
+  | 'price'
+  | 'latency'
+  | 'context'
+  | 'value'
+  | 'compound'
 
 export interface Lens {
   id: LensId
@@ -15,6 +22,7 @@ export interface Model {
   slug: string
   name: string
   shortName: string
+  added?: string | null
   version?: string | null
   modelLabel?: string | null
   modelMakers?: string[]
@@ -48,6 +56,13 @@ export interface Snapshot {
 
 export const data = snapshot as Snapshot
 export const agentData = agentSnapshot as Snapshot
+
+/** True when the entry first appeared within 7 days of the edition date. */
+export const isNew = (edition: string, added?: string | null): boolean => {
+  if (!added) return false
+  const ms = Date.parse(edition) - Date.parse(added)
+  return ms >= 0 && ms <= 7 * 86400000
+}
 
 const compact = (v: number): string => {
   if (v >= 1_000_000) {
@@ -104,6 +119,13 @@ export const LENSES: Lens[] = [
     higherBetter: false,
     format: (v) => `$${v.toFixed(2)}`,
   },
+  {
+    id: 'compound',
+    label: 'Compound',
+    hint: '60% intelligence · 25% value · 15% speed · higher wins',
+    higherBetter: true,
+    format: (v) => v.toFixed(1),
+  },
 ]
 
 const duration = (s: number): string => {
@@ -150,6 +172,13 @@ export const HLENSES: Lens[] = [
     higherBetter: false,
     format: (v) => String(Math.round(v)),
   },
+  {
+    id: 'compound',
+    label: 'Compound',
+    hint: '60% score · 25% cost · 15% time · higher wins',
+    higherBetter: true,
+    format: (v) => v.toFixed(1),
+  },
 ]
 
 export const TIERS = ['S', 'A', 'B', 'C', 'D', 'E', 'F'] as const
@@ -170,16 +199,23 @@ export interface Band {
 }
 
 /** Sort best first for the lens; nulls drop to the unranked foot. */
-export function rank(lens: Lens, models: Model[]): { ranked: Ranked[]; unranked: Model[] } {
-  const scored = models.filter((m) => m[lens.id] !== null) as Array<
-    Model & Record<LensId, number>
-  >
-  scored.sort((a, b) =>
-    lens.higherBetter ? b[lens.id] - a[lens.id] : a[lens.id] - b[lens.id],
-  )
-  const best = scored.length ? scored[0][lens.id] : 0
+export function rank(
+  lens: Lens,
+  models: Model[],
+  values?: Map<string, number | null>,
+): { ranked: Ranked[]; unranked: Model[] } {
+  const get = (m: Model): number | null =>
+    values
+      ? (values.get(m.slug) ?? null)
+      : ((m as unknown as Record<string, number | null>)[lens.id] ?? null)
+  const scored = models.filter((m) => get(m) !== null)
+  scored.sort((a, b) => {
+    const [x, y] = [get(a)!, get(b)!]
+    return lens.higherBetter ? y - x : x - y
+  })
+  const best = scored.length ? get(scored[0])! : 0
   const ranked: Ranked[] = scored.map((model, i) => {
-    const value = model[lens.id]
+    const value = get(model)!
     return {
       model,
       value,
@@ -187,8 +223,84 @@ export function rank(lens: Lens, models: Model[]): { ranked: Ranked[]; unranked:
       gap: lens.higherBetter ? best - value : value - best,
     }
   })
-  const unranked = models.filter((m) => m[lens.id] === null)
+  const unranked = models.filter((m) => get(m) === null)
   return { ranked, unranked }
+}
+
+export interface CompoundPart {
+  field: Exclude<LensId, 'compound'>
+  weight: number
+  higherBetter: boolean
+  star: string
+}
+
+export interface CompoundDef {
+  parts: CompoundPart[]
+}
+
+export const MODEL_COMPOUND: CompoundDef = {
+  parts: [
+    { field: 'intelligence', weight: 0.6, higherBetter: true, star: 'Smartest' },
+    { field: 'value', weight: 0.25, higherBetter: false, star: 'Best value' },
+    { field: 'speed', weight: 0.15, higherBetter: true, star: 'Fastest' },
+  ],
+}
+
+export const HARNESS_COMPOUND: CompoundDef = {
+  parts: [
+    { field: 'intelligence', weight: 0.6, higherBetter: true, star: 'Top score' },
+    { field: 'price', weight: 0.25, higherBetter: false, star: 'Cheapest' },
+    { field: 'latency', weight: 0.15, higherBetter: false, star: 'Quickest' },
+  ],
+}
+
+/**
+ * Weighted blend, 0 to 100. Each part scales min-max across the board, so a
+ * dollar never outshouts an index point. Missing parts drop out and the
+ * surviving weights renormalize; entries with no parts stay unranked.
+ */
+export function compoundValues(def: CompoundDef, models: Model[]): Map<string, number | null> {
+  const stats = def.parts.map((p) => {
+    const vs = models.map((m) => m[p.field]).filter((v): v is number => v !== null)
+    return { min: Math.min(...vs), max: Math.max(...vs), n: vs.length }
+  })
+  const out = new Map<string, number | null>()
+  for (const m of models) {
+    let num = 0
+    let den = 0
+    def.parts.forEach((p, i) => {
+      const v = m[p.field]
+      if (v === null || !stats[i].n) return
+      const { min, max } = stats[i]
+      const norm =
+        max === min ? 1 : p.higherBetter ? (v - min) / (max - min) : (max - v) / (max - min)
+      num += p.weight * norm
+      den += p.weight
+    })
+    out.set(m.slug, den > 0 ? (num / den) * 100 : null)
+  }
+  return out
+}
+
+/**
+ * Runaway component leaders only: rank 1 beats rank 2 by 15% or more of the
+ * bigger value. Close fights earn no star.
+ */
+export function compoundStars(def: CompoundDef, models: Model[]): Map<string, string[]> {
+  const out = new Map<string, string[]>()
+  for (const p of def.parts) {
+    const vs = models.filter((m) => m[p.field] !== null)
+    if (vs.length < 2) continue
+    const sorted = [...vs].sort((a, b) => {
+      const [x, y] = [a[p.field]!, b[p.field]!]
+      return p.higherBetter ? y - x : x - y
+    })
+    const [a, b] = [sorted[0][p.field]!, sorted[1][p.field]!]
+    if (Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b)) >= 0.15) {
+      out.set(sorted[0].slug, [...(out.get(sorted[0].slug) ?? []), p.star])
+    }
+  }
+  return out
 }
 
 function niceStep(x: number): number {
