@@ -16,6 +16,8 @@ export interface Lens {
   hint: string
   higherBetter: boolean
   format: (v: number) => string
+  /** Raw score for one entry; compound blends bypass this via a values map. */
+  get: (m: Model) => number | null
 }
 
 export interface Model {
@@ -55,7 +57,15 @@ export interface Snapshot {
 }
 
 export const data = snapshot as Snapshot
-export const agentData = agentSnapshot as Snapshot
+
+/** A harness run: harness maker in `company`, model side in `modelLabel`. */
+export type HarnessRun = Model & { modelLabel: string | null; modelMakers: string[] }
+
+export interface HarnessSnapshot extends Snapshot {
+  models: HarnessRun[]
+}
+
+export const agentData = agentSnapshot as HarnessSnapshot
 
 /** True when the entry first appeared within 7 days of the edition date. */
 export const isNew = (edition: string, added?: string | null): boolean => {
@@ -83,6 +93,7 @@ export const LENSES: Lens[] = [
     hint: 'AA Intelligence Index · higher wins',
     higherBetter: true,
     format: (v) => v.toFixed(1),
+    get: (m) => m.intelligence,
   },
   {
     id: 'speed',
@@ -90,6 +101,7 @@ export const LENSES: Lens[] = [
     hint: 'Median output tokens per second · higher wins',
     higherBetter: true,
     format: (v) => `${Math.round(v)} t/s`,
+    get: (m) => m.speed,
   },
   {
     id: 'price',
@@ -97,6 +109,7 @@ export const LENSES: Lens[] = [
     hint: 'Blended USD per 1M tokens · lower wins',
     higherBetter: false,
     format: (v) => `$${v.toFixed(2)}`,
+    get: (m) => m.price,
   },
   {
     id: 'latency',
@@ -104,6 +117,7 @@ export const LENSES: Lens[] = [
     hint: 'Median seconds to first chunk · lower wins',
     higherBetter: false,
     format: (v) => `${v.toFixed(2)}s`,
+    get: (m) => m.latency,
   },
   {
     id: 'context',
@@ -111,6 +125,7 @@ export const LENSES: Lens[] = [
     hint: 'Context window tokens · higher wins',
     higherBetter: true,
     format: (v) => compact(v),
+    get: (m) => m.context,
   },
   {
     id: 'value',
@@ -118,6 +133,7 @@ export const LENSES: Lens[] = [
     hint: 'Weighted USD per index task · lower wins',
     higherBetter: false,
     format: (v) => `$${v.toFixed(2)}`,
+    get: (m) => m.value,
   },
   {
     id: 'compound',
@@ -125,6 +141,7 @@ export const LENSES: Lens[] = [
     hint: '60% intelligence · 25% value · 15% speed · higher wins',
     higherBetter: true,
     format: (v) => v.toFixed(1),
+    get: () => null,
   },
 ]
 
@@ -150,6 +167,7 @@ export const HLENSES: Lens[] = [
     hint: 'Share of eval tasks done well · higher wins',
     higherBetter: true,
     format: (v) => `${(v * 100).toFixed(1)}%`,
+    get: (m) => m.intelligence,
   },
   {
     id: 'price',
@@ -157,6 +175,7 @@ export const HLENSES: Lens[] = [
     hint: 'Mean USD per task · lower wins',
     higherBetter: false,
     format: (v) => `$${v.toFixed(2)}`,
+    get: (m) => m.price,
   },
   {
     id: 'latency',
@@ -164,6 +183,7 @@ export const HLENSES: Lens[] = [
     hint: 'Mean wall time per task · lower wins',
     higherBetter: false,
     format: (v) => duration(v),
+    get: (m) => m.latency,
   },
   {
     id: 'speed',
@@ -171,6 +191,7 @@ export const HLENSES: Lens[] = [
     hint: 'Mean steps per task · lower wins',
     higherBetter: false,
     format: (v) => String(Math.round(v)),
+    get: (m) => m.speed,
   },
   {
     id: 'compound',
@@ -178,6 +199,7 @@ export const HLENSES: Lens[] = [
     hint: '60% score · 25% cost · 15% time · higher wins',
     higherBetter: true,
     format: (v) => v.toFixed(1),
+    get: () => null,
   },
 ]
 
@@ -205,9 +227,7 @@ export function rank(
   values?: Map<string, number | null>,
 ): { ranked: Ranked[]; unranked: Model[] } {
   const get = (m: Model): number | null =>
-    values
-      ? (values.get(m.slug) ?? null)
-      : ((m as unknown as Record<string, number | null>)[lens.id] ?? null)
+    values ? (values.get(m.slug) ?? null) : lens.get(m)
   const scored = models.filter((m) => get(m) !== null)
   scored.sort((a, b) => {
     const [x, y] = [get(a)!, get(b)!]
@@ -318,27 +338,12 @@ function niceStep(x: number): number {
  * Lenses with a wild spread (context) band in log space instead.
  * Trailing empty tiers drop; middle gaps render as slim empty rows.
  */
-export function bands(lens: Lens, ranked: Ranked[]): Band[] {
-  if (!ranked.length) return []
-  const vals = ranked.map((r) => r.value)
-  const lo = Math.min(...vals)
-  const hi = Math.max(...vals)
-  const log = lo > 0 && hi / lo > 50
-  const t = (v: number): number => {
-    if (log) return lens.higherBetter ? Math.log10(v) : -Math.log10(v)
-    return lens.higherBetter ? v : -v
-  }
-  const inv = (s: number): number => {
-    if (log) return lens.higherBetter ? 10 ** s : 10 ** -s
-    return lens.higherBetter ? s : -s
-  }
-  const ts = vals.map(t)
-  const top = Math.max(...ts)
-  const w = niceStep(Math.max(...ts.map((s) => Math.abs(s))) / TIERS.length)
+type Scale = (v: number) => number
 
+/** Even nominal bounds, each snapped to the widest near score gap. */
+function snapBounds(ts: number[], top: number, w: number): number[] {
   const nominal: number[] = []
   for (let j = 1; j < TIERS.length; j++) nominal.push(top - j * w)
-
   const sorted = [...ts].sort((a, b) => b - a)
   const gaps: { mid: number; size: number }[] = []
   for (let i = 0; i < sorted.length - 1; i++) {
@@ -360,7 +365,15 @@ export function bands(lens: Lens, ranked: Ranked[]): Band[] {
     bounds.push(best)
     prev = best
   }
+  return bounds
+}
 
+/** Drop each row into its band; report the last held tier. */
+function assignTiers(
+  ranked: Ranked[],
+  t: Scale,
+  bounds: number[],
+): { rowsByTier: Ranked[][]; last: number } {
   const rowsByTier: Ranked[][] = TIERS.map(() => [])
   for (const r of ranked) {
     const s = t(r.value)
@@ -373,9 +386,30 @@ export function bands(lens: Lens, ranked: Ranked[]): Band[] {
     }
     rowsByTier[idx].push(r)
   }
-
   let last = rowsByTier.length - 1
   while (last > 0 && rowsByTier[last].length === 0) last--
+  return { rowsByTier, last }
+}
+
+export function bands(lens: Lens, ranked: Ranked[]): Band[] {
+  if (!ranked.length) return []
+  const vals = ranked.map((r) => r.value)
+  const lo = Math.min(...vals)
+  const hi = Math.max(...vals)
+  const log = lo > 0 && hi / lo > 50
+  const t = (v: number): number => {
+    if (log) return lens.higherBetter ? Math.log10(v) : -Math.log10(v)
+    return lens.higherBetter ? v : -v
+  }
+  const inv = (s: number): number => {
+    if (log) return lens.higherBetter ? 10 ** s : 10 ** -s
+    return lens.higherBetter ? s : -s
+  }
+  const ts = vals.map(t)
+  const top = Math.max(...ts)
+  const w = niceStep(Math.max(...ts.map((s) => Math.abs(s))) / TIERS.length)
+  const bounds = snapBounds(ts, top, w)
+  const { rowsByTier, last } = assignTiers(ranked, t, bounds)
 
   const fmt = lens.format
   const labels = TIERS.map((_, j) => {
