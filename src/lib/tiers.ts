@@ -275,29 +275,68 @@ export const HARNESS_COMPOUND: CompoundDef = {
 }
 
 /**
- * Weighted blend, 0 to 100. Each part scales min-max across the board, so a
- * dollar never outshouts an index point. Missing parts drop out and the
- * surviving weights renormalize; entries with no parts stay unranked.
+ * Percentile rank per slug, 0 to 100, best first. Ties share the mid rank,
+ * so one wild outlier cannot squash the rest of the board.
+ */
+function percentiles(
+  models: Model[],
+  field: CompoundPart['field'],
+  higherBetter: boolean,
+): Map<string, number> {
+  const rows = models
+    .filter((m) => m[field] !== null)
+    .sort((a, b) => {
+      const [x, y] = [a[field]!, b[field]!]
+      return higherBetter ? y - x : x - y
+    })
+  const out = new Map<string, number>()
+  if (rows.length < 2) {
+    for (const m of rows) out.set(m.slug, 100)
+    return out
+  }
+  let i = 0
+  while (i < rows.length) {
+    let j = i
+    while (j + 1 < rows.length && rows[j + 1][field] === rows[i][field]) j++
+    const mid = (i + j) / 2
+    const pct = ((rows.length - 1 - mid) / (rows.length - 1)) * 100
+    for (let k = i; k <= j; k++) out.set(rows[k].slug, pct)
+    i = j + 1
+  }
+  return out
+}
+
+/**
+ * Weighted blend, 0 to 100. Each part ranks by board percentile, so a
+ * dollar never outshouts an index point and outliers cannot squash the
+ * scale. A missing part fills with the median (50); entries with no real
+ * part stay unranked.
  */
 export function compoundValues(def: CompoundDef, models: Model[]): Map<string, number | null> {
-  const stats = def.parts.map((p) => {
-    const vs = models.map((m) => m[p.field]).filter((v): v is number => v !== null)
-    return { min: Math.min(...vs), max: Math.max(...vs), n: vs.length }
-  })
+  const parts = def.parts.map((p) => percentiles(models, p.field, p.higherBetter))
   const out = new Map<string, number | null>()
   for (const m of models) {
-    let num = 0
-    let den = 0
+    let sum = 0
+    let real = 0
     def.parts.forEach((p, i) => {
-      const v = m[p.field]
-      if (v === null || !stats[i].n) return
-      const { min, max } = stats[i]
-      const norm =
-        max === min ? 1 : p.higherBetter ? (v - min) / (max - min) : (max - v) / (max - min)
-      num += p.weight * norm
-      den += p.weight
+      const pct = parts[i].get(m.slug)
+      if (pct === undefined) {
+        sum += p.weight * 50
+      } else {
+        sum += p.weight * pct
+        real++
+      }
     })
-    out.set(m.slug, den > 0 ? (num / den) * 100 : null)
+    out.set(m.slug, real > 0 ? sum : null)
+  }
+  return out
+}
+
+/** Slugs whose blend fills at least one part with the median. */
+export function compoundPartial(def: CompoundDef, models: Model[]): Set<string> {
+  const out = new Set<string>()
+  for (const m of models) {
+    if (def.parts.some((p) => m[p.field] === null)) out.add(m.slug)
   }
   return out
 }

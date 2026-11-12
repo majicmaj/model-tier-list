@@ -5,6 +5,7 @@ export function Tile({
   model,
   makers,
   fresh,
+  partial,
   tipOpen,
   onHover,
   onLeave,
@@ -13,6 +14,7 @@ export function Tile({
   model: Model
   makers: Record<string, Company>
   fresh: boolean
+  partial: boolean
   tipOpen: boolean
   onHover: (slug: string, anchor: HTMLElement) => void
   onLeave: () => void
@@ -37,6 +39,7 @@ export function Tile({
           New
         </span>
       )}
+      {partial && <span className="tile-dot" aria-label="Score uses partial data" />}
       {model.modelMakers?.length ? (
         <span className="logos" aria-hidden="true">
           <Mark

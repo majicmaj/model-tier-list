@@ -464,6 +464,18 @@ a {
   pointer-events: none;
 }
 
+.tile-dot {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink-soft);
+  pointer-events: none;
+}
+
 .tile-name {
   font-size: 0.625rem;
   font-weight: 600;

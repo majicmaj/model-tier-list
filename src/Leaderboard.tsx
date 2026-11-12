@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react'
 import {
   bands,
+  compoundPartial,
   compoundStars,
   compoundValues,
   gapCopy,
@@ -54,6 +55,10 @@ export default function Leaderboard({
   const rows = useMemo(() => bands(lens, ranked), [lens, ranked])
   const stars = useMemo(
     () => (blended ? compoundStars(compound, entries) : null),
+    [blended, compound, entries],
+  )
+  const partial = useMemo(
+    () => (blended ? compoundPartial(compound, entries) : new Set<string>()),
     [blended, compound, entries],
   )
   const { tip, tipEl, onHover, onLeave, onToggle } = useTip(lensId)
@@ -116,6 +121,7 @@ export default function Leaderboard({
                       model={r.model}
                       makers={makers}
                       fresh={isNew(edition, r.model.added)}
+                      partial={partial.has(r.model.slug)}
                       tipOpen={tip?.slug === r.model.slug}
                       onHover={onHover}
                       onLeave={onLeave}
@@ -141,6 +147,7 @@ export default function Leaderboard({
                   model={m}
                   makers={makers}
                   fresh={isNew(edition, m.added)}
+                  partial={false}
                   tipOpen={tip?.slug === m.slug}
                   onHover={onHover}
                   onLeave={onLeave}

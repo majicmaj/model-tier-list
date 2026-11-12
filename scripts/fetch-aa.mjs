@@ -23,6 +23,12 @@ const norm = (s) =>
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '')
 
+/** AA marks unpriced models $0; read that as no data, not free. */
+const priced = (v) => {
+  const n = num(v)
+  return n === 0 ? null : n
+}
+
 function chartMaps(charts) {
   const byUrl = new Map()
   const byLabel = new Map()
@@ -55,7 +61,7 @@ function toModel(r, ctx) {
       pbp.long?.medianOutputSpeed,
       pbp.medium?.medianOutputSpeed,
     ),
-    price: num(r.price1mBlended0To3To1),
+    price: priced(r.price1mBlended0To3To1),
     latency: firstNum(
       hl.timeToFirstToken,
       r.multiTurn?.timeToFirstToken,
@@ -64,7 +70,7 @@ function toModel(r, ctx) {
       pbp.medium?.medianTimeToFirstChunk,
     ),
     context: num(r.contextWindowTokens),
-    value: num(r.intelligenceIndexCostPerTask?.cost?.total ?? null),
+    value: priced(r.intelligenceIndexCostPerTask?.cost?.total ?? null),
   }
   for (const k of Object.keys(missing)) if (v[k] === null) missing[k]++
   if (!c.name) unmapped.add(key)

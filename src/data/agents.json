@@ -1,6 +1,6 @@
 {
   "edition": "2026-11-12",
-  "fetchedAt": "2026-11-12T17:22:12.323Z",
+  "fetchedAt": "2026-11-12T22:22:16.925Z",
   "source": "https://artificialanalysis.ai/agents/coding-agents",
   "priceField": "meanCostUsd",
   "models": [
@@ -8,6 +8,7 @@
       "slug": "claude-code-claude-opus-5-5-max",
       "name": "Claude Code",
       "shortName": "Claude Opus 5.5 (Max)",
+      "added": "2026-11-02",
       "version": "2.1.280",
       "modelLabel": "Claude Opus 5.5 (Max)",
       "modelMakers": [
@@ -23,13 +24,13 @@
       "latency": 3661.21221302161,
       "speed": 146.351117627892,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "devin-fusion-cli-claude-opus-5-5-max-gpt-6-luna-high",
       "name": "Devin Fusion CLI",
       "shortName": "Claude Opus 5.5 Max + GPT-6 Luna High",
+      "added": "2026-11-02",
       "version": "3000.11.34",
       "modelLabel": "Claude Opus 5.5 Max + GPT-6 Luna High",
       "modelMakers": [
@@ -46,13 +47,13 @@
       "latency": 3067.08119502552,
       "speed": 99.4643553817747,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "github-copilot-copilot-fusion-max",
       "name": "GitHub Copilot",
       "shortName": "Copilot Fusion (max)",
+      "added": "2026-11-02",
       "version": "1.0.101",
       "modelLabel": "Copilot Fusion (max)",
       "modelMakers": [
@@ -69,13 +70,13 @@
       "latency": 2167.26806006408,
       "speed": 171.026594982079,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "antigravity-cli-gemini-4-carbon-high",
       "name": "Antigravity CLI",
       "shortName": "Gemini 4 Carbon (High)",
+      "added": "2026-11-02",
       "version": "1.4.3",
       "modelLabel": "Gemini 4 Carbon (High)",
       "modelMakers": [
@@ -91,13 +92,13 @@
       "latency": 1789.89670714312,
       "speed": 177.827079034068,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "claude-code-claude-sonnet-5-5-max",
       "name": "Claude Code",
       "shortName": "Claude Sonnet 5.5 (Max)",
+      "added": "2026-11-02",
       "version": "2.1.280",
       "modelLabel": "Claude Sonnet 5.5 (Max)",
       "modelMakers": [
@@ -113,13 +114,13 @@
       "latency": 4784.64130125774,
       "speed": 232.941984902791,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "muse-code-muse-wonder-full-max",
       "name": "Muse Code",
       "shortName": "Muse Wonder Full (Max)",
+      "added": "2026-11-02",
       "version": "1.4.5-R5426.1",
       "modelLabel": "Muse Wonder Full (Max)",
       "modelMakers": [
@@ -135,13 +136,13 @@
       "latency": 2096.2841057163,
       "speed": 194.874971760617,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "devin-fusion-cli-claude-fable-5-1-xhigh-swe-2-medium",
       "name": "Devin Fusion CLI",
       "shortName": "Claude Fable 5.1 XHigh + SWE-2 Medium",
+      "added": "2026-11-02",
       "version": "3000.10.23",
       "modelLabel": "Claude Fable 5.1 XHigh + SWE-2 Medium",
       "modelMakers": [
@@ -158,13 +159,13 @@
       "latency": 2253.66843252199,
       "speed": 92.3841577060932,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "claude-code-claude-fable-5-1-max",
       "name": "Claude Code",
       "shortName": "Claude Fable 5.1 (Max)",
+      "added": "2026-11-02",
       "version": "2.1.263",
       "modelLabel": "Claude Fable 5.1 (Max)",
       "modelMakers": [
@@ -180,13 +181,13 @@
       "latency": 2115.55138904529,
       "speed": 42.2762050613664,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-astra-max",
       "name": "Codex",
       "shortName": "GPT-6 Astra (Max)",
+      "added": "2026-11-02",
       "version": "0.153.4",
       "modelLabel": "GPT-6 Astra (Max)",
       "modelMakers": [
@@ -202,13 +203,13 @@
       "latency": 1486.68747959053,
       "speed": 39.3501020962311,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-1-sol-max",
       "name": "Codex",
       "shortName": "GPT-6.1 Sol (Max)",
+      "added": "2026-11-02",
       "version": "0.154.0",
       "modelLabel": "GPT-6.1 Sol (Max)",
       "modelMakers": [
@@ -224,13 +225,13 @@
       "latency": 1421.42885321603,
       "speed": 40.6271304442272,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "antigravity-cli-gemini-4-argon-high",
       "name": "Antigravity CLI",
       "shortName": "Gemini 4 Argon (High)",
+      "added": "2026-11-02",
       "version": "1.2.10",
       "modelLabel": "Gemini 4 Argon (High)",
       "modelMakers": [
@@ -246,13 +247,13 @@
       "latency": 2081.39574652818,
       "speed": 166.081847507331,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "devin-fusion-cli-gpt-6-astra-xhigh-swe-2-medium",
       "name": "Devin Fusion CLI",
       "shortName": "GPT-6 Astra XHigh + SWE-2 Medium",
+      "added": "2026-11-02",
       "version": "3000.10.23",
       "modelLabel": "GPT-6 Astra XHigh + SWE-2 Medium",
       "modelMakers": [
@@ -269,13 +270,13 @@
       "latency": 1270.3477207201,
       "speed": 58.8586738351254,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "muse-code-muse-wonder-max",
       "name": "Muse Code",
       "shortName": "Muse Wonder (Max)",
+      "added": "2026-11-02",
       "version": "1.4.5-R5426.1",
       "modelLabel": "Muse Wonder (Max)",
       "modelMakers": [
@@ -291,13 +292,13 @@
       "latency": 1472.5084254817,
       "speed": 200.877049903502,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "opencode-glm-5-3-max",
       "name": "Opencode",
       "shortName": "GLM-5.3 (Max)",
+      "added": "2026-11-02",
       "version": "1.18.29",
       "modelLabel": "GLM-5.3 (Max)",
       "modelMakers": [
@@ -313,13 +314,13 @@
       "latency": 3369.69557528728,
       "speed": 111.53421852938,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "mistral-vibe-mistral-large-4-high",
       "name": "Mistral Vibe",
       "shortName": "Mistral Large 4 (High)",
+      "added": "2026-11-02",
       "version": "3.0.0-v14",
       "modelLabel": "Mistral Large 4 (High)",
       "modelMakers": [
@@ -335,13 +336,13 @@
       "latency": 2903.91483346258,
       "speed": 100.100451830129,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-1-terra-xhigh",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Xhigh)",
+      "added": "2026-11-02",
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Xhigh)",
       "modelMakers": [
@@ -357,13 +358,13 @@
       "latency": 981.713951073096,
       "speed": 71.9594569349408,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-1-terra-max",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Max)",
+      "added": "2026-11-02",
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Max)",
       "modelMakers": [
@@ -379,13 +380,13 @@
       "latency": 1568.79046882589,
       "speed": 100.428485934615,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-deepseek-v4-1-flash-max",
       "name": "Codex",
       "shortName": "DeepSeek V4.1 Flash (Max)",
+      "added": "2026-11-02",
       "version": "0.153.2",
       "modelLabel": "DeepSeek V4.1 Flash (Max)",
       "modelMakers": [
@@ -401,13 +402,13 @@
       "latency": 2283.94687962311,
       "speed": 142.882443792766,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "grok-build-grok-4-7-xhigh",
       "name": "Grok Build",
       "shortName": "Grok 4.7 (Xhigh)",
+      "added": "2026-11-02",
       "version": "1.0.40",
       "modelLabel": "Grok 4.7 (Xhigh)",
       "modelMakers": [
@@ -423,13 +424,13 @@
       "latency": 2146.05576560009,
       "speed": 169.916321277289,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "deepseek-harness-deepseek-v4-1-flash-1017-max",
       "name": "DeepSeek Harness",
       "shortName": "DeepSeek V4.1 Flash 1017 (Max)",
+      "added": "2026-11-02",
       "version": "0.2.1rc2",
       "modelLabel": "DeepSeek V4.1 Flash 1017 (Max)",
       "modelMakers": [
@@ -445,13 +446,13 @@
       "latency": 1284.94041000543,
       "speed": 101.530045617465,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-1-terra-high",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (High)",
+      "added": "2026-11-02",
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (High)",
       "modelMakers": [
@@ -467,13 +468,13 @@
       "latency": 759.266290102096,
       "speed": 66.7762083197567,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "muse-code-muse-ember-max",
       "name": "Muse Code",
       "shortName": "Muse Ember (Max)",
+      "added": "2026-11-09",
       "version": "1.4.14-R7309.1",
       "modelLabel": "Muse Ember (Max)",
       "modelMakers": [
@@ -489,13 +490,13 @@
       "latency": 1153.8620908146,
       "speed": 215.785131964809,
       "context": null,
-      "value": null,
-      "added": "2026-11-09"
+      "value": null
     },
     {
       "slug": "muse-code-muse-spark-1-3-max",
       "name": "Muse Code",
       "shortName": "Muse Spark 1.3 (Max)",
+      "added": "2026-11-02",
       "version": "1.0.3-R2198.1",
       "modelLabel": "Muse Spark 1.3 (Max)",
       "modelMakers": [
@@ -511,13 +512,13 @@
       "latency": 1398.49826969262,
       "speed": 208.319377647442,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "claude-code-step-5-preview",
       "name": "Claude Code",
       "shortName": "Step 5 Preview",
+      "added": "2026-11-02",
       "version": "2.1.220",
       "modelLabel": "Step 5 Preview",
       "modelMakers": [
@@ -533,13 +534,13 @@
       "latency": 3665.13740781145,
       "speed": 142.091813837298,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-1-terra-medium",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Medium)",
+      "added": "2026-11-02",
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Medium)",
       "modelMakers": [
@@ -555,13 +556,13 @@
       "latency": 610.752293823178,
       "speed": 57.9985804279353,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "kimi-code-cli-kimi-k3-max",
       "name": "Kimi Code CLI",
       "shortName": "Kimi K3 (Max)",
+      "added": "2026-11-02",
       "version": "0.36.1",
       "modelLabel": "Kimi K3 (Max)",
       "modelMakers": [
@@ -577,13 +578,13 @@
       "latency": 3772.73379345389,
       "speed": 185.884007277072,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "muse-code-muse-ember-xhigh",
       "name": "Muse Code",
       "shortName": "Muse Ember (Xhigh)",
+      "added": "2026-11-09",
       "version": "1.4.14-R7309.1",
       "modelLabel": "Muse Ember (Xhigh)",
       "modelMakers": [
@@ -599,13 +600,13 @@
       "latency": 1273.67282749321,
       "speed": 181.890664711632,
       "context": null,
-      "value": null,
-      "added": "2026-11-09"
+      "value": null
     },
     {
       "slug": "claude-code-qwen3-8-max",
       "name": "Claude Code",
       "shortName": "Qwen3.8 Max",
+      "added": "2026-11-02",
       "version": "2.1.266",
       "modelLabel": "Qwen3.8 Max",
       "modelMakers": [
@@ -621,13 +622,13 @@
       "latency": 4568.4135207125,
       "speed": 114.796515026192,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-1-terra-non-reasoning",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Non-reasoning)",
+      "added": "2026-11-02",
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Non-reasoning)",
       "modelMakers": [
@@ -643,13 +644,13 @@
       "latency": 572.437023079179,
       "speed": 81.5091973498425,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "claude-code-claude-haiku-5-5-max",
       "name": "Claude Code",
       "shortName": "Claude Haiku 5.5 (Max)",
+      "added": "2026-11-02",
       "version": "2.1.296",
       "modelLabel": "Claude Haiku 5.5 (Max)",
       "modelMakers": [
@@ -665,13 +666,13 @@
       "latency": 4255.92477550559,
       "speed": 114.307695231889,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "mistral-vibe-mistral-large-4-medium",
       "name": "Mistral Vibe",
       "shortName": "Mistral Large 4 (Medium)",
+      "added": "2026-11-02",
       "version": "3.0.0-v14",
       "modelLabel": "Mistral Large 4 (Medium)",
       "modelMakers": [
@@ -687,13 +688,13 @@
       "latency": 2330.06956728793,
       "speed": 80.7014391224069,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-1-terra-low",
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Low)",
+      "added": "2026-11-02",
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Low)",
       "modelMakers": [
@@ -709,13 +710,13 @@
       "latency": 379.469317133703,
       "speed": 42.7471271858369,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "antigravity-sdk-v0-1-12-gemini-3-8-flash-high",
       "name": "Antigravity SDK v0.1.12",
       "shortName": "Gemini 3.8 Flash (High)",
+      "added": "2026-11-02",
       "version": "0.1.12",
       "modelLabel": "Gemini 3.8 Flash (High)",
       "modelMakers": [
@@ -731,13 +732,13 @@
       "latency": 786.045572632779,
       "speed": 202.504982078853,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "codex-gpt-6-luna-max",
       "name": "Codex",
       "shortName": "GPT-6 Luna (Max)",
+      "added": "2026-11-02",
       "version": "0.154.0",
       "modelLabel": "GPT-6 Luna (Max)",
       "modelMakers": [
@@ -753,13 +754,13 @@
       "latency": 1250.1301772825,
       "speed": 80.0352166829586,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "muse-code-muse-spark-open-xhigh",
       "name": "Muse Code",
       "shortName": "Muse Spark Open (Xhigh)",
+      "added": "2026-11-02",
       "version": "1.4.2-R4684.1",
       "modelLabel": "Muse Spark Open (Xhigh)",
       "modelMakers": [
@@ -775,13 +776,13 @@
       "latency": 1558.86632482568,
       "speed": 161.39889866406,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     },
     {
       "slug": "mirror-beam-1-0",
       "name": "Mirror",
       "shortName": "Beam 1.0",
+      "added": "2026-11-02",
       "version": "0.1.8-aa.1",
       "modelLabel": "Beam 1.0",
       "modelMakers": [
@@ -797,8 +798,7 @@
       "latency": 2321.25393509395,
       "speed": 92.9845715216683,
       "context": null,
-      "value": null,
-      "added": "2026-11-02"
+      "value": null
     }
   ],
   "companies": {
