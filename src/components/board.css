@@ -26,26 +26,21 @@
   flex: none;
 }
 
-.tier-label-S { background: var(--red-3); color: var(--red-11); }
-.tier-label-A { background: var(--orange-3); color: var(--orange-11); }
-.tier-label-B { background: var(--amber-3); color: var(--amber-11); }
-.tier-label-C { background: var(--green-3); color: var(--green-11); }
-.tier-label-D { background: var(--teal-3); color: var(--teal-11); }
-.tier-label-E { background: var(--blue-3); color: var(--blue-11); }
-.tier-label-F { background: var(--gray-4); color: var(--gray-11); }
+.tier-label-S { background: var(--red-9); color: #fff; }
+.tier-label-A { background: var(--orange-10); color: #fff; }
+.tier-label-B { background: var(--amber-11); color: #fff; }
+.tier-label-C { background: var(--green-9); color: #fff; }
+.tier-label-D { background: var(--teal-9); color: #fff; }
+.tier-label-E { background: var(--blue-9); color: #fff; }
+.tier-label-F { background: var(--gray-9); color: #fff; }
 .tier-label-flat {
   background: transparent;
   border: 1px dashed var(--gray-7);
   color: var(--ink-soft);
 }
 
-.tier-label-S .tier-range { color: var(--red-12); }
-.tier-label-A .tier-range { color: var(--orange-12); }
-.tier-label-B .tier-range { color: var(--amber-12); }
-.tier-label-C .tier-range { color: var(--green-12); }
-.tier-label-D .tier-range { color: var(--teal-12); }
-.tier-label-E .tier-range { color: var(--blue-12); }
-.tier-label-F .tier-range { color: var(--gray-12); }
+.tier-label .tier-range { color: rgba(255, 255, 255, 0.85); }
+.tier-label-flat .tier-range { color: var(--ink-soft); }
 
 .tier-letter {
   font-family: 'Barlow Condensed', 'Barlow', sans-serif;
@@ -76,9 +71,9 @@
   touch-action: manipulation;
   width: 88px;
   height: 88px;
-  border: 0;
+  border: 1px solid var(--gray-7);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--tint, transparent) 10%, var(--paper));
+  background: var(--card);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -88,11 +83,13 @@
   padding: 6px;
   transition:
     background-color 120ms var(--ease),
+    border-color 120ms var(--ease),
     transform 120ms var(--ease);
 }
 
 .tile:hover {
-  background: color-mix(in srgb, var(--tint, transparent) 18%, var(--paper));
+  background: var(--rowwash);
+  border-color: var(--gray-8);
   transform: translateY(-1px);
 }
 
@@ -150,8 +147,9 @@
 
 .tile-new {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1;
   background: var(--action);
   color: #fff;
@@ -161,6 +159,7 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.4;
+  white-space: nowrap;
   pointer-events: none;
 }
 

@@ -55,7 +55,6 @@ export function Tile({
   onLeave: () => void
   onToggle: (slug: string, anchor: HTMLElement) => void
 }) {
-  const co = makers[model.company]
   const twin = !!model.modelMakers?.length && model.modelMakers[0] !== model.company
   const label = display.secondary ? `${display.primary}, ${display.secondary}` : display.primary
   return (
@@ -63,7 +62,6 @@ export function Tile({
       type="button"
       data-slug={model.slug}
       className={`tile${tipOpen ? ' is-open' : ''}`}
-      style={{ '--tint': co?.color || undefined } as React.CSSProperties}
       aria-label={label}
       aria-describedby={tipOpen ? `tip-${model.slug}` : undefined}
       onMouseEnter={(e) => onHover(model.slug, e.currentTarget)}
