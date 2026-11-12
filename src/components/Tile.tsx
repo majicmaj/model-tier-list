@@ -1,4 +1,4 @@
-import { deltaCopy, type Company, type Model } from '../lib/tiers'
+import { deltaCopy, type Company, type DisplayName, type Model } from '../lib/tiers'
 import { Logo, Mark } from './icons'
 
 export function Tile({
@@ -7,6 +7,7 @@ export function Tile({
   fresh,
   partial,
   delta,
+  display,
   tipOpen,
   onHover,
   onLeave,
@@ -17,18 +18,22 @@ export function Tile({
   fresh: boolean
   partial: boolean
   delta: number | null
+  display: DisplayName
   tipOpen: boolean
   onHover: (slug: string, anchor: HTMLElement) => void
   onLeave: () => void
   onToggle: (slug: string, anchor: HTMLElement) => void
 }) {
   const co = makers[model.company]
+  const twin = !!model.modelMakers?.length && model.modelMakers[0] !== model.company
+  const label = display.secondary ? `${display.primary}, ${display.secondary}` : display.primary
   return (
     <button
       type="button"
       data-slug={model.slug}
       className={`tile${tipOpen ? ' is-open' : ''}`}
       style={{ '--tint': co?.color || undefined } as React.CSSProperties}
+      aria-label={label}
       aria-describedby={tipOpen ? `tip-${model.slug}` : undefined}
       onMouseEnter={(e) => onHover(model.slug, e.currentTarget)}
       onMouseLeave={onLeave}
@@ -50,7 +55,7 @@ export function Tile({
           {deltaCopy(delta)}
         </span>
       )}
-      {model.modelMakers?.length ? (
+      {twin ? (
         <span className="logos" aria-hidden="true">
           <Mark
             src={makers[model.company]?.logo}
@@ -58,15 +63,22 @@ export function Tile({
             size={24}
           />
           <Mark
-            src={makers[model.modelMakers[0]]?.logo}
-            name={makers[model.modelMakers[0]]?.name || model.shortName}
+            src={makers[model.modelMakers![0]]?.logo}
+            name={makers[model.modelMakers![0]]?.name || model.shortName}
             size={24}
           />
         </span>
       ) : (
         <Logo model={model} makers={makers} />
       )}
-      <span className="tile-name">{model.shortName}</span>
+      <span className="tile-name" aria-hidden="true">
+        {display.primary}
+      </span>
+      {display.secondary && (
+        <span className="tile-sub" aria-hidden="true">
+          {display.secondary}
+        </span>
+      )}
     </button>
   )
 }

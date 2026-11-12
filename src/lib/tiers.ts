@@ -370,6 +370,88 @@ export function deltaCopy(delta: number): string {
   return `${delta > 0 ? '▲' : '▼'}${Math.abs(delta)}`
 }
 
+/** First tokens that restate the maker logo, per company key. */
+const BRAND_TOKENS: Record<string, string[]> = {
+  openai: ['gpt'],
+  google: ['gemini'],
+  anthropic: ['Claude'],
+  meta: ['muse'],
+  xai: ['grok'],
+  deepseek: ['deepseek'],
+  alibaba: ['qwen'],
+  mistral: ['mistral'],
+  kimi: ['kimi'],
+  tencent: ['tencent'],
+  nvidia: ['nemotron'],
+  ifm: ['k2'],
+  microsoft: ['copilot'],
+}
+
+/** Split "Terra (Max)" into base plus effort; labels without parens hold none. */
+export function splitEffort(label: string): { base: string; effort: string | null } {
+  const m = label.match(/^(.*)\(([^()]*)\)\s*$/)
+  if (!m) return { base: label.trim(), effort: null }
+  return { base: m[1].trim(), effort: m[2].trim() || null }
+}
+
+/** Drop the brand token the logo already shows; keep the rest untouched. */
+export function shortBase(base: string, company: string): string {
+  const tokens = BRAND_TOKENS[company] ?? []
+  const [first, ...rest] = base.split(/\s+/)
+  if (!first || !rest.length) return base
+  const low = first.toLowerCase()
+  const hit = tokens.some((t) => low.startsWith(t.toLowerCase()))
+  if (!hit) return base
+  // A lone version or trim word ("4.7", "Max") says nothing; keep the brand.
+  if (rest.length === 1 && /^([0-9]|max|pro|plus|mini|ultra)/i.test(rest[0])) return base
+  return rest.join(' ')
+}
+
+/** "Devin Fusion CLI" reads "Devin Fusion"; product names stay whole. */
+export function shortHarness(name: string): string {
+  return name.replace(/\s+(cli|sdk\b.*|harness)$/i, '')
+}
+
+export interface DisplayName {
+  primary: string
+  secondary: string | null
+}
+
+/**
+ * Tile copy. Runs lead with the harness, then the model. The effort tag
+ * shows only when the board holds two or more efforts for that base.
+ */
+export function displayName(model: Model, multiEffort: Set<string>): DisplayName {
+  const label = model.modelMakers ? model.modelLabel || model.shortName : model.shortName
+  const { base, effort } = splitEffort(label)
+  const company = model.modelMakers ? model.modelMakers[0] : model.company
+  const short = shortBase(base, company)
+  const key = short.toLowerCase()
+  const tag = effort && multiEffort.has(key) ? effort : null
+  if (!model.modelMakers) return { primary: short, secondary: tag }
+  return { primary: shortHarness(model.name), secondary: tag ? `${short} · ${tag}` : short }
+}
+
+/** Bases on this board that carry more than one effort. */
+export function multiEffortBases(entries: Model[]): Set<string> {
+  const seen = new Map<string, Set<string>>()
+  for (const m of entries) {
+    const label = m.modelMakers ? m.modelLabel || m.shortName : m.shortName
+    const { base, effort } = splitEffort(label)
+    if (!effort) continue
+    const company = m.modelMakers ? m.modelMakers[0] : m.company
+    const key = shortBase(base, company).toLowerCase()
+    const set = seen.get(key) ?? new Set<string>()
+    set.add(effort.toLowerCase())
+    seen.set(key, set)
+  }
+  const out = new Set<string>()
+  for (const [key, set] of seen) {
+    if (set.size > 1) out.add(key)
+  }
+  return out
+}
+
 /**
  * Runaway component leaders only: rank 1 beats rank 2 by 15% or more of the
  * bigger value. Close fights earn no star.

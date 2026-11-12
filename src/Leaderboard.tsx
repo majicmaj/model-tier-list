@@ -4,8 +4,10 @@ import {
   compoundPartial,
   compoundStars,
   compoundValues,
+  displayName,
   gapCopy,
   isNew,
+  multiEffortBases,
   prevRanks,
   rank,
   type Company,
@@ -62,6 +64,7 @@ export default function Leaderboard({
     () => (blended ? compoundPartial(compound, entries) : new Set<string>()),
     [blended, compound, entries],
   )
+  const multi = useMemo(() => multiEffortBases(entries), [entries])
   const moves = useMemo(() => {
     const before = prevRanks(lens, compound, entries)
     const out = new Map<string, number>()
@@ -133,6 +136,7 @@ export default function Leaderboard({
                       fresh={isNew(edition, r.model.added)}
                       partial={partial.has(r.model.slug)}
                       delta={moves.get(r.model.slug) ?? null}
+                      display={displayName(r.model, multi)}
                       tipOpen={tip?.slug === r.model.slug}
                       onHover={onHover}
                       onLeave={onLeave}
@@ -160,6 +164,7 @@ export default function Leaderboard({
                   fresh={isNew(edition, m.added)}
                   partial={false}
                   delta={null}
+                  display={displayName(m, multi)}
                   tipOpen={tip?.slug === m.slug}
                   onHover={onHover}
                   onLeave={onLeave}

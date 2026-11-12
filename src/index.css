@@ -497,17 +497,27 @@ a {
 }
 
 .tile-name {
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.2;
   text-align: center;
   color: var(--ink);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   max-width: 100%;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile-sub {
+  font-size: 0.5625rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ink-soft);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Detail card: ink plate, plain text, one link. */
@@ -707,6 +717,15 @@ a {
   .tile {
     width: 68px;
     height: 68px;
+    gap: 2px;
+  }
+
+  .tile-name {
+    font-size: 0.625rem;
+  }
+
+  .tile-sub {
+    font-size: 0.5rem;
   }
 
   .logo,
