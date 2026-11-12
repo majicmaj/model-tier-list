@@ -1,7 +1,7 @@
 /* Tier rows: label cell plus tile field. */
 .board {
   margin-top: 6px;
-  border-top: 2px solid var(--ink);
+  border-top: 1px solid var(--ink);
 }
 
 .tier {
@@ -58,13 +58,6 @@
   font-size: 0.625rem;
   font-variant-numeric: tabular-nums;
   line-height: 1.25;
-}
-
-.tier-empty {
-  margin: 0;
-  flex: 1 1 auto;
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
 }
 
 .tiles {

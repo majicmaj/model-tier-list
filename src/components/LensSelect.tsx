@@ -130,7 +130,7 @@ export function LensSelect({
           <Drawer.Overlay className="drawer-veil" />
           <Drawer.Content className="drawer-card" aria-label="Metric lens">
             <div className="drawer-grip" aria-hidden="true" />
-            <Drawer.Title className="drawer-title">Metric</Drawer.Title>
+            <Drawer.Title className="sr-only">Metric</Drawer.Title>
             <Drawer.Description className="sr-only">
               Pick a metric lens for the board.
             </Drawer.Description>

@@ -100,7 +100,7 @@ export const LENSES: Lens[] = [
   {
     id: 'intelligence',
     label: 'Intelligence',
-    hint: 'AA Intelligence Index · higher wins',
+    hint: 'AA index ↑',
     higherBetter: true,
     format: (v) => v.toFixed(1),
     get: (m) => m.intelligence,
@@ -108,7 +108,7 @@ export const LENSES: Lens[] = [
   {
     id: 'speed',
     label: 'Speed',
-    hint: 'Median output tokens per second · higher wins',
+    hint: 't/s ↑',
     higherBetter: true,
     format: (v) => `${Math.round(v)} t/s`,
     get: (m) => m.speed,
@@ -116,7 +116,7 @@ export const LENSES: Lens[] = [
   {
     id: 'price',
     label: 'Price',
-    hint: 'Blended USD per 1M tokens · lower wins',
+    hint: '$/1M ↓',
     higherBetter: false,
     format: (v) => `$${v.toFixed(2)}`,
     get: (m) => m.price,
@@ -124,7 +124,7 @@ export const LENSES: Lens[] = [
   {
     id: 'latency',
     label: 'Latency',
-    hint: 'Median seconds to first chunk · lower wins',
+    hint: 's ↓',
     higherBetter: false,
     format: (v) => `${v.toFixed(2)}s`,
     get: (m) => m.latency,
@@ -132,7 +132,7 @@ export const LENSES: Lens[] = [
   {
     id: 'context',
     label: 'Context',
-    hint: 'Context window tokens · higher wins',
+    hint: 'tokens ↑',
     higherBetter: true,
     format: (v) => compact(v),
     get: (m) => m.context,
@@ -140,7 +140,7 @@ export const LENSES: Lens[] = [
   {
     id: 'value',
     label: 'Value',
-    hint: 'Weighted USD per index task · lower wins',
+    hint: '$/task ↓',
     higherBetter: false,
     format: (v) => `$${v.toFixed(2)}`,
     get: (m) => m.value,
@@ -174,7 +174,7 @@ export const HLENSES: Lens[] = [
   {
     id: 'intelligence',
     label: 'Score',
-    hint: 'Share of eval tasks done well · higher wins',
+    hint: '% ↑',
     higherBetter: true,
     format: (v) => `${(v * 100).toFixed(1)}%`,
     get: (m) => m.intelligence,
@@ -182,7 +182,7 @@ export const HLENSES: Lens[] = [
   {
     id: 'price',
     label: 'Cost',
-    hint: 'Mean USD per task · lower wins',
+    hint: '$/task ↓',
     higherBetter: false,
     format: (v) => `$${v.toFixed(2)}`,
     get: (m) => m.price,
@@ -190,7 +190,7 @@ export const HLENSES: Lens[] = [
   {
     id: 'latency',
     label: 'Time',
-    hint: 'Mean wall time per task · lower wins',
+    hint: 'task time ↓',
     higherBetter: false,
     format: (v) => duration(v),
     get: (m) => m.latency,
@@ -198,7 +198,7 @@ export const HLENSES: Lens[] = [
   {
     id: 'speed',
     label: 'Steps',
-    hint: 'Mean steps per task · lower wins',
+    hint: 'steps ↓',
     higherBetter: false,
     format: (v) => String(Math.round(v)),
     get: (m) => m.speed,

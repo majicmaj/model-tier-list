@@ -111,7 +111,7 @@ a {
 /* Colophon. */
 .colophon {
   margin: 20px var(--gutter) 0;
-  border-top: 4px solid var(--ink);
+  border-top: 1px solid var(--ink);
   padding-top: 8px;
   font-size: 0.75rem;
   color: var(--ink-soft);

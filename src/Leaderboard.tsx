@@ -30,7 +30,6 @@ export interface BoardConfig {
   lenses: Lens[]
   compound: CompoundDef
   facts: FactDef[]
-  emptyBand: string
   unrankedLabel: string
   edition: string
   source: string
@@ -45,17 +44,8 @@ export default function Leaderboard({
   lensId: LensId
   onLens: (id: LensId) => void
 }) {
-  const {
-    entries,
-    makers,
-    lenses,
-    compound,
-    facts,
-    emptyBand,
-    unrankedLabel,
-    edition,
-    source,
-  } = config
+  const { entries, makers, lenses, compound, facts, unrankedLabel, edition, source } =
+    config
   const lens = lenses.find((l) => l.id === lensId) ?? lenses[0]
   const blended = lens.id === 'compound'
   const values = useMemo(
@@ -128,7 +118,7 @@ export default function Leaderboard({
                 <span className="tier-range">{b.label}</span>
               </div>
               {b.empty ? (
-                <p className="tier-empty">{emptyBand}</p>
+                <div className="tiles" aria-hidden="true" />
               ) : (
                 <div className="tiles">
                   {b.rows.map((r) => (

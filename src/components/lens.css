@@ -173,13 +173,6 @@
   margin: 4px auto 8px;
 }
 
-.drawer-title {
-  font: inherit;
-  font-weight: 700;
-  font-size: 1rem;
-  margin: 0 4px 8px;
-}
-
 .drawer-opts {
   display: flex;
   flex-direction: column;
