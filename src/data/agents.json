@@ -1,6 +1,6 @@
 {
-  "edition": "2026-11-09",
-  "fetchedAt": "2026-11-09T19:44:07.848Z",
+  "edition": "2026-11-12",
+  "fetchedAt": "2026-11-12T02:42:28.658Z",
   "source": "https://artificialanalysis.ai/agents/coding-agents",
   "priceField": "meanCostUsd",
   "models": [
@@ -273,7 +273,7 @@
       "intelligence": 0.519768236993592,
       "price": 8.04811220428196,
       "latency": 1472.5084254817,
-      "speed": 200.877049903501,
+      "speed": 200.877049903502,
       "context": null,
       "value": null
     },
@@ -295,6 +295,27 @@
       "price": 5.23102713863476,
       "latency": 3369.69557528728,
       "speed": 111.53421852938,
+      "context": null,
+      "value": null
+    },
+    {
+      "slug": "mistral-vibe-mistral-large-4-high",
+      "name": "Mistral Vibe",
+      "shortName": "Mistral Large 4 (High)",
+      "version": "3.0.0-v14",
+      "modelLabel": "Mistral Large 4 (High)",
+      "modelMakers": [
+        "mistral"
+      ],
+      "company": "mistral",
+      "url": "https://artificialanalysis.ai/agents/coding-agents",
+      "releaseDate": null,
+      "reasoning": false,
+      "openWeights": false,
+      "intelligence": 0.482774919409145,
+      "price": 1.25944220793442,
+      "latency": 2903.91483346258,
+      "speed": 100.100451830129,
       "context": null,
       "value": null
     },
@@ -614,11 +635,11 @@
       "value": null
     },
     {
-      "slug": "mistral-vibe-mistral-large-4-high",
+      "slug": "mistral-vibe-mistral-large-4-medium",
       "name": "Mistral Vibe",
-      "shortName": "Mistral Large 4 (High)",
+      "shortName": "Mistral Large 4 (Medium)",
       "version": "3.0.0-v14",
-      "modelLabel": "Mistral Large 4 (High)",
+      "modelLabel": "Mistral Large 4 (Medium)",
       "modelMakers": [
         "mistral"
       ],
@@ -751,6 +772,11 @@
       "logo": "/logos/anthropic.svg",
       "color": "#cc785c"
     },
+    "mistral": {
+      "name": "Mistral",
+      "logo": "/logos/mistral.svg",
+      "color": "#f32e02"
+    },
     "xai": {
       "name": "SpaceXAI",
       "logo": "/logos/spacexai.svg",
@@ -761,20 +787,30 @@
       "logo": "/logos/openai.svg",
       "color": "#1f1f1f"
     },
-    "mistral": {
-      "name": "Mistral",
-      "logo": "/logos/mistral.svg",
-      "color": "#f32e02"
-    },
     "google": {
       "name": "Google",
       "logo": "/logos/google.svg",
       "color": "#34A853"
     },
+    "opencode": {
+      "name": "OpenCode",
+      "logo": "/logos/opencode.svg",
+      "color": "#2D2828"
+    },
+    "zai": {
+      "name": "Z AI",
+      "logo": "/logos/zai.svg",
+      "color": "#1c7ff8"
+    },
     "kimi": {
       "name": "Kimi",
       "logo": "/logos/kimi.jpg",
       "color": "#047AFE"
+    },
+    "reflection": {
+      "name": "Reflection",
+      "logo": "/logos/reflection.svg",
+      "color": "#195428"
     },
     "cognition": {
       "name": "Cognition",
@@ -805,21 +841,6 @@
       "name": "Alibaba",
       "logo": "/logos/alibaba.svg",
       "color": "#ff7018"
-    },
-    "reflection": {
-      "name": "Reflection",
-      "logo": "/logos/reflection.svg",
-      "color": "#195428"
-    },
-    "opencode": {
-      "name": "OpenCode",
-      "logo": "/logos/opencode.svg",
-      "color": "#2D2828"
-    },
-    "zai": {
-      "name": "Z AI",
-      "logo": "/logos/zai.svg",
-      "color": "#1c7ff8"
     },
     "github": {
       "name": "GitHub",
