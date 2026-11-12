@@ -213,6 +213,33 @@ export const HLENSES: Lens[] = [
   },
 ]
 
+export type Board = 'models' | 'harnesses'
+
+/** Same-meaning lens on the other board; Speed (t/s) pairs with Time. */
+const TO_HARNESS: Record<LensId, LensId> = {
+  intelligence: 'intelligence',
+  speed: 'latency',
+  price: 'price',
+  latency: 'latency',
+  context: 'compound',
+  value: 'price',
+  compound: 'compound',
+}
+
+const TO_MODELS: Record<LensId, LensId> = {
+  intelligence: 'intelligence',
+  speed: 'compound',
+  price: 'value',
+  latency: 'speed',
+  context: 'context',
+  value: 'value',
+  compound: 'compound',
+}
+
+export function twinLens(lensId: LensId, page: Board): LensId {
+  return page === 'harnesses' ? TO_HARNESS[lensId] : TO_MODELS[lensId]
+}
+
 export const TIERS = ['S', 'A', 'B', 'C', 'D', 'E', 'F'] as const
 export type Tier = (typeof TIERS)[number]
 

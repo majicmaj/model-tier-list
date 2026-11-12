@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import Leaderboard, { type BoardConfig } from './Leaderboard'
+import { useHashRoute } from './hooks/useHashRoute'
 import {
   HARNESS_COMPOUND,
   HARNESS_FACTS,
@@ -9,14 +10,14 @@ import {
   MODEL_FACTS,
   agentData,
   data,
+  twinLens,
+  type Board,
   type LensId,
 } from './lib/tiers'
 
-type Page = 'models' | 'harnesses'
+const PAGES: Board[] = ['models', 'harnesses']
 
-const PAGES: Page[] = ['models', 'harnesses']
-
-const CONFIGS: Record<Page, BoardConfig> = {
+const CONFIGS: Record<Board, BoardConfig> = {
   models: {
     entries: data.models,
     makers: data.companies,
@@ -42,10 +43,7 @@ const CONFIGS: Record<Page, BoardConfig> = {
 }
 
 export default function App() {
-  const [page, setPage] = useState<Page>(() =>
-    window.location.hash === '#/harnesses' ? 'harnesses' : 'models',
-  )
-  const [lensId, setLensId] = useState<LensId>('compound')
+  const [{ page, lensId }, go] = useHashRoute()
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
   const pillRef = useRef<HTMLSpanElement>(null)
 
@@ -68,13 +66,11 @@ export default function App() {
     return () => window.removeEventListener('resize', placePill)
   }, [])
 
-  const goPage = (p: Page) => {
+  const goPage = (p: Board) => {
     if (p === page) return
-    // Keep the pick when the other board offers the same lens, else Compound.
-    if (!CONFIGS[p].lenses.some((l) => l.id === lensId)) setLensId('compound')
-    setPage(p)
-    window.location.hash = p === 'harnesses' ? '#/harnesses' : '#/'
+    go(p, twinLens(lensId, p))
   }
+  const goLens = (id: LensId) => go(page, id)
 
   return (
     <main className="page">
@@ -96,7 +92,7 @@ export default function App() {
           </button>
         ))}
       </div>
-      <Leaderboard key={page} config={CONFIGS[page]} lensId={lensId} onLens={setLensId} />
+      <Leaderboard key={page} config={CONFIGS[page]} lensId={lensId} onLens={goLens} />
     </main>
   )
 }
