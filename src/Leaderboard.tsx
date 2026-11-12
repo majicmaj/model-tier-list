@@ -5,13 +5,14 @@ import {
   compoundStars,
   compoundValues,
   displayName,
-  gapCopy,
+  gapNextCopy,
   isNew,
   multiEffortBases,
   prevRanks,
   rank,
   type Company,
   type CompoundDef,
+  type FactDef,
   type Lens,
   type LensId,
   type Model,
@@ -28,6 +29,7 @@ export interface BoardConfig {
   makers: Record<string, Company>
   lenses: Lens[]
   compound: CompoundDef
+  facts: FactDef[]
   emptyBand: string
   unrankedLabel: string
   edition: string
@@ -43,8 +45,17 @@ export default function Leaderboard({
   lensId: LensId
   onLens: (id: LensId) => void
 }) {
-  const { entries, makers, lenses, compound, emptyBand, unrankedLabel, edition, source } =
-    config
+  const {
+    entries,
+    makers,
+    lenses,
+    compound,
+    facts,
+    emptyBand,
+    unrankedLabel,
+    edition,
+    source,
+  } = config
   const lens = lenses.find((l) => l.id === lensId) ?? lenses[0]
   const blended = lens.id === 'compound'
   const values = useMemo(
@@ -74,7 +85,7 @@ export default function Leaderboard({
     }
     return out
   }, [lens, compound, entries, ranked])
-  const { tip, tipEl, onHover, onLeave, onToggle } = useTip(lensId)
+  const { tip, tipEl, onHover, onLeave, onToggle, onTipEnter, onTipLeave } = useTip(lensId)
   const boardRef = useRef<HTMLDivElement>(null)
   const capture = useFlip(boardRef)
 
@@ -91,17 +102,13 @@ export default function Leaderboard({
   const tipRow: Ranked | undefined = tip
     ? ranked.find((r) => r.model.slug === tip.slug)
     : undefined
-  const tipBand = tipRow ? rows.find((b) => b.rows.includes(tipRow)) : undefined
-  const tipInfo: TileInfo | null =
-    tipRow && tipBand
-      ? {
-          value: lens.format(tipRow.value),
-          rank: tipRow.rank,
-          gap: gapCopy(lens, tipRow.gap),
-          tier: tipBand.tier,
-          band: tipBand.label,
-        }
-      : null
+  const tipInfo: TileInfo | null = tipRow
+    ? {
+        value: lens.format(tipRow.value),
+        rank: tipRow.rank,
+        gap: gapNextCopy(lens, ranked, tipRow),
+      }
+    : null
 
   // All hooks sit above this return, so an empty set cannot break hook order.
   if (!entries.length) {
@@ -185,7 +192,10 @@ export default function Leaderboard({
           pos={tip}
           total={ranked.length}
           marks={tipModel ? (stars?.get(tipModel.slug) ?? []) : []}
+          facts={facts}
           elRef={tipEl}
+          onTipEnter={onTipEnter}
+          onTipLeave={onTipLeave}
         />
       )}
 

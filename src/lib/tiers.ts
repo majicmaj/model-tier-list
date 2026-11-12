@@ -258,7 +258,7 @@ export function rank(
 }
 
 export interface CompoundPart {
-  field: Exclude<LensId, 'compound'>
+  field: LensField
   weight: number
   higherBetter: boolean
   star: string
@@ -583,8 +583,54 @@ export function bands(lens: Lens, ranked: Ranked[]): Band[] {
   }))
 }
 
-/** Signed gap copy; the leader reads as lead. */
-export function gapCopy(lens: Lens, gap: number): string {
-  if (gap === 0) return 'lead'
-  return lens.higherBetter ? `−${lens.format(gap)}` : `+${lens.format(gap)}`
+/**
+ * Gap to the next better row. The leader reads its margin over #2, the rest
+ * read their gap to the row above. Lone boards read a dash.
+ */
+export function gapNextCopy(lens: Lens, ranked: Ranked[], row: Ranked): string {
+  if (ranked.length < 2) return '—'
+  const pad = (n: number): string => `#${String(n).padStart(2, '0')}`
+  if (row.rank === 1) {
+    const d = Math.abs(row.value - ranked[1].value)
+    return lens.higherBetter ? `+${lens.format(d)} · ${pad(2)}` : `−${lens.format(d)} · ${pad(2)}`
+  }
+  const above = ranked[row.rank - 2]
+  const d = Math.abs(row.value - above.value)
+  return lens.higherBetter
+    ? `−${lens.format(d)} · ${pad(row.rank - 1)}`
+    : `+${lens.format(d)} · ${pad(row.rank - 1)}`
 }
+
+export type LensField = Exclude<LensId, 'compound'>
+
+export type FactIcon = 'metric' | 'model' | 'tag' | 'bolt' | 'clock' | 'list'
+
+export interface FactDef {
+  field: LensField
+  label: string
+  icon: FactIcon
+  format: (v: number) => string
+}
+
+const lensFormat = (lenses: Lens[], id: LensField): ((v: number) => string) =>
+  lenses.find((l) => l.id === id)!.format
+
+/** Fixed fact rows for model tooltips: smarts, price, speed. */
+export const MODEL_FACTS: FactDef[] = [
+  { field: 'intelligence', label: 'Intelligence', icon: 'model', format: (v) => v.toFixed(1) },
+  { field: 'price', label: '$/1M', icon: 'tag', format: (v) => `$${v.toFixed(2)}` },
+  { field: 'speed', label: 'Speed', icon: 'bolt', format: (v) => `${Math.round(v)} t/s` },
+]
+
+/** Fixed fact rows for harness tooltips: score, cost, time, steps. */
+export const HARNESS_FACTS: FactDef[] = [
+  {
+    field: 'intelligence',
+    label: 'Score',
+    icon: 'metric',
+    format: (v) => `${(v * 100).toFixed(1)}%`,
+  },
+  { field: 'price', label: 'Cost', icon: 'tag', format: (v) => `$${v.toFixed(2)}` },
+  { field: 'latency', label: 'Time', icon: 'clock', format: lensFormat(HLENSES, 'latency') },
+  { field: 'speed', label: 'Steps', icon: 'list', format: (v) => String(Math.round(v)) },
+]

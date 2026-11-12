@@ -1,5 +1,5 @@
 import type { Ref } from 'react'
-import type { Company, Lens, Model } from '../lib/tiers'
+import type { Company, FactDef, Lens, Model } from '../lib/tiers'
 import { Icon, Mark } from './icons'
 import type { TipState } from '../hooks/useTip'
 
@@ -7,8 +7,6 @@ export interface TileInfo {
   value: string
   rank: number
   gap: string
-  tier: string
-  band: string
 }
 
 export function Tooltip({
@@ -19,7 +17,10 @@ export function Tooltip({
   pos,
   total,
   marks,
+  facts,
   elRef,
+  onTipEnter,
+  onTipLeave,
 }: {
   model: Model
   makers: Record<string, Company>
@@ -28,16 +29,22 @@ export function Tooltip({
   pos: TipState
   total: number
   marks: string[]
+  facts: FactDef[]
   elRef: Ref<HTMLDivElement>
+  onTipEnter: () => void
+  onTipLeave: () => void
 }) {
   const co = makers[model.company]
   return (
     <div
       id={`tip-${model.slug}`}
+      key={pos.above ? 'above' : 'below'}
       ref={elRef}
       role="tooltip"
-      className={`tip${pos.above ? ' is-above' : ' is-below'}${pos.pinned ? ' is-pinned' : ''}`}
+      className={`tip${pos.corrected ? ' is-set' : ''}${pos.pinned ? ' is-pinned' : ''}`}
       style={{ left: `${pos.x}px`, top: `${pos.y}px` } as React.CSSProperties}
+      onMouseEnter={onTipEnter}
+      onMouseLeave={onTipLeave}
     >
       <p className="tip-name">{model.modelMakers ? model.name : model.shortName}</p>
       {model.modelMakers ? (
@@ -66,8 +73,8 @@ export function Tooltip({
       ) : (
         <p className="tip-co">{co?.name || 'Unknown maker'}</p>
       )}
-      {info ? (
-        <dl className="tip-grid">
+      <dl className="tip-grid">
+        {info && (
           <div>
             <dt>
               <Icon n="rank" />
@@ -77,6 +84,8 @@ export function Tooltip({
               #{String(info.rank).padStart(2, '0')} of {total}
             </dd>
           </div>
+        )}
+        {info && (
           <div>
             <dt>
               <Icon n="metric" />
@@ -84,6 +93,8 @@ export function Tooltip({
             </dt>
             <dd>{info.value}</dd>
           </div>
+        )}
+        {info && (
           <div>
             <dt>
               <Icon n="gap" />
@@ -91,19 +102,21 @@ export function Tooltip({
             </dt>
             <dd>{info.gap}</dd>
           </div>
-          <div>
-            <dt>
-              <Icon n="tier" />
-              Tier
-            </dt>
-            <dd>
-              {info.tier} · {info.band}
-            </dd>
-          </div>
-        </dl>
-      ) : (
-        <p className="tip-flat">No {lens.label.toLowerCase()} score this edition.</p>
-      )}
+        )}
+        {facts.map((f) => {
+          const v = model[f.field]
+          return (
+            <div key={f.field}>
+              <dt>
+                <Icon n={f.icon} />
+                {f.label}
+              </dt>
+              <dd>{v === null ? '—' : f.format(v)}</dd>
+            </div>
+          )
+        })}
+      </dl>
+      {!info && <p className="tip-flat">No {lens.label.toLowerCase()} score this edition.</p>}
       {marks.length > 0 && (
         <p className="tip-marks">
           {marks.map((s) => (

@@ -2,9 +2,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Leaderboard, { type BoardConfig } from './Leaderboard'
 import {
   HARNESS_COMPOUND,
+  HARNESS_FACTS,
   HLENSES,
   LENSES,
   MODEL_COMPOUND,
+  MODEL_FACTS,
   agentData,
   data,
   type LensId,
@@ -20,6 +22,7 @@ const CONFIGS: Record<Page, BoardConfig> = {
     makers: data.companies,
     lenses: LENSES,
     compound: MODEL_COMPOUND,
+    facts: MODEL_FACTS,
     emptyBand: 'No models in this band.',
     unrankedLabel: 'Unranked models',
     edition: data.edition,
@@ -30,6 +33,7 @@ const CONFIGS: Record<Page, BoardConfig> = {
     makers: agentData.companies,
     lenses: HLENSES,
     compound: HARNESS_COMPOUND,
+    facts: HARNESS_FACTS,
     emptyBand: 'No harnesses in this band.',
     unrankedLabel: 'Unranked harnesses',
     edition: agentData.edition,

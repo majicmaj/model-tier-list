@@ -18,7 +18,7 @@ export interface TipState extends TipPos {
 function tilePos(anchor: HTMLElement): TipPos {
   const r = anchor.getBoundingClientRect()
   const w = 248
-  const h = 210
+  const h = 320
   const x = Math.min(Math.max(r.left + r.width / 2 - w / 2, 8), window.innerWidth - w - 8)
   const above = r.top > h + 12
   return {
@@ -33,8 +33,15 @@ function tilePos(anchor: HTMLElement): TipPos {
 export function useTip(lensId: string) {
   const [tip, setTip] = useState<TipState | null>(null)
   const tipEl = useRef<HTMLDivElement>(null)
+  const closeTimer = useRef(0)
+
+  const clearTimer = () => {
+    window.clearTimeout(closeTimer.current)
+    closeTimer.current = 0
+  }
 
   useEffect(() => setTip(null), [lensId])
+  useEffect(() => clearTimer, [])
 
   useEffect(() => {
     if (!tip) return
@@ -84,20 +91,31 @@ export function useTip(lensId: string) {
   }, [tip])
 
   const onHover = (slug: string, anchor: HTMLElement) => {
+    clearTimer()
     setTip((cur) => {
       if (cur?.pinned) return cur
+      if (cur && cur.slug === slug) return cur
       return { slug, ...tilePos(anchor), pinned: false, corrected: false }
     })
   }
+  // The pointer may cross the tile gap or enter the card; wait it out.
   const onLeave = () => {
-    setTip((cur) => (cur && !cur.pinned ? null : cur))
+    clearTimer()
+    closeTimer.current = window.setTimeout(() => {
+      setTip((cur) => (cur && !cur.pinned ? null : cur))
+    }, 120)
   }
   const onToggle = (slug: string, anchor: HTMLElement) => {
+    clearTimer()
     setTip((cur) => {
       if (cur?.pinned && cur.slug === slug) return null
       return { slug, ...tilePos(anchor), pinned: true, corrected: false }
     })
   }
+  const onTipEnter = () => clearTimer()
+  const onTipLeave = () => {
+    setTip((cur) => (cur && !cur.pinned ? null : cur))
+  }
 
-  return { tip, tipEl, onHover, onLeave, onToggle }
+  return { tip, tipEl, onHover, onLeave, onToggle, onTipEnter, onTipLeave }
 }
