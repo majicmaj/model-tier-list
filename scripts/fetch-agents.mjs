@@ -10,6 +10,7 @@ import {
   num,
   originPath,
   priorAdded,
+  priorValues,
   titleCase,
   writeSnapshot,
 } from './lib/aa.mjs'
@@ -51,7 +52,7 @@ function addMaker(companies, logoFiles, m, fallback) {
 
 /** One page row becomes one harness+model run. */
 function toRun(r, ctx) {
-  const { companies, logoFiles, slugs, missing, prior, today } = ctx
+  const { companies, logoFiles, slugs, missing, prior, prev, today } = ctx
   const key = addMaker(companies, logoFiles, r.agentCreator || {}, r.provider)
   const modelMakers = []
   for (const m of r.modelCreators || []) {
@@ -80,6 +81,7 @@ function toRun(r, ctx) {
     name: r.agentName,
     shortName: model || r.agentName,
     added: prior.get(slug) || today,
+    prev: prev.get(slug) || null,
     version,
     modelLabel: model || null,
     modelMakers,
@@ -123,6 +125,7 @@ async function main() {
     slugs: new Set(),
     missing: { intelligence: 0, price: 0, latency: 0, speed: 0 },
     prior: priorAdded('agents.json'),
+    prev: priorValues('agents.json'),
     today: new Date().toISOString().slice(0, 10),
   }
   const models = records.map((r) => toRun(r, ctx))

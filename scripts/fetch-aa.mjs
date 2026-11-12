@@ -12,6 +12,7 @@ import {
   num,
   originPath,
   priorAdded,
+  priorValues,
   titleCase,
   writeSnapshot,
 } from './lib/aa.mjs'
@@ -43,7 +44,7 @@ function chartMaps(charts) {
 
 /** One page record plus its chart entry becomes one snapshot model. */
 function toModel(r, ctx) {
-  const { byUrl, byLabel, logoFiles, companies, unmapped, missing, prior, today } = ctx
+  const { byUrl, byLabel, logoFiles, companies, unmapped, missing, prior, prev, today } = ctx
   const chart =
     byUrl.get(r.slug) || byUrl.get(r.release?.slug) || byLabel.get(norm(r.name)) || null
   const c = r.creator || {}
@@ -89,6 +90,7 @@ function toModel(r, ctx) {
     slug: r.slug,
     name: r.name,
     added: prior.get(r.slug) || today,
+    prev: prev.get(r.slug) || null,
     shortName: r.shortName || r.name,
     company: key,
     url: `https://artificialanalysis.ai/models/${r.slug}`,
@@ -125,6 +127,7 @@ async function main() {
     unmapped: new Set(),
     missing: { intelligence: 0, speed: 0, price: 0, latency: 0, context: 0, value: 0 },
     prior: priorAdded('snapshot.json'),
+    prev: priorValues('snapshot.json'),
     today: new Date().toISOString().slice(0, 10),
   }
   const models = records.map((r) => toModel(r, ctx))

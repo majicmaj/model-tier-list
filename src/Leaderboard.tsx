@@ -6,6 +6,7 @@ import {
   compoundValues,
   gapCopy,
   isNew,
+  prevRanks,
   rank,
   type Company,
   type CompoundDef,
@@ -61,6 +62,15 @@ export default function Leaderboard({
     () => (blended ? compoundPartial(compound, entries) : new Set<string>()),
     [blended, compound, entries],
   )
+  const moves = useMemo(() => {
+    const before = prevRanks(lens, compound, entries)
+    const out = new Map<string, number>()
+    for (const r of ranked) {
+      const was = before.get(r.model.slug)
+      if (was !== undefined && was !== r.rank) out.set(r.model.slug, was - r.rank)
+    }
+    return out
+  }, [lens, compound, entries, ranked])
   const { tip, tipEl, onHover, onLeave, onToggle } = useTip(lensId)
   const boardRef = useRef<HTMLDivElement>(null)
   const capture = useFlip(boardRef)
@@ -122,6 +132,7 @@ export default function Leaderboard({
                       makers={makers}
                       fresh={isNew(edition, r.model.added)}
                       partial={partial.has(r.model.slug)}
+                      delta={moves.get(r.model.slug) ?? null}
                       tipOpen={tip?.slug === r.model.slug}
                       onHover={onHover}
                       onLeave={onLeave}
@@ -148,6 +159,7 @@ export default function Leaderboard({
                   makers={makers}
                   fresh={isNew(edition, m.added)}
                   partial={false}
+                  delta={null}
                   tipOpen={tip?.slug === m.slug}
                   onHover={onHover}
                   onLeave={onLeave}

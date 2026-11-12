@@ -1,4 +1,4 @@
-import type { Company, Model } from '../lib/tiers'
+import { deltaCopy, type Company, type Model } from '../lib/tiers'
 import { Logo, Mark } from './icons'
 
 export function Tile({
@@ -6,6 +6,7 @@ export function Tile({
   makers,
   fresh,
   partial,
+  delta,
   tipOpen,
   onHover,
   onLeave,
@@ -15,6 +16,7 @@ export function Tile({
   makers: Record<string, Company>
   fresh: boolean
   partial: boolean
+  delta: number | null
   tipOpen: boolean
   onHover: (slug: string, anchor: HTMLElement) => void
   onLeave: () => void
@@ -40,6 +42,14 @@ export function Tile({
         </span>
       )}
       {partial && <span className="tile-dot" aria-label="Score uses partial data" />}
+      {delta !== null && delta !== 0 && (
+        <span
+          className={`tile-delta${delta > 0 ? ' is-up' : ' is-down'}`}
+          aria-label={`Moved ${delta > 0 ? 'up' : 'down'} ${Math.abs(delta)} since last update`}
+        >
+          {deltaCopy(delta)}
+        </span>
+      )}
       {model.modelMakers?.length ? (
         <span className="logos" aria-hidden="true">
           <Mark

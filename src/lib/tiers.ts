@@ -20,11 +20,21 @@ export interface Lens {
   get: (m: Model) => number | null
 }
 
+export interface PrevScores {
+  intelligence: number | null
+  speed: number | null
+  price: number | null
+  latency: number | null
+  context: number | null
+  value: number | null
+}
+
 export interface Model {
   slug: string
   name: string
   shortName: string
   added?: string | null
+  prev?: PrevScores | null
   version?: string | null
   modelLabel?: string | null
   modelMakers?: string[]
@@ -339,6 +349,25 @@ export function compoundPartial(def: CompoundDef, models: Model[]): Set<string> 
     if (def.parts.some((p) => m[p.field] === null)) out.add(m.slug)
   }
   return out
+}
+
+/**
+ * Last edition rank per slug for this lens, over entries held in both
+ * editions. Fresh entries have no move; removed entries do not count.
+ */
+export function prevRanks(lens: Lens, def: CompoundDef, models: Model[]): Map<string, number> {
+  const held = models.filter((m) => m.prev)
+  const then = held.map((m) => ({ ...m, ...m.prev }))
+  const { ranked } =
+    lens.id === 'compound'
+      ? rank(lens, then, compoundValues(def, then))
+      : rank(lens, then)
+  return new Map(ranked.map((r) => [r.model.slug, r.rank]))
+}
+
+/** Signed move copy: positive climbs read ▲n, drops read ▼n. */
+export function deltaCopy(delta: number): string {
+  return `${delta > 0 ? '▲' : '▼'}${Math.abs(delta)}`
 }
 
 /**

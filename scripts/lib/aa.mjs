@@ -20,6 +20,26 @@ export function priorAdded(file) {
   }
 }
 
+const PREV_FIELDS = ['intelligence', 'speed', 'price', 'latency', 'context', 'value']
+
+/** Last edition raw scores, keyed by slug, so the app can show rank moves. */
+export function priorValues(file) {
+  const p = join(ROOT, 'src', 'data', file)
+  if (!existsSync(p)) return new Map()
+  try {
+    const models = JSON.parse(readFileSync(p, 'utf8')).models
+    return new Map(
+      models.map((m) => {
+        const prev = {}
+        for (const f of PREV_FIELDS) prev[f] = m[f] ?? null
+        return [m.slug, prev]
+      }),
+    )
+  } catch {
+    return new Map()
+  }
+}
+
 export const titleCase = (s) =>
   s
     .split(/[-_ ]+/)

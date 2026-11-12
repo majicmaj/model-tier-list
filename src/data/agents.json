@@ -1,6 +1,6 @@
 {
   "edition": "2026-11-12",
-  "fetchedAt": "2026-11-12T22:22:16.925Z",
+  "fetchedAt": "2026-11-12T22:24:16.232Z",
   "source": "https://artificialanalysis.ai/agents/coding-agents",
   "priceField": "meanCostUsd",
   "models": [
@@ -9,6 +9,14 @@
       "name": "Claude Code",
       "shortName": "Claude Opus 5.5 (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.616528649505811,
+        "speed": 146.351117627892,
+        "price": 11.4227202144224,
+        "latency": 3661.21221302161,
+        "context": null,
+        "value": null
+      },
       "version": "2.1.280",
       "modelLabel": "Claude Opus 5.5 (Max)",
       "modelMakers": [
@@ -31,6 +39,14 @@
       "name": "Devin Fusion CLI",
       "shortName": "Claude Opus 5.5 Max + GPT-6 Luna High",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.615117219506897,
+        "speed": 99.4643553817747,
+        "price": 7.99768820548534,
+        "latency": 3067.08119502552,
+        "context": null,
+        "value": null
+      },
       "version": "3000.11.34",
       "modelLabel": "Claude Opus 5.5 Max + GPT-6 Luna High",
       "modelMakers": [
@@ -54,6 +70,14 @@
       "name": "GitHub Copilot",
       "shortName": "Copilot Fusion (max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.598570672857608,
+        "speed": 171.026594982079,
+        "price": 5.58738499550885,
+        "latency": 2167.26806006408,
+        "context": null,
+        "value": null
+      },
       "version": "1.0.101",
       "modelLabel": "Copilot Fusion (max)",
       "modelMakers": [
@@ -77,6 +101,14 @@
       "name": "Antigravity CLI",
       "shortName": "Gemini 4 Carbon (High)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.594049025741284,
+        "speed": 177.827079034068,
+        "price": 7.7432202900257,
+        "latency": 1789.89670714312,
+        "context": null,
+        "value": null
+      },
       "version": "1.4.3",
       "modelLabel": "Gemini 4 Carbon (High)",
       "modelMakers": [
@@ -99,6 +131,14 @@
       "name": "Claude Code",
       "shortName": "Claude Sonnet 5.5 (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.593374426631911,
+        "speed": 232.941984902791,
+        "price": 13.3015082635468,
+        "latency": 4784.64130125774,
+        "context": null,
+        "value": null
+      },
       "version": "2.1.280",
       "modelLabel": "Claude Sonnet 5.5 (Max)",
       "modelMakers": [
@@ -121,6 +161,14 @@
       "name": "Muse Code",
       "shortName": "Muse Wonder Full (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.588804489084392,
+        "speed": 194.874971760617,
+        "price": null,
+        "latency": 2096.2841057163,
+        "context": null,
+        "value": null
+      },
       "version": "1.4.5-R5426.1",
       "modelLabel": "Muse Wonder Full (Max)",
       "modelMakers": [
@@ -143,6 +191,14 @@
       "name": "Devin Fusion CLI",
       "shortName": "Claude Fable 5.1 XHigh + SWE-2 Medium",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.586619030954708,
+        "speed": 92.3841577060932,
+        "price": 8.19825160322711,
+        "latency": 2253.66843252199,
+        "context": null,
+        "value": null
+      },
       "version": "3000.10.23",
       "modelLabel": "Claude Fable 5.1 XHigh + SWE-2 Medium",
       "modelMakers": [
@@ -166,6 +222,14 @@
       "name": "Claude Code",
       "shortName": "Claude Fable 5.1 (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.576200245682633,
+        "speed": 42.2762050613664,
+        "price": 11.5301045391259,
+        "latency": 2115.55138904529,
+        "context": null,
+        "value": null
+      },
       "version": "2.1.263",
       "modelLabel": "Claude Fable 5.1 (Max)",
       "modelMakers": [
@@ -188,6 +252,14 @@
       "name": "Codex",
       "shortName": "GPT-6 Astra (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.546635690561529,
+        "speed": 39.3501020962311,
+        "price": 7.03615822479963,
+        "latency": 1486.68747959053,
+        "context": null,
+        "value": null
+      },
       "version": "0.153.4",
       "modelLabel": "GPT-6 Astra (Max)",
       "modelMakers": [
@@ -210,6 +282,14 @@
       "name": "Codex",
       "shortName": "GPT-6.1 Sol (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.541279798631476,
+        "speed": 40.6271304442272,
+        "price": 1.5046389983744,
+        "latency": 1421.42885321603,
+        "context": null,
+        "value": null
+      },
       "version": "0.154.0",
       "modelLabel": "GPT-6.1 Sol (Max)",
       "modelMakers": [
@@ -232,6 +312,14 @@
       "name": "Antigravity CLI",
       "shortName": "Gemini 4 Argon (High)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.532462665363311,
+        "speed": 166.081847507331,
+        "price": 11.7318632341125,
+        "latency": 2081.39574652818,
+        "context": null,
+        "value": null
+      },
       "version": "1.2.10",
       "modelLabel": "Gemini 4 Argon (High)",
       "modelMakers": [
@@ -254,6 +342,14 @@
       "name": "Devin Fusion CLI",
       "shortName": "GPT-6 Astra XHigh + SWE-2 Medium",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.530769734767025,
+        "speed": 58.8586738351254,
+        "price": 4.33822148437056,
+        "latency": 1270.3477207201,
+        "context": null,
+        "value": null
+      },
       "version": "3000.10.23",
       "modelLabel": "GPT-6 Astra XHigh + SWE-2 Medium",
       "modelMakers": [
@@ -277,6 +373,14 @@
       "name": "Muse Code",
       "shortName": "Muse Wonder (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.519768236993592,
+        "speed": 200.877049903502,
+        "price": 8.04811220428196,
+        "latency": 1472.5084254817,
+        "context": null,
+        "value": null
+      },
       "version": "1.4.5-R5426.1",
       "modelLabel": "Muse Wonder (Max)",
       "modelMakers": [
@@ -299,6 +403,14 @@
       "name": "Opencode",
       "shortName": "GLM-5.3 (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.489161690344303,
+        "speed": 111.53421852938,
+        "price": 5.23102713863476,
+        "latency": 3369.69557528728,
+        "context": null,
+        "value": null
+      },
       "version": "1.18.29",
       "modelLabel": "GLM-5.3 (Max)",
       "modelMakers": [
@@ -321,6 +433,14 @@
       "name": "Mistral Vibe",
       "shortName": "Mistral Large 4 (High)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.482774919409145,
+        "speed": 100.100451830129,
+        "price": 1.25944220793442,
+        "latency": 2903.91483346258,
+        "context": null,
+        "value": null
+      },
       "version": "3.0.0-v14",
       "modelLabel": "Mistral Large 4 (High)",
       "modelMakers": [
@@ -343,6 +463,14 @@
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Xhigh)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.482238344954925,
+        "speed": 71.9594569349408,
+        "price": 0.690844449567775,
+        "latency": 981.713951073096,
+        "context": null,
+        "value": null
+      },
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Xhigh)",
       "modelMakers": [
@@ -365,6 +493,14 @@
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.481004244053438,
+        "speed": 100.428485934615,
+        "price": 1.24038465572461,
+        "latency": 1568.79046882589,
+        "context": null,
+        "value": null
+      },
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Max)",
       "modelMakers": [
@@ -387,6 +523,14 @@
       "name": "Codex",
       "shortName": "DeepSeek V4.1 Flash (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.473001334419464,
+        "speed": 142.882443792766,
+        "price": 0.38619359563592,
+        "latency": 2283.94687962311,
+        "context": null,
+        "value": null
+      },
       "version": "0.153.2",
       "modelLabel": "DeepSeek V4.1 Flash (Max)",
       "modelMakers": [
@@ -409,6 +553,14 @@
       "name": "Grok Build",
       "shortName": "Grok 4.7 (Xhigh)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.465968752688172,
+        "speed": 169.916321277289,
+        "price": 9.47935653344195,
+        "latency": 2146.05576560009,
+        "context": null,
+        "value": null
+      },
       "version": "1.0.40",
       "modelLabel": "Grok 4.7 (Xhigh)",
       "modelMakers": [
@@ -431,6 +583,14 @@
       "name": "DeepSeek Harness",
       "shortName": "DeepSeek V4.1 Flash 1017 (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.463051957532312,
+        "speed": 101.530045617465,
+        "price": 0.29627468390668,
+        "latency": 1284.94041000543,
+        "context": null,
+        "value": null
+      },
       "version": "0.2.1rc2",
       "modelLabel": "DeepSeek V4.1 Flash 1017 (Max)",
       "modelMakers": [
@@ -453,6 +613,14 @@
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (High)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.462787772238514,
+        "speed": 66.7762083197567,
+        "price": 0.544031579042956,
+        "latency": 759.266290102096,
+        "context": null,
+        "value": null
+      },
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (High)",
       "modelMakers": [
@@ -475,6 +643,14 @@
       "name": "Muse Code",
       "shortName": "Muse Ember (Max)",
       "added": "2026-11-09",
+      "prev": {
+        "intelligence": 0.459457786466818,
+        "speed": 215.785131964809,
+        "price": null,
+        "latency": 1153.8620908146,
+        "context": null,
+        "value": null
+      },
       "version": "1.4.14-R7309.1",
       "modelLabel": "Muse Ember (Max)",
       "modelMakers": [
@@ -497,6 +673,14 @@
       "name": "Muse Code",
       "shortName": "Muse Spark 1.3 (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.457077885630498,
+        "speed": 208.319377647442,
+        "price": 3.91029139020419,
+        "latency": 1398.49826969262,
+        "context": null,
+        "value": null
+      },
       "version": "1.0.3-R2198.1",
       "modelLabel": "Muse Spark 1.3 (Max)",
       "modelMakers": [
@@ -519,6 +703,14 @@
       "name": "Claude Code",
       "shortName": "Step 5 Preview",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.431274491691105,
+        "speed": 142.091813837298,
+        "price": 1.84006320525524,
+        "latency": 3665.13740781145,
+        "context": null,
+        "value": null
+      },
       "version": "2.1.220",
       "modelLabel": "Step 5 Preview",
       "modelMakers": [
@@ -541,6 +733,14 @@
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Medium)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.420492375909634,
+        "speed": 57.9985804279353,
+        "price": 0.394994482142174,
+        "latency": 610.752293823178,
+        "context": null,
+        "value": null
+      },
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Medium)",
       "modelMakers": [
@@ -563,6 +763,14 @@
       "name": "Kimi Code CLI",
       "shortName": "Kimi K3 (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.41417319257087,
+        "speed": 185.884007277072,
+        "price": 5.16526976917945,
+        "latency": 3772.73379345389,
+        "context": null,
+        "value": null
+      },
       "version": "0.36.1",
       "modelLabel": "Kimi K3 (Max)",
       "modelMakers": [
@@ -585,6 +793,14 @@
       "name": "Muse Code",
       "shortName": "Muse Ember (Xhigh)",
       "added": "2026-11-09",
+      "prev": {
+        "intelligence": 0.398415900727707,
+        "speed": 181.890664711632,
+        "price": null,
+        "latency": 1273.67282749321,
+        "context": null,
+        "value": null
+      },
       "version": "1.4.14-R7309.1",
       "modelLabel": "Muse Ember (Xhigh)",
       "modelMakers": [
@@ -607,6 +823,14 @@
       "name": "Claude Code",
       "shortName": "Qwen3.8 Max",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.392199207885305,
+        "speed": 114.796515026192,
+        "price": 3.79584401482699,
+        "latency": 4568.4135207125,
+        "context": null,
+        "value": null
+      },
       "version": "2.1.266",
       "modelLabel": "Qwen3.8 Max",
       "modelMakers": [
@@ -629,6 +853,14 @@
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Non-reasoning)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.392151614641034,
+        "speed": 81.5091973498425,
+        "price": 0.454255643441512,
+        "latency": 572.437023079179,
+        "context": null,
+        "value": null
+      },
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Non-reasoning)",
       "modelMakers": [
@@ -651,6 +883,14 @@
       "name": "Claude Code",
       "shortName": "Claude Haiku 5.5 (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.373496050722277,
+        "speed": 114.307695231889,
+        "price": 2.67388407176395,
+        "latency": 4255.92477550559,
+        "context": null,
+        "value": null
+      },
       "version": "2.1.296",
       "modelLabel": "Claude Haiku 5.5 (Max)",
       "modelMakers": [
@@ -673,6 +913,14 @@
       "name": "Mistral Vibe",
       "shortName": "Mistral Large 4 (Medium)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.354072051699794,
+        "speed": 80.7014391224069,
+        "price": 0.782666187098099,
+        "latency": 2330.06956728793,
+        "context": null,
+        "value": null
+      },
       "version": "3.0.0-v14",
       "modelLabel": "Mistral Large 4 (Medium)",
       "modelMakers": [
@@ -695,6 +943,14 @@
       "name": "Codex",
       "shortName": "GPT-6.1 Terra (Low)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.3485683422396,
+        "speed": 42.7471271858369,
+        "price": 0.198820047696481,
+        "latency": 379.469317133703,
+        "context": null,
+        "value": null
+      },
       "version": "0.163.0",
       "modelLabel": "GPT-6.1 Terra (Low)",
       "modelMakers": [
@@ -717,6 +973,14 @@
       "name": "Antigravity SDK v0.1.12",
       "shortName": "Gemini 3.8 Flash (High)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.33272301118714,
+        "speed": 202.504982078853,
+        "price": 2.51071545979138,
+        "latency": 786.045572632779,
+        "context": null,
+        "value": null
+      },
       "version": "0.1.12",
       "modelLabel": "Gemini 3.8 Flash (High)",
       "modelMakers": [
@@ -739,6 +1003,14 @@
       "name": "Codex",
       "shortName": "GPT-6 Luna (Max)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.312156308460954,
+        "speed": 80.0352166829586,
+        "price": 0.156271419158149,
+        "latency": 1250.1301772825,
+        "context": null,
+        "value": null
+      },
       "version": "0.154.0",
       "modelLabel": "GPT-6 Luna (Max)",
       "modelMakers": [
@@ -761,6 +1033,14 @@
       "name": "Muse Code",
       "shortName": "Muse Spark Open (Xhigh)",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.263007023894863,
+        "speed": 161.39889866406,
+        "price": 3.54324946048794,
+        "latency": 1558.86632482568,
+        "context": null,
+        "value": null
+      },
       "version": "1.4.2-R4684.1",
       "modelLabel": "Muse Spark Open (Xhigh)",
       "modelMakers": [
@@ -783,6 +1063,14 @@
       "name": "Mirror",
       "shortName": "Beam 1.0",
       "added": "2026-11-02",
+      "prev": {
+        "intelligence": 0.20478987379168,
+        "speed": 92.9845715216683,
+        "price": 0.319490234063365,
+        "latency": 2321.25393509395,
+        "context": null,
+        "value": null
+      },
       "version": "0.1.8-aa.1",
       "modelLabel": "Beam 1.0",
       "modelMakers": [

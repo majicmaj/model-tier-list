@@ -476,6 +476,26 @@ a {
   pointer-events: none;
 }
 
+.tile-delta {
+  position: absolute;
+  right: 5px;
+  bottom: 3px;
+  z-index: 1;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.tile-delta.is-up {
+  color: var(--green-11);
+}
+
+.tile-delta.is-down {
+  color: var(--red-11);
+}
+
 .tile-name {
   font-size: 0.625rem;
   font-weight: 600;
