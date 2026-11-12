@@ -40,11 +40,35 @@ export function LensSelect({
   onPick: (id: LensId) => void
 }) {
   const [open, setOpen] = useState(false)
+  const [closing, setClosing] = useState(false)
   const [isMobile, setIsMobile] = useState(
     () => window.matchMedia('(max-width: 640px)').matches,
   )
   const btnRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  const fadeTimer = useRef(0)
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(fadeTimer.current)
+    },
+    [],
+  )
+
+  /** Desktop menu fades out, then unmounts; the sheet animates itself. */
+  const close = (immediate: boolean) => {
+    if (immediate || isMobile) {
+      setOpen(false)
+      setClosing(false)
+      return
+    }
+    if (closing) return
+    setClosing(true)
+    fadeTimer.current = window.setTimeout(() => {
+      setOpen(false)
+      setClosing(false)
+    }, 120)
+  }
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 640px)')
@@ -59,11 +83,11 @@ export function LensSelect({
   useEffect(() => {
     if (!open || isMobile) return
     const onDown = (e: MouseEvent | TouchEvent) => {
-      if (!(e.target as HTMLElement).closest('.lens-field')) setOpen(false)
+      if (!(e.target as HTMLElement).closest('.lens-field')) close(false)
     }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setOpen(false)
+        close(false)
         btnRef.current?.focus()
       }
     }
@@ -99,7 +123,7 @@ export function LensSelect({
       e.preventDefault()
       opts[opts.length - 1]?.focus()
     } else if (e.key === 'Tab') {
-      setOpen(false)
+      close(false)
     }
   }
 
@@ -112,7 +136,7 @@ export function LensSelect({
 
   const pick = (id: LensId) => {
     onPick(id)
-    setOpen(false)
+    close(false)
     btnRef.current?.focus()
   }
 
@@ -144,7 +168,7 @@ export function LensSelect({
           ref={menuRef}
           role="listbox"
           aria-label="Metric lens"
-          className="lens-menu"
+          className={`lens-menu${closing ? ' is-out' : ''}`}
           onKeyDown={onMenuKeys}
         >
           <LensOptions lenses={lenses} lens={lens} onPick={pick} />

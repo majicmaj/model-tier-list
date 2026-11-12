@@ -1,0 +1,308 @@
+/* Tier rows: label cell plus tile field. */
+.board {
+  margin-top: 6px;
+  border-top: 2px solid var(--ink);
+}
+
+.tier {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 4px var(--gutter);
+  border-bottom: 1px solid var(--hair);
+}
+
+.tier-label {
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+  width: 88px;
+  height: 88px;
+  flex: none;
+}
+
+.tier-label-S { background: var(--red-3); color: var(--red-11); }
+.tier-label-A { background: var(--orange-3); color: var(--orange-11); }
+.tier-label-B { background: var(--amber-3); color: var(--amber-11); }
+.tier-label-C { background: var(--green-3); color: var(--green-11); }
+.tier-label-D { background: var(--teal-3); color: var(--teal-11); }
+.tier-label-E { background: var(--blue-3); color: var(--blue-11); }
+.tier-label-F { background: var(--gray-4); color: var(--gray-11); }
+.tier-label-flat {
+  background: transparent;
+  border: 1px dashed var(--gray-7);
+  color: var(--ink-soft);
+}
+
+.tier-label-S .tier-range { color: var(--red-12); }
+.tier-label-A .tier-range { color: var(--orange-12); }
+.tier-label-B .tier-range { color: var(--amber-12); }
+.tier-label-C .tier-range { color: var(--green-12); }
+.tier-label-D .tier-range { color: var(--teal-12); }
+.tier-label-E .tier-range { color: var(--blue-12); }
+.tier-label-F .tier-range { color: var(--gray-12); }
+
+.tier-letter {
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.tier-range {
+  font-size: 0.625rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+
+.tier-empty {
+  margin: 0;
+  flex: 1 1 auto;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.tiles {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Model square: logo over name on a faint maker tint. */
+.tile {
+  appearance: none;
+  position: relative;
+  flex: 0 0 auto;
+  touch-action: manipulation;
+  width: 88px;
+  height: 88px;
+  border: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--tint, transparent) 10%, var(--paper));
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px;
+  transition:
+    background-color 120ms var(--ease),
+    transform 120ms var(--ease);
+}
+
+.tile:hover {
+  background: color-mix(in srgb, var(--tint, transparent) 18%, var(--paper));
+  transform: translateY(-1px);
+}
+
+.tile.is-open {
+  outline: 2px solid var(--action);
+  outline-offset: 1px;
+}
+
+.logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+  flex: none;
+}
+
+.logo-miss {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--gray-5);
+  color: var(--gray-11);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.logos {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+}
+
+.mark {
+  object-fit: contain;
+  display: block;
+  flex: none;
+}
+
+.mark-miss {
+  border-radius: 4px;
+  background: var(--gray-5);
+  color: var(--gray-11);
+  font-size: 0.625rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.tile-new {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 1;
+  background: var(--action);
+  color: #fff;
+  border-radius: 999px;
+  padding: 1px 5px;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.tile-marks {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  display: flex;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.tile-mark {
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  background: var(--amber-9);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tile-mark svg {
+  width: 10px;
+  height: 10px;
+  display: block;
+}
+
+.tile-dot {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink-soft);
+  pointer-events: none;
+}
+
+.tile-delta {
+  position: absolute;
+  right: 5px;
+  bottom: 3px;
+  z-index: 1;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.tile-delta.is-up {
+  color: var(--green-11);
+}
+
+.tile-delta.is-down {
+  color: var(--red-11);
+}
+
+.tile-name {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ink);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile-sub {
+  font-size: 0.5625rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ink-soft);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Narrow board: tier strips, roomier tiles. */
+@media (max-width: 640px) {
+  .tier {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .tier-label {
+    width: auto;
+    height: 28px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 0 10px;
+    border-radius: 6px;
+  }
+
+  .tier-letter {
+    font-size: 1.125rem;
+  }
+
+  .tier-range {
+    display: none;
+  }
+
+  .tier-label-flat .tier-range {
+    display: block;
+  }
+
+  .tile {
+    width: 80px;
+    height: 68px;
+    gap: 2px;
+  }
+
+  .tile-name {
+    font-size: 0.625rem;
+  }
+
+  .tile-sub {
+    font-size: 0.5rem;
+  }
+
+  .logo,
+  .logo-miss {
+    width: 22px;
+    height: 22px;
+  }
+}

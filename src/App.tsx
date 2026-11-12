@@ -1,4 +1,3 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
 import Leaderboard, { type BoardConfig } from './Leaderboard'
 import { useHashRoute } from './hooks/useHashRoute'
 import {
@@ -44,27 +43,6 @@ const CONFIGS: Record<Board, BoardConfig> = {
 
 export default function App() {
   const [{ page, lensId }, go] = useHashRoute()
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
-  const pillRef = useRef<HTMLSpanElement>(null)
-
-  const placePill = () => {
-    const btn = tabRefs.current[PAGES.indexOf(page)]
-    const pill = pillRef.current
-    const base = tabRefs.current[0]?.offsetWidth
-    if (!btn || !pill || !base) return
-    pill.style.width = `${base}px`
-    pill.style.transform = `translateX(${btn.offsetLeft - 2}px) scaleX(${btn.offsetWidth / base})`
-  }
-
-  useLayoutEffect(() => {
-    placePill()
-  }, [page])
-
-  useEffect(() => {
-    window.addEventListener('resize', placePill)
-    document.fonts?.ready.then(placePill).catch(() => {})
-    return () => window.removeEventListener('resize', placePill)
-  }, [])
 
   const goPage = (p: Board) => {
     if (p === page) return
@@ -75,14 +53,16 @@ export default function App() {
   return (
     <main className="page">
       <h1 className="sr-only">Model and Harness Tier List</h1>
-      <div className="pages" role="tablist" aria-label="Leaderboard">
-        <span ref={pillRef} className="pages-pill" aria-hidden="true" />
-        {PAGES.map((p, i) => (
+      <div
+        className="pages"
+        role="tablist"
+        aria-label="Leaderboard"
+        style={{ '--i': PAGES.indexOf(page) } as React.CSSProperties}
+      >
+        <span className="pages-pill" aria-hidden="true" />
+        {PAGES.map((p) => (
           <button
             key={p}
-            ref={(el) => {
-              tabRefs.current[i] = el
-            }}
             role="tab"
             aria-selected={page === p}
             className={`page-tab${page === p ? ' is-on' : ''}`}
@@ -92,7 +72,9 @@ export default function App() {
           </button>
         ))}
       </div>
-      <Leaderboard key={page} config={CONFIGS[page]} lensId={lensId} onLens={goLens} />
+      <div key={page} className="board-cross">
+        <Leaderboard config={CONFIGS[page]} lensId={lensId} onLens={goLens} />
+      </div>
     </main>
   )
 }

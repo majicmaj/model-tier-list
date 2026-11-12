@@ -1,0 +1,148 @@
+/* Lens picker: rounded button, menu lists each lens with its hint. */
+.lens-field {
+  position: relative;
+  display: inline-block;
+  margin: 0 var(--gutter);
+  z-index: 20;
+}
+
+.lens-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--gray-7);
+  background: var(--card);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    background-color 150ms var(--ease),
+    border-color 150ms var(--ease);
+}
+
+.lens-btn:hover {
+  border-color: var(--gray-8);
+  background: var(--rowwash);
+}
+
+.lens-btn svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+}
+
+.lens-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  min-width: 250px;
+  max-width: calc(100vw - 2 * var(--gutter));
+  background: var(--card);
+  border: 1px solid var(--gray-7);
+  border-radius: 12px;
+  box-shadow: 3px 6px 24px rgba(0, 0, 0, 0.16);
+  padding: 4px;
+  animation: tip-in-below 160ms var(--ease) both;
+}
+
+.lens-menu.is-out {
+  animation: tip-out 120ms var(--ease) both;
+}
+
+@keyframes tip-out {
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.lens-opt {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.lens-opt:hover {
+  background: var(--rowwash);
+}
+
+.lens-opt.is-on {
+  background: var(--blue-3);
+}
+
+.lens-opt-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.lens-opt-hint {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+/* Phone lens picker: Vaul bottom sheet. */
+.drawer-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.drawer-card {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 41;
+  background: var(--card);
+  border-radius: 16px 16px 0 0;
+  padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+  max-height: 80dvh;
+  overflow-y: auto;
+  outline: none;
+}
+
+.drawer-grip {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--gray-7);
+  margin: 4px auto 8px;
+}
+
+.drawer-title {
+  font: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 4px 8px;
+}
+
+.drawer-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+@keyframes tip-in-below {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}

@@ -119,12 +119,11 @@ export default function Leaderboard({
         {lens.hint}
       </p>
 
-      {/* display:contents adds no box; it only scopes tile queries. */}
-      <div ref={boardRef} style={{ display: 'contents' }}>
+      <div ref={boardRef}>
         <div className="board">
           {rows.map((b) => (
             <section key={b.tier} className="tier" aria-label={`Tier ${b.tier}`}>
-              <div className={`tier-label tier-label-${b.tier}`}>
+              <div className={`tier-label tier-label-${b.tier}`} data-tier={b.tier}>
                 <span className="tier-letter">{b.tier}</span>
                 <span className="tier-range">{b.label}</span>
               </div>
@@ -156,7 +155,7 @@ export default function Leaderboard({
 
         {unranked.length > 0 && (
           <section className="tier tier-flat" aria-label={unrankedLabel}>
-            <div className="tier-label tier-label-flat">
+            <div className="tier-label tier-label-flat" data-tier="flat">
               <span className="tier-letter">–</span>
               <span className="tier-range">No score</span>
             </div>

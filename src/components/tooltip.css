@@ -1,0 +1,152 @@
+/* Detail card: ink plate, plain text, one link. */
+.tip {
+  position: fixed;
+  z-index: 30;
+  width: 248px;
+  background: var(--ink);
+  color: var(--gray-1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 3px 6px 24px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  transition:
+    opacity 120ms var(--ease),
+    left 120ms var(--ease),
+    top 120ms var(--ease);
+}
+
+.tip.is-set {
+  opacity: 1;
+}
+
+.tip.is-out {
+  opacity: 0;
+}
+
+.tip-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.25;
+}
+
+.tip-co {
+  margin: 1px 0 0;
+  font-size: 0.8125rem;
+  color: var(--gray-6);
+}
+
+.tip-combo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tip-part {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--gray-4);
+}
+
+.tip-part > svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  color: var(--gray-6);
+}
+
+.tip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin: 10px 0 0;
+}
+
+.tip-grid dt {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gray-6);
+  margin: 0;
+}
+
+.tip-grid dt svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+}
+
+.tip-grid dd {
+  margin: 1px 0 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.tip-flat {
+  margin: 10px 0 0;
+  font-size: 0.8125rem;
+  color: var(--gray-6);
+}
+
+.tip-meta {
+  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.tag {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray-4);
+  border: 1px solid var(--gray-10);
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+.tip-marks {
+  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag-star {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--amber-4);
+  border-color: var(--amber-8);
+}
+
+.tag-star svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+}
+
+.tip-rel {
+  font-size: 0.75rem;
+  color: var(--gray-6);
+  font-variant-numeric: tabular-nums;
+}
+
+.tip-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--blue-4);
+}

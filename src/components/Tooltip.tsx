@@ -41,7 +41,7 @@ export function Tooltip({
       key={pos.above ? 'above' : 'below'}
       ref={elRef}
       role="tooltip"
-      className={`tip${pos.corrected ? ' is-set' : ''}${pos.pinned ? ' is-pinned' : ''}`}
+      className={`tip${pos.corrected ? ' is-set' : ''}${pos.leaving ? ' is-out' : ''}`}
       style={{ left: `${pos.x}px`, top: `${pos.y}px` } as React.CSSProperties}
       onMouseEnter={onTipEnter}
       onMouseLeave={onTipLeave}
