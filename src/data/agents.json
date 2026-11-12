@@ -1,6 +1,6 @@
 {
   "edition": "2026-11-12",
-  "fetchedAt": "2026-11-12T02:42:28.658Z",
+  "fetchedAt": "2026-11-12T17:22:12.323Z",
   "source": "https://artificialanalysis.ai/agents/coding-agents",
   "priceField": "meanCostUsd",
   "models": [
@@ -32,7 +32,8 @@
       "version": "3000.11.34",
       "modelLabel": "Claude Opus 5.5 Max + GPT-6 Luna High",
       "modelMakers": [
-        "unknown"
+        "anthropic",
+        "openai"
       ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
@@ -53,7 +54,8 @@
       "version": "1.0.101",
       "modelLabel": "Copilot Fusion (max)",
       "modelMakers": [
-        "unknown"
+        "anthropic",
+        "openai"
       ],
       "company": "github",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
@@ -137,7 +139,8 @@
       "version": "3000.10.23",
       "modelLabel": "Claude Fable 5.1 XHigh + SWE-2 Medium",
       "modelMakers": [
-        "unknown"
+        "anthropic",
+        "cognition"
       ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
@@ -168,7 +171,7 @@
       "intelligence": 0.576200245682633,
       "price": 11.5301045391259,
       "latency": 2115.55138904529,
-      "speed": 42.2762050613663,
+      "speed": 42.2762050613664,
       "context": null,
       "value": null
     },
@@ -242,7 +245,8 @@
       "version": "3000.10.23",
       "modelLabel": "GPT-6 Astra XHigh + SWE-2 Medium",
       "modelMakers": [
-        "unknown"
+        "openai",
+        "cognition"
       ],
       "company": "cognition",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
@@ -370,7 +374,7 @@
       "modelMakers": [
         "deepseek"
       ],
-      "company": "deepseek",
+      "company": "openai",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
       "reasoning": false,
@@ -496,7 +500,7 @@
       "modelMakers": [
         "stepfun"
       ],
-      "company": "stepfun",
+      "company": "anthropic",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
       "reasoning": false,
@@ -580,7 +584,7 @@
       "modelMakers": [
         "alibaba"
       ],
-      "company": "alibaba_cloud",
+      "company": "anthropic",
       "url": "https://artificialanalysis.ai/agents/coding-agents",
       "releaseDate": null,
       "reasoning": false,
@@ -762,16 +766,6 @@
     }
   ],
   "companies": {
-    "meta": {
-      "name": "Meta",
-      "logo": "/logos/meta.svg",
-      "color": "#0089f4"
-    },
-    "anthropic": {
-      "name": "Anthropic",
-      "logo": "/logos/anthropic.svg",
-      "color": "#cc785c"
-    },
     "mistral": {
       "name": "Mistral",
       "logo": "/logos/mistral.svg",
@@ -787,55 +781,45 @@
       "logo": "/logos/openai.svg",
       "color": "#1f1f1f"
     },
+    "anthropic": {
+      "name": "Anthropic",
+      "logo": "/logos/anthropic.svg",
+      "color": "#cc785c"
+    },
     "google": {
       "name": "Google",
       "logo": "/logos/google.svg",
       "color": "#34A853"
     },
-    "opencode": {
-      "name": "OpenCode",
-      "logo": "/logos/opencode.svg",
-      "color": "#2D2828"
-    },
-    "zai": {
-      "name": "Z AI",
-      "logo": "/logos/zai.svg",
-      "color": "#1c7ff8"
+    "meta": {
+      "name": "Meta",
+      "logo": "/logos/meta.svg",
+      "color": "#0089f4"
     },
     "kimi": {
       "name": "Kimi",
       "logo": "/logos/kimi.jpg",
       "color": "#047AFE"
     },
-    "reflection": {
-      "name": "Reflection",
-      "logo": "/logos/reflection.svg",
-      "color": "#195428"
-    },
     "cognition": {
       "name": "Cognition",
       "logo": "/logos/devin.svg",
       "color": "#2200FF"
-    },
-    "unknown": {
-      "name": "Unknown",
-      "logo": null,
-      "color": null
     },
     "deepseek": {
       "name": "DeepSeek",
       "logo": "/logos/deepseek.svg",
       "color": "#2243e6"
     },
+    "reflection": {
+      "name": "Reflection",
+      "logo": "/logos/reflection.svg",
+      "color": "#195428"
+    },
     "stepfun": {
-      "name": "Stepfun",
+      "name": "StepFun",
       "logo": "/logos/stepfun.svg",
       "color": "#00F5E7"
-    },
-    "alibaba_cloud": {
-      "name": "Alibaba Cloud",
-      "logo": null,
-      "color": null
     },
     "alibaba": {
       "name": "Alibaba",
@@ -846,6 +830,16 @@
       "name": "GitHub",
       "logo": "/logos/github.svg",
       "color": "#181717"
+    },
+    "opencode": {
+      "name": "OpenCode",
+      "logo": "/logos/opencode.svg",
+      "color": "#2D2828"
+    },
+    "zai": {
+      "name": "Z AI",
+      "logo": "/logos/zai.svg",
+      "color": "#1c7ff8"
     }
   }
 }
