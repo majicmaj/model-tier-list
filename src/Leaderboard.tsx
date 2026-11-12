@@ -491,10 +491,17 @@ function LensSelect({
   )
 }
 
-export default function Leaderboard({ config }: { config: BoardConfig }) {
+export default function Leaderboard({
+  config,
+  lensId,
+  onLens,
+}: {
+  config: BoardConfig
+  lensId: LensId
+  onLens: (id: LensId) => void
+}) {
   const { entries, makers, lenses, compound, emptyBand, unrankedLabel, edition, source } =
     config
-  const [lensId, setLensId] = useState<LensId>(lenses[0].id)
   const [tip, setTip] = useState<TipState | null>(null)
   const firstRects = useRef(new Map<string, { x: number; y: number }>())
   const lens = lenses.find((l) => l.id === lensId) ?? lenses[0]
@@ -525,7 +532,7 @@ export default function Leaderboard({ config }: { config: BoardConfig }) {
       })
       firstRects.current = m
     }
-    setLensId(id)
+    onLens(id)
   }
 
   // Mount enter: staggered fade in one WAAPI pass, before first paint.

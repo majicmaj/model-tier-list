@@ -1,6 +1,14 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Leaderboard, { type BoardConfig } from './Leaderboard'
-import { HARNESS_COMPOUND, HLENSES, LENSES, MODEL_COMPOUND, agentData, data } from './lib/tiers'
+import {
+  HARNESS_COMPOUND,
+  HLENSES,
+  LENSES,
+  MODEL_COMPOUND,
+  agentData,
+  data,
+  type LensId,
+} from './lib/tiers'
 
 type Page = 'models' | 'harnesses'
 
@@ -33,6 +41,7 @@ export default function App() {
   const [page, setPage] = useState<Page>(() =>
     window.location.hash === '#/harnesses' ? 'harnesses' : 'models',
   )
+  const [lensId, setLensId] = useState<LensId>('compound')
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
   const pillRef = useRef<HTMLSpanElement>(null)
 
@@ -57,6 +66,8 @@ export default function App() {
 
   const goPage = (p: Page) => {
     if (p === page) return
+    // Keep the pick when the other board offers the same lens, else Compound.
+    if (!CONFIGS[p].lenses.some((l) => l.id === lensId)) setLensId('compound')
     setPage(p)
     window.location.hash = p === 'harnesses' ? '#/harnesses' : '#/'
   }
@@ -81,7 +92,7 @@ export default function App() {
           </button>
         ))}
       </div>
-      <Leaderboard key={page} config={CONFIGS[page]} />
+      <Leaderboard key={page} config={CONFIGS[page]} lensId={lensId} onLens={setLensId} />
     </main>
   )
 }
