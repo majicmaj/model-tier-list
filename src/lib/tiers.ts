@@ -409,7 +409,9 @@ export function shortBase(base: string, company: string): string {
 
 /** "Devin Fusion CLI" reads "Devin Fusion"; product names stay whole. */
 export function shortHarness(name: string): string {
-  return name.replace(/\s+(cli|sdk\b.*|harness)$/i, '')
+  return name
+    .replace(/\s+(cli|sdk\b.*|harness)$/i, '')
+    .replace(/^(github|microsoft)\s+/i, '')
 }
 
 export interface DisplayName {

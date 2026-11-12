@@ -90,7 +90,7 @@ a {
 
 .page {
   --gutter: 20px;
-  max-width: 940px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 22px 0 56px;
 }
@@ -292,18 +292,10 @@ a {
 
 .tier {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
-  overflow-x: auto;
   padding: 4px var(--gutter);
   border-bottom: 1px solid var(--hair);
-  scrollbar-width: thin;
-}
-
-/* End space survives scrolling; plain end padding would collapse. */
-.tier::after {
-  content: '';
-  flex: 0 0 calc(var(--gutter) - 10px);
 }
 
 .tier-label {
@@ -315,8 +307,8 @@ a {
   justify-content: center;
   text-align: center;
   gap: 2px;
-  width: 78px;
-  height: 78px;
+  width: 88px;
+  height: 88px;
   flex: none;
 }
 
@@ -363,7 +355,8 @@ a {
 
 .tiles {
   display: flex;
-  flex: none;
+  flex: 1;
+  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
 }
@@ -374,8 +367,8 @@ a {
   position: relative;
   flex: 0 0 auto;
   touch-action: manipulation;
-  width: 78px;
-  height: 78px;
+  width: 88px;
+  height: 88px;
   border: 0;
   border-radius: 10px;
   background: color-mix(in srgb, var(--tint, transparent) 10%, var(--paper));
@@ -709,9 +702,32 @@ a {
     padding: 18px 0 48px;
   }
 
+  .tier {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
   .tier-label {
-    width: 68px;
-    height: 68px;
+    width: auto;
+    height: 28px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 0 10px;
+    border-radius: 6px;
+  }
+
+  .tier-letter {
+    font-size: 1.125rem;
+  }
+
+  .tier-range {
+    display: none;
+  }
+
+  .tier-label-flat .tier-range {
+    display: block;
   }
 
   .tile {
